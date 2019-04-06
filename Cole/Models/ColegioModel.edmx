@@ -1,0 +1,1268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ColegioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="int" Nullable="false" />
+          <Property Name="DniTutor" Type="int" />
+        </EntityType>
+        <EntityType Name="Asiste">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="NroCurso" />
+            <PropertyRef Name="DivisionCurso" />
+          </Key>
+          <Property Name="DniAlumno" Type="int" Nullable="false" />
+          <Property Name="NroCurso" Type="int" Nullable="false" />
+          <Property Name="DivisionCurso" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="año" Type="date" />
+        </EntityType>
+        <EntityType Name="Califica">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="DniProfesor" />
+            <PropertyRef Name="FechaEvaluacion" />
+            <PropertyRef Name="TituloEvaluacion" />
+          </Key>
+          <Property Name="DniAlumno" Type="int" Nullable="false" />
+          <Property Name="DniProfesor" Type="int" Nullable="false" />
+          <Property Name="FechaEvaluacion" Type="datetime" Nullable="false" />
+          <Property Name="TituloEvaluacion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Nota" Type="int" />
+        </EntityType>
+        <EntityType Name="Cuota">
+          <Key>
+            <PropertyRef Name="FechaDelMes" />
+          </Key>
+          <Property Name="FechaDelMes" Type="date" Nullable="false" />
+          <Property Name="Monto" Type="float" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="Nro" />
+            <PropertyRef Name="Division" />
+          </Key>
+          <Property Name="Nro" Type="int" Nullable="false" />
+          <Property Name="Division" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dicta">
+          <Key>
+            <PropertyRef Name="NroCurso" />
+            <PropertyRef Name="DivisionCurso" />
+            <PropertyRef Name="NombreMateria" />
+            <PropertyRef Name="año" />
+          </Key>
+          <Property Name="NroCurso" Type="int" Nullable="false" />
+          <Property Name="DivisionCurso" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="NombreMateria" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="año" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evaluacion">
+          <Key>
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" />
+          <Property Name="NombreMateria" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Inasistencia">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="DniAlumno" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="EsMedia" Type="bit" />
+          <Property Name="DniProfesor" Type="int" />
+        </EntityType>
+        <EntityType Name="Institucion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="Categoria" Type="varchar" MaxLength="20" />
+          <Property Name="NumeroTelefono" Type="int" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" />
+          <Property Name="DniAdministrador" Type="int" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mensaje">
+          <Key>
+            <PropertyRef Name="DniEmisor" />
+            <PropertyRef Name="FechaYHora" />
+          </Key>
+          <Property Name="DniEmisor" Type="int" Nullable="false" />
+          <Property Name="FechaYHora" Type="datetime" Nullable="false" />
+          <Property Name="DniReceptor" Type="int" />
+          <Property Name="Texto" Type="text" />
+        </EntityType>
+        <EntityType Name="Paga">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="FechaDelMes" />
+          </Key>
+          <Property Name="DniAlumno" Type="int" Nullable="false" />
+          <Property Name="FechaDelMes" Type="date" Nullable="false" />
+          <Property Name="NroRecibo" Type="int" />
+          <Property Name="FechaPago" Type="date" />
+          <Property Name="Lugar" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="int" Nullable="false" />
+          <Property Name="Cuil" Type="int" />
+          <Property Name="TelCelular" Type="int" />
+          <Property Name="TelFijo" Type="int" />
+          <Property Name="Contraseña" Type="varchar" MaxLength="32" />
+          <Property Name="Sexo" Type="char" MaxLength="1" />
+          <Property Name="Domicilio" Type="varchar" MaxLength="50" />
+          <Property Name="Nacionalidad" Type="varchar" MaxLength="32" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Apellido" Type="varchar" MaxLength="20" />
+          <Property Name="FechaNacimiento" Type="date" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publicacion">
+          <Key>
+            <PropertyRef Name="DniProfesor" />
+            <PropertyRef Name="NombreMateria" />
+            <PropertyRef Name="FechaYHora" />
+          </Key>
+          <Property Name="DniProfesor" Type="int" Nullable="false" />
+          <Property Name="NombreMateria" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FechaYHora" Type="datetime" Nullable="false" />
+          <Property Name="Mensaje" Type="text" />
+        </EntityType>
+        <EntityType Name="Titulo">
+          <Key>
+            <PropertyRef Name="Dni" />
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Dni" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tutor">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="int" Nullable="false" />
+          <Property Name="Ocupacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Alumno__Dni__4E88ABD4">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumno__DniTutor__4F7CD00D">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="DniTutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Asiste__DniAlumn__693CA210">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Asiste" Type="Self.Asiste" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Asiste">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Califica__DniAlu__74AE54BC">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Califica">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Califica__DniPro__75A278F5">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Califica">
+              <PropertyRef Name="DniProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dicta__año__70DDC3D8">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
+          <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Dicta">
+              <PropertyRef Name="NombreMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Evaluacio__Nombr__5CD6CB2B">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="0..1" />
+          <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Evaluacion">
+              <PropertyRef Name="NombreMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inasisten__DniAl__656C112C">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Inasistencia" Type="Self.Inasistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Inasistencia">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inasisten__DniPr__66603565">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <End Role="Inasistencia" Type="Self.Inasistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Inasistencia">
+              <PropertyRef Name="DniProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Instituci__DniAd__7A672E12">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+          <End Role="Institucion" Type="Self.Institucion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Institucion">
+              <PropertyRef Name="DniAdministrador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mensaje__DniEmis__5FB337D6">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="DniEmisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mensaje__DniRece__60A75C0F">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="DniReceptor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paga__DniAlumno__6D0D32F4">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Paga" Type="Self.Paga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Paga">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paga__FechaDelMe__6E01572D">
+          <End Role="Cuota" Type="Self.Cuota" Multiplicity="1" />
+          <End Role="Paga" Type="Self.Paga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuota">
+              <PropertyRef Name="FechaDelMes" />
+            </Principal>
+            <Dependent Role="Paga">
+              <PropertyRef Name="FechaDelMes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesor__Dni__52593CB8">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Titulo__Dni__5441852A">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="Titulo" Type="Self.Titulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Titulo">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tutor__Dni__4BAC3F29">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Tutor">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asiste_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Asiste" Type="Self.Asiste" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Nro" />
+              <PropertyRef Name="Division" />
+            </Principal>
+            <Dependent Role="Asiste">
+              <PropertyRef Name="NroCurso" />
+              <PropertyRef Name="DivisionCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Califica_Evaluacion">
+          <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="1" />
+          <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evaluacion">
+              <PropertyRef Name="Fecha" />
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Califica">
+              <PropertyRef Name="FechaEvaluacion" />
+              <PropertyRef Name="TituloEvaluacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dicta_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Nro" />
+              <PropertyRef Name="Division" />
+            </Principal>
+            <Dependent Role="Dicta">
+              <PropertyRef Name="NroCurso" />
+              <PropertyRef Name="DivisionCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ColegioModelStoreContainer">
+          <EntitySet Name="Alumno" EntityType="Self.Alumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asiste" EntityType="Self.Asiste" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Califica" EntityType="Self.Califica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cuota" EntityType="Self.Cuota" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dicta" EntityType="Self.Dicta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluacion" EntityType="Self.Evaluacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inasistencia" EntityType="Self.Inasistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Institucion" EntityType="Self.Institucion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mensaje" EntityType="Self.Mensaje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paga" EntityType="Self.Paga" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publicacion" EntityType="Self.Publicacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Titulo" EntityType="Self.Titulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tutor" EntityType="Self.Tutor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Alumno__Dni__4E88ABD4" Association="Self.FK__Alumno__Dni__4E88ABD4">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumno__DniTutor__4F7CD00D" Association="Self.FK__Alumno__DniTutor__4F7CD00D">
+            <End Role="Tutor" EntitySet="Tutor" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Asiste__DniAlumn__693CA210" Association="Self.FK__Asiste__DniAlumn__693CA210">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Asiste" EntitySet="Asiste" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Califica__DniAlu__74AE54BC" Association="Self.FK__Califica__DniAlu__74AE54BC">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Califica" EntitySet="Califica" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Califica__DniPro__75A278F5" Association="Self.FK__Califica__DniPro__75A278F5">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Califica" EntitySet="Califica" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dicta__año__70DDC3D8" Association="Self.FK__Dicta__año__70DDC3D8">
+            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Dicta" EntitySet="Dicta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Evaluacio__Nombr__5CD6CB2B" Association="Self.FK__Evaluacio__Nombr__5CD6CB2B">
+            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Evaluacion" EntitySet="Evaluacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inasisten__DniAl__656C112C" Association="Self.FK__Inasisten__DniAl__656C112C">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Inasistencia" EntitySet="Inasistencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inasisten__DniPr__66603565" Association="Self.FK__Inasisten__DniPr__66603565">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Inasistencia" EntitySet="Inasistencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Instituci__DniAd__7A672E12" Association="Self.FK__Instituci__DniAd__7A672E12">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Institucion" EntitySet="Institucion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mensaje__DniEmis__5FB337D6" Association="Self.FK__Mensaje__DniEmis__5FB337D6">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mensaje__DniRece__60A75C0F" Association="Self.FK__Mensaje__DniRece__60A75C0F">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paga__DniAlumno__6D0D32F4" Association="Self.FK__Paga__DniAlumno__6D0D32F4">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Paga" EntitySet="Paga" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paga__FechaDelMe__6E01572D" Association="Self.FK__Paga__FechaDelMe__6E01572D">
+            <End Role="Cuota" EntitySet="Cuota" />
+            <End Role="Paga" EntitySet="Paga" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesor__Dni__52593CB8" Association="Self.FK__Profesor__Dni__52593CB8">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Titulo__Dni__5441852A" Association="Self.FK__Titulo__Dni__5441852A">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Titulo" EntitySet="Titulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tutor__Dni__4BAC3F29" Association="Self.FK__Tutor__Dni__4BAC3F29">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Tutor" EntitySet="Tutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asiste_Curso" Association="Self.FK_Asiste_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Asiste" EntitySet="Asiste" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Califica_Evaluacion" Association="Self.FK_Califica_Evaluacion">
+            <End Role="Evaluacion" EntitySet="Evaluacion" />
+            <End Role="Califica" EntitySet="Califica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dicta_Curso" Association="Self.FK_Dicta_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Dicta" EntitySet="Dicta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ColegioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumno">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="Int32" Nullable="false" />
+          <Property Name="DniTutor" Type="Int32" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Alumno__Dni__4E88ABD4" FromRole="Alumno" ToRole="Persona" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK__Alumno__DniTutor__4F7CD00D" FromRole="Alumno" ToRole="Tutor" />
+          <NavigationProperty Name="Asiste" Relationship="Self.FK__Asiste__DniAlumn__693CA210" FromRole="Alumno" ToRole="Asiste" />
+          <NavigationProperty Name="Califica" Relationship="Self.FK__Califica__DniAlu__74AE54BC" FromRole="Alumno" ToRole="Califica" />
+          <NavigationProperty Name="Inasistencia" Relationship="Self.FK__Inasisten__DniAl__656C112C" FromRole="Alumno" ToRole="Inasistencia" />
+          <NavigationProperty Name="Paga" Relationship="Self.FK__Paga__DniAlumno__6D0D32F4" FromRole="Alumno" ToRole="Paga" />
+        </EntityType>
+        <EntityType Name="Asiste">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="NroCurso" />
+            <PropertyRef Name="DivisionCurso" />
+          </Key>
+          <Property Name="DniAlumno" Type="Int32" Nullable="false" />
+          <Property Name="NroCurso" Type="Int32" Nullable="false" />
+          <Property Name="DivisionCurso" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="año" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Asiste__DniAlumn__693CA210" FromRole="Asiste" ToRole="Alumno" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Asiste_Curso" FromRole="Asiste" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="Califica">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="DniProfesor" />
+            <PropertyRef Name="FechaEvaluacion" />
+            <PropertyRef Name="TituloEvaluacion" />
+          </Key>
+          <Property Name="DniAlumno" Type="Int32" Nullable="false" />
+          <Property Name="DniProfesor" Type="Int32" Nullable="false" />
+          <Property Name="FechaEvaluacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TituloEvaluacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nota" Type="Int32" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Califica__DniAlu__74AE54BC" FromRole="Califica" ToRole="Alumno" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Califica__DniPro__75A278F5" FromRole="Califica" ToRole="Profesor" />
+          <NavigationProperty Name="Evaluacion" Relationship="Self.FK_Califica_Evaluacion" FromRole="Califica" ToRole="Evaluacion" />
+        </EntityType>
+        <EntityType Name="Cuota">
+          <Key>
+            <PropertyRef Name="FechaDelMes" />
+          </Key>
+          <Property Name="FechaDelMes" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Monto" Type="Double" />
+          <NavigationProperty Name="Paga" Relationship="Self.FK__Paga__FechaDelMe__6E01572D" FromRole="Cuota" ToRole="Paga" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="Nro" />
+            <PropertyRef Name="Division" />
+          </Key>
+          <Property Name="Nro" Type="Int32" Nullable="false" />
+          <Property Name="Division" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Asiste" Relationship="Self.FK_Asiste_Curso" FromRole="Curso" ToRole="Asiste" />
+          <NavigationProperty Name="Dicta" Relationship="Self.FK_Dicta_Curso" FromRole="Curso" ToRole="Dicta" />
+        </EntityType>
+        <EntityType Name="Dicta">
+          <Key>
+            <PropertyRef Name="NroCurso" />
+            <PropertyRef Name="DivisionCurso" />
+            <PropertyRef Name="NombreMateria" />
+            <PropertyRef Name="año" />
+          </Key>
+          <Property Name="NroCurso" Type="Int32" Nullable="false" />
+          <Property Name="DivisionCurso" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreMateria" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="año" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Dicta_Curso" FromRole="Dicta" ToRole="Curso" />
+          <NavigationProperty Name="Materia" Relationship="Self.FK__Dicta__año__70DDC3D8" FromRole="Dicta" ToRole="Materia" />
+        </EntityType>
+        <EntityType Name="Evaluacion">
+          <Key>
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Titulo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NombreMateria" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Califica" Relationship="Self.FK_Califica_Evaluacion" FromRole="Evaluacion" ToRole="Califica" />
+          <NavigationProperty Name="Materia" Relationship="Self.FK__Evaluacio__Nombr__5CD6CB2B" FromRole="Evaluacion" ToRole="Materia" />
+        </EntityType>
+        <EntityType Name="Inasistencia">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="Fecha" />
+          </Key>
+          <Property Name="DniAlumno" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EsMedia" Type="Boolean" />
+          <Property Name="DniProfesor" Type="Int32" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Inasisten__DniAl__656C112C" FromRole="Inasistencia" ToRole="Alumno" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Inasisten__DniPr__66603565" FromRole="Inasistencia" ToRole="Profesor" />
+        </EntityType>
+        <EntityType Name="Institucion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Categoria" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroTelefono" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DniAdministrador" Type="Int32" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Instituci__DniAd__7A672E12" FromRole="Institucion" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Dicta" Relationship="Self.FK__Dicta__año__70DDC3D8" FromRole="Materia" ToRole="Dicta" />
+          <NavigationProperty Name="Evaluacion" Relationship="Self.FK__Evaluacio__Nombr__5CD6CB2B" FromRole="Materia" ToRole="Evaluacion" />
+        </EntityType>
+        <EntityType Name="Mensaje">
+          <Key>
+            <PropertyRef Name="DniEmisor" />
+            <PropertyRef Name="FechaYHora" />
+          </Key>
+          <Property Name="DniEmisor" Type="Int32" Nullable="false" />
+          <Property Name="FechaYHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DniReceptor" Type="Int32" />
+          <Property Name="Texto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Mensaje__DniEmis__5FB337D6" FromRole="Mensaje" ToRole="Persona" />
+          <NavigationProperty Name="Persona1" Relationship="Self.FK__Mensaje__DniRece__60A75C0F" FromRole="Mensaje" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Paga">
+          <Key>
+            <PropertyRef Name="DniAlumno" />
+            <PropertyRef Name="FechaDelMes" />
+          </Key>
+          <Property Name="DniAlumno" Type="Int32" Nullable="false" />
+          <Property Name="FechaDelMes" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NroRecibo" Type="Int32" />
+          <Property Name="FechaPago" Type="DateTime" Precision="0" />
+          <Property Name="Lugar" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Paga__DniAlumno__6D0D32F4" FromRole="Paga" ToRole="Alumno" />
+          <NavigationProperty Name="Cuota" Relationship="Self.FK__Paga__FechaDelMe__6E01572D" FromRole="Paga" ToRole="Cuota" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="Int32" Nullable="false" />
+          <Property Name="Cuil" Type="Int32" />
+          <Property Name="TelCelular" Type="Int32" />
+          <Property Name="TelFijo" Type="Int32" />
+          <Property Name="Contraseña" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nacionalidad" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Alumno__Dni__4E88ABD4" FromRole="Persona" ToRole="Alumno" />
+          <NavigationProperty Name="Institucion" Relationship="Self.FK__Instituci__DniAd__7A672E12" FromRole="Persona" ToRole="Institucion" />
+          <NavigationProperty Name="Mensaje" Relationship="Self.FK__Mensaje__DniEmis__5FB337D6" FromRole="Persona" ToRole="Mensaje" />
+          <NavigationProperty Name="Mensaje1" Relationship="Self.FK__Mensaje__DniRece__60A75C0F" FromRole="Persona" ToRole="Mensaje" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Profesor__Dni__52593CB8" FromRole="Persona" ToRole="Profesor" />
+          <NavigationProperty Name="Tutor" Relationship="Self.FK__Tutor__Dni__4BAC3F29" FromRole="Persona" ToRole="Tutor" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Califica" Relationship="Self.FK__Califica__DniPro__75A278F5" FromRole="Profesor" ToRole="Califica" />
+          <NavigationProperty Name="Inasistencia" Relationship="Self.FK__Inasisten__DniPr__66603565" FromRole="Profesor" ToRole="Inasistencia" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Profesor__Dni__52593CB8" FromRole="Profesor" ToRole="Persona" />
+          <NavigationProperty Name="Titulo" Relationship="Self.FK__Titulo__Dni__5441852A" FromRole="Profesor" ToRole="Titulo" />
+        </EntityType>
+        <EntityType Name="Publicacion">
+          <Key>
+            <PropertyRef Name="DniProfesor" />
+            <PropertyRef Name="NombreMateria" />
+            <PropertyRef Name="FechaYHora" />
+          </Key>
+          <Property Name="DniProfesor" Type="Int32" Nullable="false" />
+          <Property Name="NombreMateria" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaYHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Titulo">
+          <Key>
+            <PropertyRef Name="Dni" />
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="Dni" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Titulo__Dni__5441852A" FromRole="Titulo" ToRole="Profesor" />
+        </EntityType>
+        <EntityType Name="Tutor">
+          <Key>
+            <PropertyRef Name="Dni" />
+          </Key>
+          <Property Name="Dni" Type="Int32" Nullable="false" />
+          <Property Name="Ocupacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Alumno" Relationship="Self.FK__Alumno__DniTutor__4F7CD00D" FromRole="Tutor" ToRole="Alumno" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Tutor__Dni__4BAC3F29" FromRole="Tutor" ToRole="Persona" />
+        </EntityType>
+        <Association Name="FK__Alumno__Dni__4E88ABD4">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumno__DniTutor__4F7CD00D">
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tutor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="DniTutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Asiste__DniAlumn__693CA210">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Asiste" Type="Self.Asiste" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Asiste">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Califica__DniAlu__74AE54BC">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Califica">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inasisten__DniAl__656C112C">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Inasistencia" Type="Self.Inasistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Inasistencia">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paga__DniAlumno__6D0D32F4">
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="1" />
+          <End Role="Paga" Type="Self.Paga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Paga">
+              <PropertyRef Name="DniAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asiste_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Asiste" Type="Self.Asiste" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Nro" />
+              <PropertyRef Name="Division" />
+            </Principal>
+            <Dependent Role="Asiste">
+              <PropertyRef Name="NroCurso" />
+              <PropertyRef Name="DivisionCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Califica__DniPro__75A278F5">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Califica">
+              <PropertyRef Name="DniProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Califica_Evaluacion">
+          <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="1" />
+          <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evaluacion">
+              <PropertyRef Name="Fecha" />
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Califica">
+              <PropertyRef Name="FechaEvaluacion" />
+              <PropertyRef Name="TituloEvaluacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paga__FechaDelMe__6E01572D">
+          <End Role="Cuota" Type="Self.Cuota" Multiplicity="1" />
+          <End Role="Paga" Type="Self.Paga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuota">
+              <PropertyRef Name="FechaDelMes" />
+            </Principal>
+            <Dependent Role="Paga">
+              <PropertyRef Name="FechaDelMes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dicta_Curso">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Nro" />
+              <PropertyRef Name="Division" />
+            </Principal>
+            <Dependent Role="Dicta">
+              <PropertyRef Name="NroCurso" />
+              <PropertyRef Name="DivisionCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dicta__año__70DDC3D8">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
+          <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Dicta">
+              <PropertyRef Name="NombreMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Evaluacio__Nombr__5CD6CB2B">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="0..1" />
+          <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="Nombre" />
+            </Principal>
+            <Dependent Role="Evaluacion">
+              <PropertyRef Name="NombreMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inasisten__DniPr__66603565">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <End Role="Inasistencia" Type="Self.Inasistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Inasistencia">
+              <PropertyRef Name="DniProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Instituci__DniAd__7A672E12">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+          <End Role="Institucion" Type="Self.Institucion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Institucion">
+              <PropertyRef Name="DniAdministrador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mensaje__DniEmis__5FB337D6">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="DniEmisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mensaje__DniRece__60A75C0F">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
+          <End Role="Mensaje" Type="Self.Mensaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Mensaje">
+              <PropertyRef Name="DniReceptor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesor__Dni__52593CB8">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tutor__Dni__4BAC3F29">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Tutor" Type="Self.Tutor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Tutor">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Titulo__Dni__5441852A">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="Titulo" Type="Self.Titulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Titulo">
+              <PropertyRef Name="Dni" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ColegioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumno" EntityType="Self.Alumno" />
+          <EntitySet Name="Asiste" EntityType="Self.Asiste" />
+          <EntitySet Name="Califica" EntityType="Self.Califica" />
+          <EntitySet Name="Cuota" EntityType="Self.Cuota" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" />
+          <EntitySet Name="Dicta" EntityType="Self.Dicta" />
+          <EntitySet Name="Evaluacion" EntityType="Self.Evaluacion" />
+          <EntitySet Name="Inasistencia" EntityType="Self.Inasistencia" />
+          <EntitySet Name="Institucion" EntityType="Self.Institucion" />
+          <EntitySet Name="Materia" EntityType="Self.Materia" />
+          <EntitySet Name="Mensaje" EntityType="Self.Mensaje" />
+          <EntitySet Name="Paga" EntityType="Self.Paga" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+          <EntitySet Name="Publicacion" EntityType="Self.Publicacion" />
+          <EntitySet Name="Titulo" EntityType="Self.Titulo" />
+          <EntitySet Name="Tutor" EntityType="Self.Tutor" />
+          <AssociationSet Name="FK__Alumno__Dni__4E88ABD4" Association="Self.FK__Alumno__Dni__4E88ABD4">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumno__DniTutor__4F7CD00D" Association="Self.FK__Alumno__DniTutor__4F7CD00D">
+            <End Role="Tutor" EntitySet="Tutor" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Asiste__DniAlumn__693CA210" Association="Self.FK__Asiste__DniAlumn__693CA210">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Asiste" EntitySet="Asiste" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Califica__DniAlu__74AE54BC" Association="Self.FK__Califica__DniAlu__74AE54BC">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Califica" EntitySet="Califica" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inasisten__DniAl__656C112C" Association="Self.FK__Inasisten__DniAl__656C112C">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Inasistencia" EntitySet="Inasistencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paga__DniAlumno__6D0D32F4" Association="Self.FK__Paga__DniAlumno__6D0D32F4">
+            <End Role="Alumno" EntitySet="Alumno" />
+            <End Role="Paga" EntitySet="Paga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asiste_Curso" Association="Self.FK_Asiste_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Asiste" EntitySet="Asiste" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Califica__DniPro__75A278F5" Association="Self.FK__Califica__DniPro__75A278F5">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Califica" EntitySet="Califica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Califica_Evaluacion" Association="Self.FK_Califica_Evaluacion">
+            <End Role="Evaluacion" EntitySet="Evaluacion" />
+            <End Role="Califica" EntitySet="Califica" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paga__FechaDelMe__6E01572D" Association="Self.FK__Paga__FechaDelMe__6E01572D">
+            <End Role="Cuota" EntitySet="Cuota" />
+            <End Role="Paga" EntitySet="Paga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dicta_Curso" Association="Self.FK_Dicta_Curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Dicta" EntitySet="Dicta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dicta__año__70DDC3D8" Association="Self.FK__Dicta__año__70DDC3D8">
+            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Dicta" EntitySet="Dicta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Evaluacio__Nombr__5CD6CB2B" Association="Self.FK__Evaluacio__Nombr__5CD6CB2B">
+            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Evaluacion" EntitySet="Evaluacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inasisten__DniPr__66603565" Association="Self.FK__Inasisten__DniPr__66603565">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Inasistencia" EntitySet="Inasistencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Instituci__DniAd__7A672E12" Association="Self.FK__Instituci__DniAd__7A672E12">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Institucion" EntitySet="Institucion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mensaje__DniEmis__5FB337D6" Association="Self.FK__Mensaje__DniEmis__5FB337D6">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mensaje__DniRece__60A75C0F" Association="Self.FK__Mensaje__DniRece__60A75C0F">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Mensaje" EntitySet="Mensaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesor__Dni__52593CB8" Association="Self.FK__Profesor__Dni__52593CB8">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tutor__Dni__4BAC3F29" Association="Self.FK__Tutor__Dni__4BAC3F29">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Tutor" EntitySet="Tutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Titulo__Dni__5441852A" Association="Self.FK__Titulo__Dni__5441852A">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Titulo" EntitySet="Titulo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ColegioModelStoreContainer" CdmEntityContainer="ColegioEntities">
+          <EntitySetMapping Name="Alumno">
+            <EntityTypeMapping TypeName="ColegioModel.Alumno">
+              <MappingFragment StoreEntitySet="Alumno">
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="DniTutor" ColumnName="DniTutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Asiste">
+            <EntityTypeMapping TypeName="ColegioModel.Asiste">
+              <MappingFragment StoreEntitySet="Asiste">
+                <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
+                <ScalarProperty Name="NroCurso" ColumnName="NroCurso" />
+                <ScalarProperty Name="DivisionCurso" ColumnName="DivisionCurso" />
+                <ScalarProperty Name="año" ColumnName="año" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Califica">
+            <EntityTypeMapping TypeName="ColegioModel.Califica">
+              <MappingFragment StoreEntitySet="Califica">
+                <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
+                <ScalarProperty Name="DniProfesor" ColumnName="DniProfesor" />
+                <ScalarProperty Name="FechaEvaluacion" ColumnName="FechaEvaluacion" />
+                <ScalarProperty Name="TituloEvaluacion" ColumnName="TituloEvaluacion" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuota">
+            <EntityTypeMapping TypeName="ColegioModel.Cuota">
+              <MappingFragment StoreEntitySet="Cuota">
+                <ScalarProperty Name="FechaDelMes" ColumnName="FechaDelMes" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="ColegioModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="Nro" ColumnName="Nro" />
+                <ScalarProperty Name="Division" ColumnName="Division" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dicta">
+            <EntityTypeMapping TypeName="ColegioModel.Dicta">
+              <MappingFragment StoreEntitySet="Dicta">
+                <ScalarProperty Name="NroCurso" ColumnName="NroCurso" />
+                <ScalarProperty Name="DivisionCurso" ColumnName="DivisionCurso" />
+                <ScalarProperty Name="NombreMateria" ColumnName="NombreMateria" />
+                <ScalarProperty Name="año" ColumnName="año" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evaluacion">
+            <EntityTypeMapping TypeName="ColegioModel.Evaluacion">
+              <MappingFragment StoreEntitySet="Evaluacion">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="NombreMateria" ColumnName="NombreMateria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inasistencia">
+            <EntityTypeMapping TypeName="ColegioModel.Inasistencia">
+              <MappingFragment StoreEntitySet="Inasistencia">
+                <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="EsMedia" ColumnName="EsMedia" />
+                <ScalarProperty Name="DniProfesor" ColumnName="DniProfesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Institucion">
+            <EntityTypeMapping TypeName="ColegioModel.Institucion">
+              <MappingFragment StoreEntitySet="Institucion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="DniAdministrador" ColumnName="DniAdministrador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materia">
+            <EntityTypeMapping TypeName="ColegioModel.Materia">
+              <MappingFragment StoreEntitySet="Materia">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mensaje">
+            <EntityTypeMapping TypeName="ColegioModel.Mensaje">
+              <MappingFragment StoreEntitySet="Mensaje">
+                <ScalarProperty Name="DniEmisor" ColumnName="DniEmisor" />
+                <ScalarProperty Name="FechaYHora" ColumnName="FechaYHora" />
+                <ScalarProperty Name="DniReceptor" ColumnName="DniReceptor" />
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paga">
+            <EntityTypeMapping TypeName="ColegioModel.Paga">
+              <MappingFragment StoreEntitySet="Paga">
+                <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
+                <ScalarProperty Name="FechaDelMes" ColumnName="FechaDelMes" />
+                <ScalarProperty Name="NroRecibo" ColumnName="NroRecibo" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="Lugar" ColumnName="Lugar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="ColegioModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Cuil" ColumnName="Cuil" />
+                <ScalarProperty Name="TelCelular" ColumnName="TelCelular" />
+                <ScalarProperty Name="TelFijo" ColumnName="TelFijo" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesor">
+            <EntityTypeMapping TypeName="ColegioModel.Profesor">
+              <MappingFragment StoreEntitySet="Profesor">
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publicacion">
+            <EntityTypeMapping TypeName="ColegioModel.Publicacion">
+              <MappingFragment StoreEntitySet="Publicacion">
+                <ScalarProperty Name="DniProfesor" ColumnName="DniProfesor" />
+                <ScalarProperty Name="NombreMateria" ColumnName="NombreMateria" />
+                <ScalarProperty Name="FechaYHora" ColumnName="FechaYHora" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Titulo">
+            <EntityTypeMapping TypeName="ColegioModel.Titulo">
+              <MappingFragment StoreEntitySet="Titulo">
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tutor">
+            <EntityTypeMapping TypeName="ColegioModel.Tutor">
+              <MappingFragment StoreEntitySet="Tutor">
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Ocupacion" ColumnName="Ocupacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
