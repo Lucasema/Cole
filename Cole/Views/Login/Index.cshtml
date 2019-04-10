@@ -1,40 +1,57 @@
-﻿
+﻿@model Cole.Models.Persona
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Login/_LayoutLogin.cshtml";
+}
+
 <div class="mdl-grid">
-    
     <div class="mdl-layout-spacer">
-      
-        <figure class="front">
-            <div class="mdl-card mdl-shadow--6dp">
-                <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
-                    <h2 class="mdl-card__title-text">Simple Login</h2>
-                </div>
 
-                <div class="mdl-card__supporting-text">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" id="login" />
-                        <label class="mdl-textfield__label" for="login">Login</label>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <figure class="front">
+                <div class="mdl-card mdl-shadow--6dp">
+                    <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+                        <h2 class="mdl-card__title-text">Iniciar sesión</h2>
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="password" id="password" />
-                        <label class="mdl-textfield__label" for="password">Password</label>
+                    <div class="mdl-card__supporting-text">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            @if (ViewBag.error == null)
+                            {
+                                <div class="control-label col-md-2">
+                                    dni
+                                </div>
+                            }
+                            <div>
+                                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @Value = "dni uwu", @class = "mdl-textfield__input" } })
+                                
+                                <div style="color:red">
+                                    @Html.ValidationMessageFor(model => model.Dni, "", new { @class = "mdl-textfield__label" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            @Html.LabelFor(model => model.Contraseña, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div>
+                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                @Html.ValidationMessageFor(model => model.Contraseña, "", new { @class = "mdl-textfield__label" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <div class="mdl-grid">
+                            <input type="submit" value="Ingresar" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
+                        </div>
                     </div>
                 </div>
-
-                <div class="mdl-card__actions mdl-card--border">
-                    <div class="mdl-grid">
-                        <button class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-                            Login
-                        </button>
-
-                    </div>
-
-
-                </div>
-            </div>
-        </figure>
-
-
+            </figure>
+        }
     </div>
-
 </div>
-
