@@ -152,6 +152,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Models\Alumno.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
@@ -229,6 +230,7 @@
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Servicios\LoginServicio.cs" />
+    <Compile Include="Servicios\RolesColegio.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\MensajeDeError.css" />
@@ -300,6 +302,8 @@
     <Content Include="Views\Personas\Edit.cshtml" />
     <Content Include="Views\Personas\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Administrador\_LayoutAdministrador.cshtml" />
+    <Content Include="Views\Administrador\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
