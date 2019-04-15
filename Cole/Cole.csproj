@@ -233,7 +233,6 @@
     <Compile Include="Servicios\RolesColegio.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\MensajeDeError.css" />
     <Content Include="Models\ColegioModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ColegioModel.Context.cs</LastGenOutput>
@@ -275,7 +274,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\MensajeDeError.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Shared\material.min.js" />
     <Content Include="Views\Shared\styles.css" />
@@ -304,6 +302,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Administrador\_LayoutAdministrador.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
+    <Content Include="Views\Login\JAJA.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.Mvc;
 using Cole.Servicios;
+using System.Threading;
 
 namespace Cole.Controllers
 {
@@ -41,12 +42,20 @@ namespace Cole.Controllers
                 if (persona != null)
                 {
                     FormsAuthentication.SetAuthCookie(persona.Dni.ToString(), false);
+                    Session["UserName"] = persona.Dni.ToString();
+                    var identity = new System.Security.Principal.GenericIdentity(persona.Dni.ToString());
+                    var principal = new System.Security.Principal.GenericPrincipal(identity, new string[] { "Administrador"});
+               
+                    System.Web.HttpContext.Current.User = principal;
+                    Thread.CurrentPrincipal = principal;
+                    
 
                     //si es el administrador
                     if (LoginServicio.EsAdministrador(persona.Dni))
                     {
                         //retorna vista de dministrador
-                        return View();
+                        //return JAJA();
+                        return RedirectToAction("Index","Administrador");
                     }
                     else if (LoginServicio.EsAlumno(persona.Dni))
                     {
@@ -69,6 +78,13 @@ namespace Cole.Controllers
            
 
             
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult JAJA()
+        {
+            ViewBag.id = HttpContext.User.IsInRole("Administrador");
+            return View("JAJA");
         }
     }
 }

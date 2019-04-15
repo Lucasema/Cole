@@ -48,6 +48,7 @@ namespace Cole.Servicios
             else if (LoginServicio.EsProfesor(Int32.Parse(username)))
             {
                 return new string[] { "Alumno" };
+                
             }
             else
             {

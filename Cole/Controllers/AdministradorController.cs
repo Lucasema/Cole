@@ -9,10 +9,13 @@ namespace Cole.Controllers
     public class AdministradorController : Controller
     {
         // GET: Administrador
-        
-        [Authorize(Roles = "Administrador")]
+
+
         public ActionResult Index()
         {
+            HttpContext.User.IsInRole("Administrador");
+            bool a = HttpContext.User.Identity.IsAuthenticated;
+            string un = (String)Session["UserName"];
             return View();
         }
     }
