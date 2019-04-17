@@ -41,28 +41,23 @@ namespace Cole.Controllers
                 var persona = db.Persona.Where(x => x.Dni == p.Dni && x.Contraseña == p.Contraseña).First();
                 if (persona != null)
                 {
-                    FormsAuthentication.SetAuthCookie(persona.Dni.ToString(), false);
-                    Session["UserName"] = persona.Dni.ToString();
-                    var identity = new System.Security.Principal.GenericIdentity(persona.Dni.ToString());
-                    var principal = new System.Security.Principal.GenericPrincipal(identity, new string[] { "Administrador"});
+                    HttpContext.Session["IsAuthenticated"] = true;
                
-                    System.Web.HttpContext.Current.User = principal;
-                    Thread.CurrentPrincipal = principal;
-                    
-
                     //si es el administrador
                     if (LoginServicio.EsAdministrador(persona.Dni))
                     {
-                        //retorna vista de dministrador
-                        //return JAJA();
+                        HttpContext.Session["Role"] = "Administrador";
+                        
                         return RedirectToAction("Index","Administrador");
                     }
                     else if (LoginServicio.EsAlumno(persona.Dni))
                     {
+                        HttpContext.Session["Role"] = "Alumno";
                         return View();
                     }
                     else if (LoginServicio.EsProfesor(persona.Dni))
                     {
+                        HttpContext.Session["Role"] = "Profesor";
                         return View();
                     }
                 }
@@ -78,13 +73,6 @@ namespace Cole.Controllers
            
 
             
-        }
-
-        [Authorize(Roles = "Administrador")]
-        public ActionResult JAJA()
-        {
-            ViewBag.id = HttpContext.User.IsInRole("Administrador");
-            return View("JAJA");
         }
     }
 }

@@ -11,11 +11,9 @@ namespace Cole.Controllers
         // GET: Administrador
 
 
+            [Filters.Autorizar(Roles ="Administrador")]
         public ActionResult Index()
         {
-            HttpContext.User.IsInRole("Administrador");
-            bool a = HttpContext.User.Identity.IsAuthenticated;
-            string un = (String)Session["UserName"];
             return View();
         }
     }
