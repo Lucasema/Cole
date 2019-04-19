@@ -22,7 +22,12 @@ namespace Cole.Models
             this.Inasistencia = new HashSet<Inasistencia>();
             this.Paga = new HashSet<Paga>();
         }
-    
+
+
+
+
+        /*elementos propios del alumno*/
+
         public int Dni { get; set; }
         public Nullable<int> DniTutor { get; set; }
     
