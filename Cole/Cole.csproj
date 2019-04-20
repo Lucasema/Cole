@@ -232,6 +232,8 @@
     <Content Include="Content\css_layout_dissmisable_drawer.css" />
     <Content Include="Content\css_layout_dissmisable_drawer1.css" />
     <Content Include="Content\css_layout_dissmisable_drawer2.css" />
+    <Content Include="Content\Datepicker.js" />
+    <Content Include="Content\DatePickerStyle.css" />
     <Content Include="Content\Google classroom.png" />
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Models\ColegioModel.Context.tt">

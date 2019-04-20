@@ -22,11 +22,108 @@
     <!--
     <link rel="canonical" href="http://www.example.com/">
     -->
+
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-indigo.min.css" />
- 
+
+
     <style>
+        /*Bootstrap Calendar*/
+        .datepicker {
+            border-radius: 0;
+            padding: 0;
+        }
+
+        .datepicker-days table thead, .datepicker-days table tbody, .datepicker-days table tfoot {
+            padding: 10px;
+            display: list-item;
+        }
+
+        .datepicker-days table thead, .datepicker-months table thead, .datepicker-years table thead, .datepicker-decades table thead, .datepicker-centuries table thead {
+            background: #3546b3;
+            color: #ffffff;
+            border-radius: 0;
+        }
+
+            .datepicker-days table thead tr:nth-child(2n+0) td, .datepicker-days table thead tr:nth-child(2n+0) th {
+                border-radius: 3px;
+            }
+
+            .datepicker-days table thead tr:nth-child(3n+0) {
+                text-transform: uppercase;
+                font-weight: 300 !important;
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+        .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+            padding: 11px 13px;
+        }
+
+        .datepicker-months table thead td, .datepicker-months table thead th, .datepicker-years table thead td, .datepicker-years table thead th, .datepicker-decades table thead td, .datepicker-decades table thead th, .datepicker-centuries table thead td, .datepicker-centuries table thead th {
+            border-radius: 0;
+        }
+
+        .datepicker td, .datepicker th {
+            border-radius: 50%;
+            padding: 0 12px;
+        }
+
+        .datepicker-days table thead, .datepicker-months table thead, .datepicker-years table thead, .datepicker-decades table thead, .datepicker-centuries table thead {
+            background: #3546b3;
+            color: #ffffff;
+            border-radius: 0;
+        }
+
+        .datepicker table tr td.active, .datepicker table tr td.active:hover, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover {
+            background-image: none;
+        }
+
+        .datepicker .prev, .datepicker .next {
+            color: rgba(255, 255, 255, 0.5);
+            transition: 0.3s;
+            width: 37px;
+            height: 37px;
+        }
+
+            .datepicker .prev:hover, .datepicker .next:hover {
+                background: transparent;
+                color: rgba(255, 255, 255, 0.99);
+                font-size: 21px;
+            }
+
+        .datepicker .datepicker-switch {
+            font-size: 24px;
+            font-weight: 400;
+            transition: 0.3s;
+        }
+
+            .datepicker .datepicker-switch:hover {
+                color: rgba(255, 255, 255, 0.7);
+                background: transparent;
+            }
+
+        .datepicker table tr td span {
+            border-radius: 2px;
+            margin: 3%;
+            width: 27%;
+        }
+
+            .datepicker table tr td span.active, .datepicker table tr td span.active:hover, .datepicker table tr td span.active.disabled, .datepicker table tr td span.active.disabled:hover {
+                background-color: #3546b3;
+                background-image: none;
+            }
+
+        .dropdown-menu {
+            border: 1px solid rgba(0,0,0,.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        }
+
+        .datepicker-dropdown.datepicker-orient-top:before {
+            border-top: 7px solid rgba(0,0,0,.1);
+        }
 
         html, body {
             font-family: 'Roboto', 'Helvetica', sans-serif;
@@ -166,9 +263,9 @@
             align-items: stretch;
         }
         /* TODO: Find a proper solution to have the graphs
- * not float around outside their container in IE10/11.
- * Using a browserhacks.com solution for now.
- */
+        * not float around outside their container in IE10/11.
+        * Using a browserhacks.com solution for now.
+        */
         _:-ms-input-placeholder, :root .demo-graphs {
             min-height: 664px;
         }
@@ -266,6 +363,7 @@
             z-index: 900;
         }
     </style>
+
 </head>
 <body>
 
@@ -294,7 +392,7 @@
             </div>
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-            
+
             <header class="demo-drawer-header">
                 <h3>
                     Menu
@@ -302,7 +400,7 @@
                 <div class="demo-avatar-dropdown">
                     <span>39315821</span>
                     <div class="mdl-layout-spacer"></div>
-                    
+
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
                         <li class="mdl-menu__item">hello@example.com</li>
                         <li class="mdl-menu__item">info@example.com</li>
@@ -312,10 +410,10 @@
             </header>
             <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--white material-icons" role="presentation">school</i>Alumnos</a>
-                <a class="mdl-navigation__link" href=""><img src="~/Content/teacher-icon.png"  width="24" height="24" style="margin-right:26px;padding-left:4px;-webkit-filter:invert(%100);filter: invert(100%)"/>Profesores</a>
+                <a class="mdl-navigation__link" href=""><img src="~/Content/teacher-icon.png" width="24" height="24" style="margin-right:26px;padding-left:4px;-webkit-filter:invert(%100);filter: invert(100%)" />Profesores</a>
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--white material-icons" role="presentation">supervisor_account</i>Tutores</a>
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--white material-icons" role="presentation">class</i>Materias</a>
-                <a class="mdl-navigation__link" href=""><img src="~/Content/Google classroom.png" style="margin-right:32px;-webkit-filter:invert(%100);filter: invert(100%)"/>Cursos</a>
+                <a class="mdl-navigation__link" href=""><img src="~/Content/Google classroom.png" style="margin-right:32px;-webkit-filter:invert(%100);filter: invert(100%)" />Cursos</a>
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--white material-icons" role="presentation">attach_money</i>Cuotas</a>
                 <div class="mdl-layout-spacer"></div>
                 <a class="mdl-navigation__link" href=""><i class="mdl-color-text--white material-icons" role="presentation">exit_to_app</i>Salir</a>
@@ -324,8 +422,8 @@
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid demo-content">
                 @RenderBody()
-                
-            </div>              
+
+            </div>
         </main>
     </div>
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="position: fixed; left: -1000px; height: -1000px;">
@@ -376,7 +474,20 @@
         </defs>
     </svg>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems, options);
+            
+        });
+        $('.datepicker').pickadate({
 
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+
+        
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

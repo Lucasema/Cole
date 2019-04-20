@@ -10,10 +10,9 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Create</title>
+    
 </head>
 <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
     
     
     <div class="mdl-grid col-md-12">
@@ -31,30 +30,30 @@
                         
                         <div class="mdl-card__supporting-text" style="display:table-cell">
 
-                                
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px">
 
-                                    <div class="col-md-6">
-                                        @Html.EditorFor(model => model.Persona.Dni, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
-                                        <label class="mdl-textfield__label" for="Persona.Dni">
-                                            Dni
-                                        </label>
-                                        @Html.ValidationMessageFor(model => model.Persona.Dni, "", new { @class = "text-danger" })
-                                    </div>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px">
+
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Persona.Dni, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                    <label class="mdl-textfield__label" for="Persona.Dni">
+                                        Dni
+                                    </label>
+                                    @Html.ValidationMessageFor(model => model.Persona.Dni, "", new { @class = "text-danger" })
                                 </div>
+                            </div>
 
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 
-                                    <div class="col-md-6">
-                                        @Html.EditorFor(model => model.Tutor.Dni, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
-                                        <label class="mdl-textfield__label" for="DniTutor">
-                                            Dni del tutor
-                                        </label>
-                                        @Html.ValidationMessageFor(model => model.DniTutor, "", new { @class = "text-danger" })
-                                    </div>
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Tutor.Dni, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                    <label class="mdl-textfield__label" for="DniTutor">
+                                        Dni del tutor
+                                    </label>
+                                    @Html.ValidationMessageFor(model => model.DniTutor, "", new { @class = "text-danger" })
                                 </div>
+                            </div>
 
                             <div class="mdl-grid col-md-12">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -133,16 +132,28 @@
                                     </div>
                                 </div>
 
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Persona.Sexo, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
-                                        <label class="mdl-textfield__label" for="Persona.Sexo">
-                                            Sexo
-                                        </label>
-                                        @Html.ValidationMessageFor(model => model.Persona.Sexo, "", new { @class = "text-danger" })
+                                @*<div class="mdc-select">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Persona.Sexo, new { htmlAttributes = new { @class = "mdc-select__native-control" } })
+                    <label class="mdc-floating-label">Sexo</label>
+
+                    @Html.ValidationMessageFor(model => model.Persona.Sexo, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+                                <div class="col-md-10">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <select class="mdl-textfield__input" id="Persona.Sexo" name="Persona.Sexo">
+                                            <option></option>
+                                            <option value="h">Hombre</option>
+                                            <option value="m">Mujer</option>
+
+
+                                        </select>
+                                        <label class="mdl-textfield__label" for="Persona.Sexo">Sexo</label>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="mdl-grid col-md-12">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px">
                                     <div class="col-md-10">
@@ -164,7 +175,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mdl-grid col-md-12" >
+                            <div class="mdl-grid col-md-12">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.FechaNacimiento, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
@@ -175,14 +186,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input type="date" class="mdl-textfield__input" placeholder="please input something">
+                                <div class="mdc-text-field-helper-line" for="Persona.FechaNacimiento">
+                                    <div class="mdc-text-field-helper-text" aria-hidden="true">Fecha de Nacimiento</div>
+                                </div>
+
+                            </div>
 
 
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <div class="mdl-grid">
-                                        <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
-                                    </div>
+                            
+
+
+                            <div class="mdl-card__actions mdl-card--border">
+                                <div class="mdl-grid">
+                                    <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
                                 </div>
                             </div>
+                        </div>
 
 
                         </div>

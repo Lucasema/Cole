@@ -39,8 +39,6 @@ namespace Cole.Controllers
         // GET: Alumno/Create
         public ActionResult Create()
         {
-            ViewBag.Dni = new SelectList(db.Persona, "Dni", "Contraseña");
-            ViewBag.DniTutor = new SelectList(db.Tutor, "Dni", "Ocupacion");
             return View();
         }
 
@@ -53,14 +51,19 @@ namespace Cole.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 db.Persona.Add(alumno.Persona);
+
                 db.Tutor.Add(alumno.Tutor);
 
                 alumno.Dni = alumno.Persona.Dni;
+
                 alumno.DniTutor = alumno.Tutor.Dni;
 
                 db.Alumno.Add(alumno);
+
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
