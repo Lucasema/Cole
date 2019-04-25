@@ -164,8 +164,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mdl-grid col-md-12" >
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            
+                            <div class="mdl-grid col-md-12">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.FechaNacimiento, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
                                         <label class="mdl-textfield__label" for="Persona.FechaNacimiento">
@@ -174,7 +175,10 @@
                                         @Html.ValidationMessageFor(model => model.Persona.FechaNacimiento, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+                                <div class="col-md-12" id="contenedor">
+                                </div>
                             </div>
+
 
 
                                 <div class="mdl-card__actions mdl-card--border">

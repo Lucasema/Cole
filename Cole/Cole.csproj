@@ -234,6 +234,8 @@
     <Content Include="Content\css_layout_dissmisable_drawer2.css" />
     <Content Include="Content\Google classroom.png" />
     <Content Include="Content\teacher-icon.png" />
+    <Content Include="Content\window-date-picker.css" />
+    <Content Include="Content\window-date-picker.js" />
     <Content Include="Models\ColegioModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ColegioModel.Context.cs</LastGenOutput>
