@@ -45,7 +45,7 @@
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             
                             <div>
-                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "mdl-textfield__input", @Type="password" } })
                                 @if (ViewBag.errorContraseña == null)
                                 {
                                     <label class="mdl-textfield__label" for="Contraseña">
