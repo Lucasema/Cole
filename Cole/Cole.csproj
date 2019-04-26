@@ -235,6 +235,8 @@
     <Content Include="Content\Datepicker.js" />
     <Content Include="Content\DatePickerStyle.css" />
     <Content Include="Content\Google classroom.png" />
+    <Content Include="Content\mdc.select.css" />
+    <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />

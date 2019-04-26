@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-indigo.min.css" />
-
+    <link href="~/Content/mdc.select.css" rel="stylesheet" />
     <link href="~/Content/window-date-picker.css" rel="stylesheet" />
     <style>
 
@@ -374,8 +374,8 @@
     </svg>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="~/Content/window-date-picker.js"></script>
+    <script src="~/Content/mdc.select.js"></script>
     <script>
-
 
         WindowDatePicker.createLanguage('es', {
             DAYS_ABBR: ['', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'],
@@ -395,9 +395,14 @@
         });
 
         picker.el.addEventListener('wdp.change', () => {
-        document.getElementById("Persona_FechaNacimiento").parentElement.parentElement.classList.add("is-dirty");
+            document.getElementById("Persona_FechaNacimiento").parentElement.parentElement.classList.add("is-dirty");
         });
+        
+
+        const select = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+
     </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
