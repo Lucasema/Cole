@@ -276,12 +276,12 @@
                 <span class="mdl-layout-title">Colegio San Agustín</span>
                 <div class="mdl-layout-spacer"></div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                        <i class="material-icons">search</i>
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search1">
+                        <i class="material-icons">search1</i>
                     </label>
                     <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" id="search">
-                        <label class="mdl-textfield__label" for="search">Enter your query...</label>
+                        <input class="mdl-textfield__input" type="text" id="search1">
+                        <label class="mdl-textfield__label" for="search1">Enter your query...</label>
                     </div>
                 </div>
                 <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
@@ -377,6 +377,8 @@
     <script src="~/Content/mdc.select.js"></script>
     <script>
 
+        const select = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+
         WindowDatePicker.createLanguage('es', {
             DAYS_ABBR: ['', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'],
             MONTHS: ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -399,7 +401,7 @@
         });
         
 
-        const select = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+        
 
     </script>
 
