@@ -8,13 +8,13 @@
 
 
                 <h2 class="mdl-cell--12-col">Listado personas</h2>
-                <div class="mdl-cell--12-col">
+                <div class="mdl-cell--12-col" style="display:contents">
 
-                    <form method="post" action="Index">
+                    <form method="post" action="Index" class="mdl-cell--10-col">
 
                         <div class="mdc-select">
                             <i class="mdc-select__dropdown-icon"></i>
-                            <select id="buscarPor" class="mdc-select__native-control" style="height:46px" name="buscarPor">
+                            <select id="buscarPor" class="mdc-select__native-control" style="height:45px" name="buscarPor">
                                 <option value="dni">dni</option>
                                 <option value="apellido">Apellido</option>
                             </select>
@@ -35,14 +35,16 @@
                         </button>
 
                     </form>
-
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="float:right;margin-top:12px">
+                    <div class="mdl-cell--2-col">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px">
 
                         @Html.ActionLink("Crear nuevo", "Create", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: null)
                     </button>
+                    </div>
 
 
                 </div>
+    <br />
 
                 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col">
                     <thead>
@@ -79,8 +81,16 @@
 
 
                     <tbody>
-                        @foreach (var item in Model)
+                        @if (Model == null)
                         {
+                            <tr>
+                                <td colspan="8" style="color:red">No se han encontrado coincidencias</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Dni)
@@ -115,8 +125,8 @@
                                     @Html.ActionLink("Delete", "Delete", new { id = item.Dni })
                                 </td>
                             </tr>
+                            }
                         }
-                        
                     </tbody>
                 </table>
             </div>

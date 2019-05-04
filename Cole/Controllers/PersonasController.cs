@@ -142,26 +142,28 @@ namespace Cole.Controllers
         public ActionResult Index(String buscarPor, String valor)
         {
             List<Persona> lista;
-
-            if (buscarPor == "dni")
-            {
-                 lista = db.Database.SqlQuery<Persona>(
-                    "Select * " +
-                    "From Persona " +
-                    "Where Persona.Dni= @p0 ", Int32.Parse(valor)
-                    ).ToList<Persona>();
+            if (valor != null) { 
+                if (buscarPor == "dni")
+                {
+                   lista = db.Database.SqlQuery<Persona>(
+                        "Select * " +
+                        "From Persona " +
+                        "Where Persona.Dni= @p0 ", Int32.Parse(valor)
+                        ).ToList<Persona>();
                 
+                }
+                else
+                {
+                    lista = db.Database.SqlQuery<Persona>(
+                        "Select * " +
+                        "From Persona " +
+                        "Where Persona.Apellido= @p0 ", valor
+                        ).ToList<Persona>();
+                }
+                return View(lista);
             }
-            else
-            {
-                lista = db.Database.SqlQuery<Persona>(
-                    "Select * " +
-                    "From Persona " +
-                    "Where Persona.Apellido= @p0 ", valor
-                    ).ToList<Persona>();
-            }
-            
-            return View(lista);
+
+            return Index();
         }
     }
 }
