@@ -7,126 +7,126 @@
 <div class="mdl-grid">
 
 
-                <h2 class="mdl-cell--12-col">Listado personas</h2>
-                <div class="mdl-cell--12-col" style="display:contents">
+    <h2 class="mdl-cell--12-col">Listado personas</h2>
+    <div class="mdl-cell--12-col" style="display:contents">
 
-                    <form method="post" action="Index" class="mdl-cell--10-col">
+        <form method="post" action="Index" class="mdl-cell--10-col">
 
-                        <div class="mdc-select">
-                            <i class="mdc-select__dropdown-icon"></i>
-                            <select id="buscarPor" class="mdc-select__native-control" style="height:45px" name="buscarPor">
-                                <option value="dni">dni</option>
-                                <option value="apellido">Apellido</option>
-                            </select>
-                            <label for="SearchBy" class="mdc-floating-label">Buscar por</label>
-                            <div class="mdc-line-ripple"></div>
-                        </div>
-                        
-
-                        <div class="mdl-textfield mdl-js-textfield"  style="width:150px">
-                            <input class="mdl-textfield__input text-box single-line" id="valor" name="valor">
-                            <label class="mdl-textfield__label">
-                            </label>
-                        </div>
-
-
-                        <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
-                            <i class="material-icons">search</i>
-                        </button>
-
-                    </form>
-                    <div class="mdl-cell--2-col">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px">
-
-                        @Html.ActionLink("Crear nuevo", "Create", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: null)
-                    </button>
-                    </div>
-
-
-                </div>
-    <br />
-
-                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col">
-                    <thead>
-                        <tr>
-                            <th>
-                                D.N.I.
-                            </th>
-
-                            <th>
-                                Nombre
-                            </th>
-
-                            <th>
-                                Apellido
-                            </th>
-
-                            <th>
-                                Teléfono celular
-                            </th>
-                            <th>
-                                Teléfono fijo
-                            </th>
-
-                            <th>
-                                Domicilio
-                            </th>
-                            <th>
-                                Nacionalidad
-                            </th>
-
-                            <th></th>
-                        </tr>
-                    </thead>
-
-
-                    <tbody>
-                        @if (Model == null)
-                        {
-                            <tr>
-                                <td colspan="8" style="color:red">No se han encontrado coincidencias</td>
-                            </tr>
-                        }
-                        else
-                        {
-                            foreach (var item in Model)
-                            {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Dni)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Apellido)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TelCelular)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TelFijo)
-                                </td>
-
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Domicilio)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nacionalidad)
-                                </td>
-
-
-
-
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Dni }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Dni }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Dni })
-                                </td>
-                            </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
+            <div class="mdc-select">
+                <i class="mdc-select__dropdown-icon"></i>
+                <select id="buscarPor" class="mdc-select__native-control" style="height:45px" name="buscarPor">
+                    <option value="dni">dni</option>
+                    <option value="apellido">Apellido</option>
+                </select>
+                <label for="SearchBy" class="mdc-floating-label">Buscar por</label>
+                <div class="mdc-line-ripple"></div>
             </div>
+
+
+            <div class="mdl-textfield mdl-js-textfield" style="width:150px">
+                <input class="mdl-textfield__input text-box single-line" id="valor" name="valor">
+                <label class="mdl-textfield__label">
+                </label>
+            </div>
+
+
+            <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
+                <i class="material-icons">search</i>
+            </button>
+
+        </form>
+        <div class="mdl-cell--2-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px">
+
+                @Html.ActionLink("Crear nuevo", "Create", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: null)
+            </button>
+        </div>
+
+
+    </div>
+    <br />
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col">
+            <thead>
+                <tr>
+                    <th>
+                        D.N.I.
+                    </th>
+
+                    <th>
+                        Nombre
+                    </th>
+
+                    <th>
+                        Apellido
+                    </th>
+
+                    <th>
+                        Teléfono celular
+                    </th>
+                    <th>
+                        Teléfono fijo
+                    </th>
+
+                    <th>
+                        Domicilio
+                    </th>
+                    <th>
+                        Nacionalidad
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="8" style="color:red;text-align:center">No se han encontrado coincidencias</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dni)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Apellido)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TelCelular)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TelFijo)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Domicilio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nacionalidad)
+                            </td>
+
+
+
+
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.Dni }) |
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Dni }) |
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.Dni })
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        
+    </div>

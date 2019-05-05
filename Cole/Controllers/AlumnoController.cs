@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cole.Models;
-
+using Cole.Servicios;
 namespace Cole.Controllers
 {
     public class AlumnoController : Controller
@@ -18,8 +18,22 @@ namespace Cole.Controllers
         public ActionResult Index()
         {
             var alumno = db.Alumno.Include(a => a.Persona).Include(a => a.Tutor);
+            
             return View(alumno.ToList());
         }
+
+        [HttpPost]
+        public ActionResult Index(string campo, string valor)
+        {
+            if (valor != "")
+            {
+                List<Alumno> alumnos = AlumnoServicio.Buscar(campo, valor);
+                return View(alumnos);
+            }
+            return Index();
+        }
+
+
 
         // GET: Alumno/Details/5
         public ActionResult Details(int? id)

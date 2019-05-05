@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Cole.Models;
 
+
 namespace Cole.Controllers
 {
     public class PersonasController : Controller
@@ -142,7 +143,8 @@ namespace Cole.Controllers
         public ActionResult Index(String buscarPor, String valor)
         {
             List<Persona> lista;
-            if (valor != null) { 
+            if (valor != null && valor != "") { 
+
                 if (buscarPor == "dni")
                 {
                    lista = db.Database.SqlQuery<Persona>(
@@ -159,8 +161,12 @@ namespace Cole.Controllers
                         "From Persona " +
                         "Where Persona.Apellido= @p0 ", valor
                         ).ToList<Persona>();
+
+                   
                 }
                 return View(lista);
+
+
             }
 
             return Index();

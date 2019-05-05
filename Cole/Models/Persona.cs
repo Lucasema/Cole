@@ -11,6 +11,7 @@ namespace Cole.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Persona
     {
@@ -21,7 +22,8 @@ namespace Cole.Models
             this.Mensaje = new HashSet<Mensaje>();
             this.Mensaje1 = new HashSet<Mensaje>();
         }
-    
+        
+        [Range(0, 2147483646, ErrorMessage = "El campo {0} debe ser un numero entre")]
         public int Dni { get; set; }
         public Nullable<int> Cuil { get; set; }
         public Nullable<int> TelCelular { get; set; }
