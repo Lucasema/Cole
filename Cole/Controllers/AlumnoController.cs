@@ -68,11 +68,17 @@ namespace Cole.Controllers
 
                 db.Persona.Add(alumno.Persona);
 
+                Persona tutor = new Persona();
+                tutor.Dni = alumno.Tutor.Dni;
+                db.Persona.Add(tutor);
+
                 db.Tutor.Add(alumno.Tutor);
 
                 alumno.Dni = alumno.Persona.Dni;
 
                 alumno.DniTutor = alumno.Tutor.Dni;
+
+                alumno.Persona.Contraseña = alumno.Dni.ToString();
 
                 db.Alumno.Add(alumno);
 

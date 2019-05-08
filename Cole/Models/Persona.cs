@@ -12,6 +12,7 @@ namespace Cole.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Cole.Servicios;
     
     public partial class Persona
     {
@@ -23,17 +24,38 @@ namespace Cole.Models
             this.Mensaje1 = new HashSet<Mensaje>();
         }
         
-        [Range(0, 2147483646, ErrorMessage = "El campo {0} debe ser un numero entre")]
+        [Range(0, 2147483646, ErrorMessage = "D.N.I. inválido.")]
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [Display(Name ="D.N.I.")]
         public int Dni { get; set; }
-        public Nullable<int> Cuil { get; set; }
+
+        [StringLength(13, ErrorMessage = "El campo no debe superar los 13 caracteres.")]
+        public string Cuil { get; set; }
+
+        
         public Nullable<int> TelCelular { get; set; }
         public Nullable<int> TelFijo { get; set; }
         public string Contraseña { get; set; }
         public string Sexo { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(100, ErrorMessage = "El campo no debe superar los 100 caracteres.")]
         public string Domicilio { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(32, ErrorMessage = "El campo no debe superar los 32 caracteres.")]
         public string Nacionalidad { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(20, ErrorMessage = "El campo no debe superar los 20 caracteres.")]
         public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(20, ErrorMessage = "El campo no debe superar los 20 caracteres.")]
         public string Apellido { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [CurrentDate(ErrorMessage = "Fecha inválida.")]
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
     
         public virtual Alumno Alumno { get; set; }

@@ -229,6 +229,7 @@
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Servicios\AlumnoServicio.cs" />
+    <Compile Include="Servicios\CurrentDateAttribute.cs" />
     <Compile Include="Servicios\LoginServicio.cs" />
     <Compile Include="Servicios\RolesColegio.cs" />
   </ItemGroup>
@@ -242,6 +243,7 @@
     <Content Include="Content\mdc.select.css" />
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
+    <Content Include="Content\ValidacionesCrearAlumno.js" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />
     <Content Include="Models\ColegioModel.Context.tt">

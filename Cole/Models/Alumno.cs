@@ -29,7 +29,7 @@ namespace Cole.Models
 
         /*elementos propios del alumno*/
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Range(0, 99999999, ErrorMessage = "El campo {0} debe ser un numero entre {1} y {2}")]
+        [Range(0, 999999999, ErrorMessage = "El campo {0} debe ser un numero entre {1} y {2}")]
         public int Dni { get; set; }
         public Nullable<int> DniTutor { get; set; }
     
