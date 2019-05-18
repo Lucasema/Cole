@@ -65,15 +65,7 @@ namespace Cole.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                db.Persona.Add(alumno.Persona);
-
-                Persona tutor = new Persona();
-                tutor.Dni = alumno.Tutor.Dni;
-                db.Persona.Add(tutor);
-
-                db.Tutor.Add(alumno.Tutor);
-
+                
                 alumno.Dni = alumno.Persona.Dni;
 
                 alumno.DniTutor = alumno.Tutor.Dni;
@@ -104,8 +96,7 @@ namespace Cole.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Dni = new SelectList(db.Persona, "Dni", "Contraseña", alumno.Dni);
-            ViewBag.DniTutor = new SelectList(db.Tutor, "Dni", "Ocupacion", alumno.DniTutor);
+
             return View(alumno);
         }
 
@@ -114,16 +105,21 @@ namespace Cole.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Dni,DniTutor")] Alumno alumno)
+        public ActionResult Edit(Alumno alumno)
         {
+            alumno.Dni = alumno.Persona.Dni;
+            alumno.DniTutor = alumno.Tutor.Dni;
+            
+            //hay que tener en cuenta que el tutor se puede cambiar!
+
             if (ModelState.IsValid)
             {
                 db.Entry(alumno).State = EntityState.Modified;
+                db.Entry(alumno.Persona).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Dni = new SelectList(db.Persona, "Dni", "Contraseña", alumno.Dni);
-            ViewBag.DniTutor = new SelectList(db.Tutor, "Dni", "Ocupacion", alumno.DniTutor);
+
             return View(alumno);
         }
 
@@ -149,6 +145,7 @@ namespace Cole.Controllers
         {
             Alumno alumno = db.Alumno.Find(id);
             db.Alumno.Remove(alumno);
+            db.Persona.Remove(alumno.Persona);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

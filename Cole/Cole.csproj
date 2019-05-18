@@ -153,12 +153,17 @@
     <Compile Include="Controllers\AlumnoController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Filters\Autorizar.cs" />
-    <Compile Include="Models\Alumno.cs">
-      <DependentUpon>ColegioModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Alumno.cs">
+      <DependentUpon>ColegioModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Asiste.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
@@ -180,8 +185,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ColegioModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Models\Cuota.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
@@ -193,9 +196,6 @@
     </Compile>
     <Compile Include="Models\Evaluacion.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Inasistencia.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
@@ -218,7 +218,6 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Publicacion.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
@@ -228,6 +227,7 @@
     <Compile Include="Models\Tutor.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\AlumnoServicio.cs" />
     <Compile Include="Servicios\CurrentDateAttribute.cs" />
     <Compile Include="Servicios\LoginServicio.cs" />
@@ -240,22 +240,13 @@
     <Content Include="Content\Datepicker.js" />
     <Content Include="Content\DatePickerStyle.css" />
     <Content Include="Content\Google classroom.png" />
+    <Content Include="Content\InstanciadorDatepicker.js" />
     <Content Include="Content\mdc.select.css" />
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />
-    <Content Include="Models\ColegioModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ColegioModel.Context.cs</LastGenOutput>
-      <DependentUpon>ColegioModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\ColegioModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ColegioModel.edmx</DependentUpon>
-      <LastGenOutput>ColegioModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -265,6 +256,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\ColegioModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ColegioModel.edmx</DependentUpon>
+      <LastGenOutput>ColegioModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ColegioModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ColegioModel.edmx</DependentUpon>
+      <LastGenOutput>ColegioModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

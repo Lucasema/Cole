@@ -127,12 +127,12 @@
             <PropertyRef Name="Dni" />
           </Key>
           <Property Name="Dni" Type="int" Nullable="false" />
-          <Property Name="Cuil" Type="int" />
+          <Property Name="Cuil" Type="varchar" MaxLength="13" />
           <Property Name="TelCelular" Type="int" />
           <Property Name="TelFijo" Type="int" />
           <Property Name="Contraseña" Type="varchar" MaxLength="32" />
           <Property Name="Sexo" Type="char" MaxLength="1" />
-          <Property Name="Domicilio" Type="varchar" MaxLength="50" />
+          <Property Name="Domicilio" Type="varchar" MaxLength="100" />
           <Property Name="Nacionalidad" Type="varchar" MaxLength="32" />
           <Property Name="Nombre" Type="varchar" MaxLength="20" />
           <Property Name="Apellido" Type="varchar" MaxLength="20" />
@@ -669,12 +669,12 @@
             <PropertyRef Name="Dni" />
           </Key>
           <Property Name="Dni" Type="Int32" Nullable="false" />
-          <Property Name="Cuil" Type="Int32" />
+          <Property Name="Cuil" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="TelCelular" Type="Int32" />
           <Property Name="TelFijo" Type="Int32" />
           <Property Name="Contraseña" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Domicilio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Domicilio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Nacionalidad" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Apellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
