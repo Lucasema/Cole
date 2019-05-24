@@ -17,6 +17,8 @@ namespace Cole.Servicios
 
             if (campo == "dni")
             {
+                // en este caso, se podria encontrar erroneamente una cadena de caracteres y seria incorrecto
+
                 int dni = Int32.Parse(valor);
                 var queryAlumnos = db.Alumno.Include(a => a.Persona).Include(a => a.Tutor).Where(x => x.Dni == dni);
 

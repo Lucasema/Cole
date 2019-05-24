@@ -152,6 +152,7 @@
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
+    <Compile Include="Controllers\ProfesorsController.cs" />
     <Compile Include="Filters\Autorizar.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Servicios\AlumnoServicio.cs" />
     <Compile Include="Servicios\CurrentDateAttribute.cs" />
     <Compile Include="Servicios\LoginServicio.cs" />
+    <Compile Include="Servicios\ProfesorServicio.cs" />
     <Compile Include="Servicios\RolesColegio.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,10 +243,13 @@
     <Content Include="Content\DatePickerStyle.css" />
     <Content Include="Content\Google classroom.png" />
     <Content Include="Content\InstanciadorDatepicker.js" />
+    <Content Include="Content\mdc.chips.css" />
+    <Content Include="Content\mdc.chips.js" />
     <Content Include="Content\mdc.select.css" />
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
+    <Content Include="Content\ValidacionesCrearProfesor.js" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -321,6 +326,11 @@
     <Content Include="Views\Alumno\Details.cshtml" />
     <Content Include="Views\Alumno\Edit.cshtml" />
     <Content Include="Views\Alumno\Index.cshtml" />
+    <Content Include="Views\Profesors\Create.cshtml" />
+    <Content Include="Views\Profesors\Delete.cshtml" />
+    <Content Include="Views\Profesors\Details.cshtml" />
+    <Content Include="Views\Profesors\Edit.cshtml" />
+    <Content Include="Views\Profesors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

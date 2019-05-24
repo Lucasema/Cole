@@ -8,18 +8,18 @@ using System.Web;
 using System.Web.Mvc;
 using Cole.Models;
 using Cole.Servicios;
+
 namespace Cole.Controllers
 {
-    public class AlumnoController : Controller
+    public class ProfesorsController : Controller
     {
         private ColegioEntities db = new ColegioEntities();
 
-        // GET: Alumno
+        // GET: Profesors
         public ActionResult Index()
         {
-            var alumno = db.Alumno.Include(a => a.Persona).Include(a => a.Tutor);
-            
-            return View(alumno.ToList());
+            var profesor = db.Profesor.Include(p => p.Persona);
+            return View(profesor.ToList());
         }
 
         [HttpPost]
@@ -27,128 +27,126 @@ namespace Cole.Controllers
         {
             if (valor != "")
             {
-                List<Alumno> alumnos = AlumnoServicio.Buscar(campo, valor);
-                return View(alumnos);
+                List<Profesor> profesores = ProfesorServicio.Buscar(campo, valor);
+                return View(profesores);
             }
             return Index();
         }
 
-
-
-        // GET: Alumno/Details/5
+        // GET: Profesors/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Alumno alumno = db.Alumno.Find(id);
-            if (alumno == null)
+            Profesor profesor = db.Profesor.Find(id);
+            if (profesor == null)
             {
                 return HttpNotFound();
             }
-            return View(alumno);
+            return View(profesor);
         }
 
-        // GET: Alumno/Create
+        // GET: Profesors/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Alumno/Create
+        // POST: Profesors/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Alumno alumno)
+        public ActionResult Create( Profesor profesor)
         {
+            foreach(Titulo item in profesor.Titulo)
+            {
+                item.Dni = profesor.Persona.Dni;
+            }
+
             if (ModelState.IsValid)
             {
-                
-                alumno.Dni = alumno.Persona.Dni;
+                profesor.Dni = profesor.Persona.Dni;
 
-                alumno.DniTutor = alumno.Tutor.Dni;
-
-                alumno.Persona.Contraseña = alumno.Dni.ToString();
-
-                db.Alumno.Add(alumno);
-
+                db.Profesor.Add(profesor);
+                //DbUpdateException si ya existe una persona en la base de datos con ese dni
                 db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Dni = new SelectList(db.Persona, "Dni", "Contraseña", alumno.Dni);
-            ViewBag.DniTutor = new SelectList(db.Tutor, "Dni", "Ocupacion", alumno.DniTutor);
-            return View(alumno);
+            ViewBag.Dni = new SelectList(db.Persona, "Dni", "Cuil", profesor.Dni);
+            return View(profesor);
         }
 
-        // GET: Alumno/Edit/5
+        // GET: Profesors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Alumno alumno = db.Alumno.Find(id);
-            if (alumno == null)
+            Profesor profesor = db.Profesor.Include(p => p.Titulo).Where(p => p.Dni == id).First<Profesor>();
+
+            if (profesor == null)
             {
                 return HttpNotFound();
             }
 
-            return View(alumno);
+
+            return View(profesor);
         }
 
-        // POST: Alumno/Edit/5
+        // POST: Profesors/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Alumno alumno)
+        public ActionResult Edit( Profesor profesor)
         {
-            alumno.Dni = alumno.Persona.Dni;
-            alumno.DniTutor = alumno.Tutor.Dni;
-            
-            //hay que tener en cuenta que el tutor se puede cambiar!
-
+            profesor.Dni = profesor.Persona.Dni;
             if (ModelState.IsValid)
             {
-                db.Entry(alumno).State = EntityState.Modified;
-                db.Entry(alumno.Persona).State = EntityState.Modified;
+                db.Entry(profesor).State = EntityState.Modified;
+                db.Entry(profesor.Persona).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(alumno);
+            return View(profesor);
         }
 
-        // GET: Alumno/Delete/5
+        // GET: Profesors/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            Alumno alumno = db.Alumno.Find(id);
-
-            if (alumno == null)
+            Profesor profesor = db.Profesor.Find(id);
+            if (profesor == null)
             {
                 return HttpNotFound();
             }
-            return View(alumno);
+            return View(profesor);
         }
 
-        // POST: Alumno/Delete/5
+        // POST: Profesors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Alumno alumno = db.Alumno.Find(id);
+            Profesor profesor = db.Profesor.Find(id);
             Persona p = db.Persona.Find(id);
+            List<Titulo> titulos = db.Titulo.Where(t => t.Dni == profesor.Dni).ToList<Titulo>();
 
-            db.Alumno.Remove(alumno);
+            foreach(Titulo t in titulos)
+            {
+                db.Titulo.Remove(t);
+            }
+
+            db.Profesor.Remove(profesor);
             db.Persona.Remove(p);
             db.SaveChanges();
             return RedirectToAction("Index");

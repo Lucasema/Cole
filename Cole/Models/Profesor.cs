@@ -23,6 +23,8 @@ namespace Cole.Models
         }
     
         public int Dni { get; set; }
+
+        public List<Titulo> Titulos { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Califica> Califica { get; set; }
