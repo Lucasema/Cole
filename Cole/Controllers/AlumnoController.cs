@@ -75,13 +75,13 @@ namespace Cole.Controllers
 
                 Persona p = new Persona();
                 p.Dni = alumno.Tutor.Dni;
-                p.Apellido = "default";
-                p.Nombre = "default";
+                p.Apellido = "-";
+                p.Nombre = "-";
                 p.FechaNacimiento = DateTime.MinValue;
-                p.Cuil = "default";
-                p.Domicilio = "default";
-                p.Nacionalidad = "default";
-                p.Sexo = "h";
+                p.Cuil = "-";
+                p.Domicilio = "-";
+                p.Nacionalidad = "-";
+                p.Sexo = "-";
                 p.TelCelular = 0;
                 p.TelFijo = 0;
                 p.Contraseña = alumno.DniTutor.ToString();
@@ -121,29 +121,6 @@ namespace Cole.Controllers
                     throw e;
                 }
 
-                
-
-                //try
-                //{
-                    
-                //}
-                //catch(DbUpdateException e)
-                //{
-
-                //    object[] parametros = { alumno.Persona.Dni, alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento };
-                    
-                //    db.Database.ExecuteSqlCommand("INSERT INTO Persona (Dni, Cuil, TelCelular, TelFijo, Contraseña, Sexo, Domicilio, Nacionalidad, Nombre, Apellido, FechaNacimiento)" +
-                //        " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)", alumno.Persona.Dni.ToString(), alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento);
-
-                //    db.Database.ExecuteSqlCommand("INSERT INTO Alumno (Dni, DniTutor)" +
-                //        " VALUES (@p0, @p1)", alumno.Dni, alumno.DniTutor);
-
-
-                //}
-
-
-
-
                 return RedirectToAction("Index");
             }
 
@@ -159,7 +136,7 @@ namespace Cole.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Alumno alumno = db.Alumno.Find(id);
+            Alumno alumno = db.Alumno.Find(id);                                     
             if (alumno == null)
             {
                 return HttpNotFound();
@@ -180,10 +157,13 @@ namespace Cole.Controllers
             
             //hay que tener en cuenta que el tutor se puede cambiar!
 
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(alumno).State = EntityState.Modified;
                 db.Entry(alumno.Persona).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
