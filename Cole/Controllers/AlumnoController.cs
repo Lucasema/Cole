@@ -73,20 +73,33 @@ namespace Cole.Controllers
 
                 alumno.Persona.Contraseña = alumno.Dni.ToString();
 
-                alumno.Tutor.Persona = new Persona();
+                Persona p = new Persona();
+                p.Dni = alumno.Tutor.Dni;
+                p.Apellido = "default";
+                p.Nombre = "default";
+                p.FechaNacimiento = DateTime.MinValue;
+                p.Cuil = "default";
+                p.Domicilio = "default";
+                p.Nacionalidad = "default";
+                p.Sexo = "h";
+                p.TelCelular = 0;
+                p.TelFijo = 0;
+                p.Contraseña = alumno.DniTutor.ToString();
 
-                alumno.Tutor.Persona.Dni = (int)alumno.DniTutor;
+                alumno.Tutor.Persona = p;
 
-                
+
+
                 try
                 {
                     db.Alumno.Add(alumno);
                     db.SaveChanges();
                 }
-                catch(DbUpdateException e)
+                catch (DbUpdateException e)
                 {
+                    Persona result = db.Database.SqlQuery<Persona>("SELECT * FROM Persona WHERE Persona.Dni = @p0", parameters: alumno.Dni).FirstOrDefault();
 
-                    if(db.Persona.Find(alumno.Dni) != null)
+                    if ( result != null)
                     {
                         ViewBag.keyDuplicadaAlumno = "Ya existe una persona con ese D.N.I.";
                         return View(alumno);
@@ -102,7 +115,7 @@ namespace Cole.Controllers
                         db.Database.ExecuteSqlCommand("INSERT INTO Alumno (Dni, DniTutor)" +
                             " VALUES (@p0, @p1)", alumno.Dni, alumno.DniTutor);
 
-                        return View("index");
+                        return Index();
                     }
 
                     throw e;
