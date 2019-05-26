@@ -11,7 +11,8 @@ namespace Cole.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Profesor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,9 @@ namespace Cole.Models
             this.Inasistencia = new HashSet<Inasistencia>();
             this.Titulo = new HashSet<Titulo>();
         }
-    
+
+
+        [Key]
         public int Dni { get; set; }
 
         public List<Titulo> Titulos { get; set; }

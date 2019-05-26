@@ -48,14 +48,6 @@ if (document.getElementById("errorTel").innerHTML.toString() != "") {
     textfield.classList.add("is-dirty");
 }
 
-if (document.getElementById("errorContraseña").innerHTML.toString() != "") {
-
-    var textfield = document.getElementById("contraseña");
-
-    textfield.classList.add("is-invalid");
-    textfield.classList.add("is-dirty");
-}
-
 if (document.getElementById("errorDomicilio").innerHTML.toString() != "") {
 
     var textfield = document.getElementById("domicilio");
@@ -80,3 +72,10 @@ if (document.getElementById("errorFechaNacimiento").innerHTML.toString() != "") 
     textfield.classList.add("is-dirty");
 }
 
+if (document.getElementById("errorNacionalidad").innerHTML.toString() != "") {
+
+    var textfield = document.getElementById("nacionalidad");
+
+    textfield.classList.add("is-invalid");
+    textfield.classList.add("is-dirty");
+}

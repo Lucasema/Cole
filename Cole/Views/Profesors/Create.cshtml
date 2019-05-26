@@ -38,6 +38,10 @@
                                             D.N.I.
                                         </label>
                                         <span class="mdl-textfield__error">
+                                            @if(ViewBag.KeyDuplicada != null)
+                                            {
+                                                <span id="errorDni">@ViewBag.KeyDuplicada</span>
+                                            }
                                             @Html.ValidationMessageFor(model => model.Persona.Dni, "", new { @id = "errorDni" })
                                         </span>
                                     </div>
@@ -204,6 +208,8 @@
 
 
                             <script>
+
+                                //evitar que se ingresen dos titulos con el mismo valor
 
                                 var tit = document.getElementById("titulos");
 

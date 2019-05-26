@@ -234,6 +234,7 @@
     <Compile Include="Servicios\LoginServicio.cs" />
     <Compile Include="Servicios\ProfesorServicio.cs" />
     <Compile Include="Servicios\RolesColegio.cs" />
+    <Compile Include="Servicios\TutorsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css_layout_dissmisable_drawer.css" />
@@ -331,6 +332,11 @@
     <Content Include="Views\Profesors\Details.cshtml" />
     <Content Include="Views\Profesors\Edit.cshtml" />
     <Content Include="Views\Profesors\Index.cshtml" />
+    <Content Include="Views\Tutors\Create.cshtml" />
+    <Content Include="Views\Tutors\Delete.cshtml" />
+    <Content Include="Views\Tutors\Details.cshtml" />
+    <Content Include="Views\Tutors\Edit.cshtml" />
+    <Content Include="Views\Tutors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

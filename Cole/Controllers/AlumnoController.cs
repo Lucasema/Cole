@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -72,9 +73,63 @@ namespace Cole.Controllers
 
                 alumno.Persona.Contraseña = alumno.Dni.ToString();
 
-                db.Alumno.Add(alumno);
+                alumno.Tutor.Persona = new Persona();
 
-                db.SaveChanges();
+                alumno.Tutor.Persona.Dni = (int)alumno.DniTutor;
+
+                
+                try
+                {
+                    db.Alumno.Add(alumno);
+                    db.SaveChanges();
+                }
+                catch(DbUpdateException e)
+                {
+
+                    if(db.Persona.Find(alumno.Dni) != null)
+                    {
+                        ViewBag.keyDuplicadaAlumno = "Ya existe una persona con ese D.N.I.";
+                        return View(alumno);
+                    }
+
+                    if(db.Tutor.Find(alumno.DniTutor) != null)
+                    {
+                        object[] parametros = { alumno.Persona.Dni, alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento };
+
+                        db.Database.ExecuteSqlCommand("INSERT INTO Persona (Dni, Cuil, TelCelular, TelFijo, Contraseña, Sexo, Domicilio, Nacionalidad, Nombre, Apellido, FechaNacimiento)" +
+                            " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)", alumno.Persona.Dni.ToString(), alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento);
+
+                        db.Database.ExecuteSqlCommand("INSERT INTO Alumno (Dni, DniTutor)" +
+                            " VALUES (@p0, @p1)", alumno.Dni, alumno.DniTutor);
+
+                        return View("index");
+                    }
+
+                    throw e;
+                }
+
+                
+
+                //try
+                //{
+                    
+                //}
+                //catch(DbUpdateException e)
+                //{
+
+                //    object[] parametros = { alumno.Persona.Dni, alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento };
+                    
+                //    db.Database.ExecuteSqlCommand("INSERT INTO Persona (Dni, Cuil, TelCelular, TelFijo, Contraseña, Sexo, Domicilio, Nacionalidad, Nombre, Apellido, FechaNacimiento)" +
+                //        " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)", alumno.Persona.Dni.ToString(), alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento);
+
+                //    db.Database.ExecuteSqlCommand("INSERT INTO Alumno (Dni, DniTutor)" +
+                //        " VALUES (@p0, @p1)", alumno.Dni, alumno.DniTutor);
+
+
+                //}
+
+
+
 
                 return RedirectToAction("Index");
             }

@@ -1,0 +1,35 @@
+﻿@model Cole.Models.Tutor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tutor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ocupacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ocupacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Persona.Cuil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Persona.Cuil)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Dni }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

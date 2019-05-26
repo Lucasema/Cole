@@ -38,6 +38,10 @@
                                             D.N.I.
                                         </label>
                                         <span class="mdl-textfield__error">
+                                            @if (ViewBag.KeyDuplicadaAlumno != null)
+                                            {
+                                                <span id="errorDni">@ViewBag.KeyDuplicadaAlumno</span>
+                                            }
                                             @Html.ValidationMessageFor(model => model.Persona.Dni, "", new { @id = "errorDni" })
                                         </span>
                                     </div>

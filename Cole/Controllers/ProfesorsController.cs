@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -71,8 +72,14 @@ namespace Cole.Controllers
                 profesor.Dni = profesor.Persona.Dni;
 
                 db.Profesor.Add(profesor);
-                //DbUpdateException si ya existe una persona en la base de datos con ese dni
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }catch(DbUpdateException e)
+                {
+                    ViewBag.KeyDuplicada = "Ya existe una persona con ese D.N.I.";
+                    return View(profesor);
+                }
                 return RedirectToAction("Index");
             }
 

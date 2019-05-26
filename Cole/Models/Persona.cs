@@ -27,6 +27,7 @@ namespace Cole.Models
         [Range(0, 2147483646, ErrorMessage = "D.N.I. inválido.")]
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Display(Name ="D.N.I.")]
+        [Key]
         public int Dni { get; set; }
 
         [StringLength(13, ErrorMessage = "El campo no debe superar los 13 caracteres.")]
