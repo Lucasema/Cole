@@ -15,8 +15,11 @@ namespace Cole.Models
     public partial class Publicacion
     {
         public int DniProfesor { get; set; }
-        public string NombreMateria { get; set; }
+        public int IdMateria { get; set; }
         public System.DateTime FechaYHora { get; set; }
         public string Mensaje { get; set; }
+    
+        public virtual Materia Materia { get; set; }
+        public virtual Profesor Profesor { get; set; }
     }
 }

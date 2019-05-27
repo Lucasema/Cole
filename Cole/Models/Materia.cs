@@ -19,13 +19,17 @@ namespace Cole.Models
         {
             this.Dicta = new HashSet<Dicta>();
             this.Evaluacion = new HashSet<Evaluacion>();
+            this.Publicacion = new HashSet<Publicacion>();
         }
     
+        public int Id { get; set; }
         public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dicta> Dicta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Evaluacion> Evaluacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Publicacion> Publicacion { get; set; }
     }
 }

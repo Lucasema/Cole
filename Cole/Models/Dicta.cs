@@ -16,7 +16,7 @@ namespace Cole.Models
     {
         public int NroCurso { get; set; }
         public string DivisionCurso { get; set; }
-        public string NombreMateria { get; set; }
+        public int IdMateria { get; set; }
         public System.DateTime año { get; set; }
     
         public virtual Curso Curso { get; set; }

@@ -1,0 +1,19 @@
+﻿@model Cole.Models.Materia
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Materia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Nombre }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

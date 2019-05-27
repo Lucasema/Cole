@@ -1,44 +1,239 @@
 ﻿@model Cole.Models.Tutor
 
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
 }
 
-<h2>Create</h2>
+<!DOCTYPE html>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Tutor</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Dni, "Dni", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Dni", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Dni, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ocupacion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Ocupacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ocupacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="mdl-grid col-md-12">
+        <div class="mdl-layout-spacer">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <figure class="front">
+                    <div class="mdl-card-wide mdl-shadow--6dp">
+                        <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+                            <h2 class="mdl-card__title-text">Añadir tutor</h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text" style="display:table-cell">
+
+                            <div class="mdl-grid col-md-12">
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="dni">
+
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.Dni, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.Dni">
+                                            D.N.I.
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @if (ViewBag.KeyDuplicada != null)
+                                            {
+                                                <span id="errorDni">@ViewBag.KeyDuplicada</span>
+                                            }
+                                            @Html.ValidationMessageFor(model => model.Persona.Dni, "", new { @id = "errorDni" })
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="ocupacionTutor">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Ocupacion, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Tutor.Ocupacion">
+                                            Ocupación
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Ocupacion, "", new { @id = "errorOcupacionTutor" })
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="mdl-grid col-md-12">
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="nombre">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.Nombre, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.Nombre">
+                                            Nombre
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.Nombre, "", new { @id = "errorNombre" })
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="apellido">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.Apellido, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.Apellido">
+                                            Apellido
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.Apellido, "", new { @id = "errorApellido" })
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mdl-grid col-md-12">
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="cuil">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.Cuil, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.Cuil">
+                                            C.U.I.L.
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.Cuil, "", new { @id = "errorCuil" })
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="celu">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.TelCelular, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.TelCelular">
+                                            Teléfono Celular
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.TelCelular, "", new { @id = "errorCelu" })
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="mdl-grid col-md-12">
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="tel">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.TelFijo, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.TelFijo">
+                                            Teléfono fijo
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.TelFijo, "", new { @id = "errorTel" })
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-10">
+                                    <div class="mdc-select" style="height:47px; width:300px">
+                                        <i class="mdc-select__dropdown-icon"></i>
+                                        <select id="Persona_Sexo" class="mdc-select__native-control" name="Persona.Sexo">
+                                            <option value="h">Hombre</option>
+                                            <option value="m">Mujer</option>
+                                        </select>
+                                        <label for="Persona_Sexo" class="mdc-floating-label">Sexo</label>
+                                        <div class="mdc-line-ripple"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mdl-grid col-md-12">
+
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="domicilio">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.Domicilio, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.Domicilio">
+                                            Domicilio
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.Domicilio, "", new { @id = "errorDomicilio" })
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="nacionalidad" style="padding-right:10px">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.Nacionalidad, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.Nacionalidad">
+                                            Nacionalidad
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.Nacionalidad, "", new { @id = "errorNacionalidad" })
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="mdl-grid col-md-12">
+
+
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty" id="fechaNacimiento">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Persona.FechaNacimiento, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Persona.FechaNacimiento">
+                                            Fecha de Nacimiento
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @Html.ValidationMessageFor(model => model.Persona.FechaNacimiento, "", new { @id = "errorFechaNacimiento" })
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" id="contenedor">
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <br />
+
+
+                            <div class="mdl-card__actions mdl-card--border">
+                                <div class="mdl-grid">
+                                    <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </figure>
+            }
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <script src="~/Content/window-date-picker.js"></script>
+    <script src="~/Content/InstanciadorDatepicker.js"></script>
+    <script src="~/Content/ValidacionesCrearTutor.js"></script>
+</body>
+</html>

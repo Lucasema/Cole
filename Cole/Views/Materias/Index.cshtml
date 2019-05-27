@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Cole.Models.Materia>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Nombre }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Nombre }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Nombre })
+        </td>
+    </tr>
+}
+
+</table>

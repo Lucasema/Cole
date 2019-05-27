@@ -151,6 +151,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\MateriasController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\ProfesorsController.cs" />
     <Compile Include="Filters\Autorizar.cs" />
@@ -234,7 +235,8 @@
     <Compile Include="Servicios\LoginServicio.cs" />
     <Compile Include="Servicios\ProfesorServicio.cs" />
     <Compile Include="Servicios\RolesColegio.cs" />
-    <Compile Include="Servicios\TutorsController.cs" />
+    <Compile Include="Controllers\TutorsController.cs" />
+    <Compile Include="Servicios\TutorServicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css_layout_dissmisable_drawer.css" />
@@ -251,6 +253,7 @@
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
     <Content Include="Content\ValidacionesCrearProfesor.js" />
+    <Content Include="Content\ValidacionesCrearTutor.js" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -337,6 +340,11 @@
     <Content Include="Views\Tutors\Details.cshtml" />
     <Content Include="Views\Tutors\Edit.cshtml" />
     <Content Include="Views\Tutors\Index.cshtml" />
+    <Content Include="Views\Materias\Create.cshtml" />
+    <Content Include="Views\Materias\Delete.cshtml" />
+    <Content Include="Views\Materias\Details.cshtml" />
+    <Content Include="Views\Materias\Edit.cshtml" />
+    <Content Include="Views\Materias\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,7 +7,7 @@
 <div class="mdl-grid">
 
 
-    <h2 class="mdl-cell--12-col">Listado de profesores</h2>
+    <h2 class="mdl-cell--12-col">Listado de Tutores</h2>
     <div class="mdl-cell--12-col" style="display:contents">
 
         <form method="post" action="Index" class="mdl-cell--10-col">
@@ -90,6 +90,10 @@
                 <th>
                     Nacionalidad
                 </th>
+                <th>
+                    Ocupacion
+                </th>
+                
 
                 <th></th>
             </tr>
@@ -107,39 +111,41 @@
             {
                 foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dni)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Apellido)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.TelCelular)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.TelFijo)
-                        </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dni)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Persona.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Persona.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Persona.TelCelular)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Persona.TelFijo)
+                    </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Domicilio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Nacionalidad)
-                        </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Persona.Domicilio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Persona.Nacionalidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ocupacion)
+                    </td>
 
 
 
-
-                        <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.Dni }) |
-                            @Html.ActionLink("Detalles", "Details", new { id = item.Dni }) |
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Dni })
-                        </td>
-                    </tr>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Dni }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.Dni }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Dni })
+                    </td>
+                </tr>
                 }
             }
         </tbody>

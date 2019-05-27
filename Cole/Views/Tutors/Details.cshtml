@@ -1,35 +1,77 @@
-﻿@model Cole.Models.Tutor
+﻿
+@model Cole.Models.Tutor
 
 @{
-    ViewBag.Title = "Details";
     Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
 }
 
-<h2>Details</h2>
+<!DOCTYPE html>
 
-<div>
-    <h4>Tutor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Ocupacion)
-        </dt>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalles</title>
+</head>
+<body>
 
-        <dd>
-            @Html.DisplayFor(model => model.Ocupacion)
-        </dd>
+    <div class="mdl-grid col-md-12">
+        <div class="mdl-layout-spacer">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Persona.Cuil)
-        </dt>
+            <figure class="front">
+                <div class="mdl-card-wide mdl-shadow--6dp">
+                    <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+                        <h2 class="mdl-card__title-text">Detalles del Tutor</h2>
+                    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Persona.Cuil)
-        </dd>
+                    <div class="mdl-card__supporting-text" style="display:table-cell">
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Dni }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                        <div>
+                            <ul>
+                                <li>
+                                    <text style="font-weight: bold">D.N.I:</text> @Model.Dni
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">Apellido:</text> @Model.Persona.Apellido
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">Nombre:</text> @Model.Persona.Nombre
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">C.U.I.L.:</text> @Model.Persona.Cuil
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">Sexo:</text> @Model.Persona.Sexo
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">Domicilio:</text> @Model.Persona.Domicilio
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">Fecha de nacimiento:</text> @Model.Persona.FechaNacimiento.Value.ToShortDateString()
+                                </li>
+                                <li>
+                                    <text style="font-weight: bold">Nacionalidad:</text> @Model.Persona.Nacionalidad
+                                </li>
+
+                                <li>
+                                    <text style="font-weight: bold">Númedo de celular:</text> @Model.Persona.TelCelular
+                                </li>
+
+                                <li>
+                                    <text style="font-weight: bold">Teléfono fijo:</text> @Model.Persona.TelFijo
+                                </li>
+
+
+                            </ul>
+
+                            <p>
+                                @Html.ActionLink("Editar", "Edit", new { id = Model.Dni }) |
+                                @Html.ActionLink("Volver al listado", "Index")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </figure>
+        </div>
+    </div>
+</body>
+</html>
