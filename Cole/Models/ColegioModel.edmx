@@ -15,13 +15,12 @@
         <EntityType Name="Asiste">
           <Key>
             <PropertyRef Name="DniAlumno" />
-            <PropertyRef Name="NroCurso" />
-            <PropertyRef Name="DivisionCurso" />
+            <PropertyRef Name="año" />
+            <PropertyRef Name="IdCurso" />
           </Key>
           <Property Name="DniAlumno" Type="int" Nullable="false" />
-          <Property Name="NroCurso" Type="int" Nullable="false" />
-          <Property Name="DivisionCurso" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="año" Type="date" />
+          <Property Name="año" Type="date" Nullable="false" />
+          <Property Name="IdCurso" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Califica">
           <Key>
@@ -45,23 +44,22 @@
         </EntityType>
         <EntityType Name="Curso">
           <Key>
-            <PropertyRef Name="Nro" />
-            <PropertyRef Name="Division" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Nro" Type="int" Nullable="false" />
           <Property Name="Division" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nivel" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Dicta">
           <Key>
-            <PropertyRef Name="NroCurso" />
-            <PropertyRef Name="DivisionCurso" />
             <PropertyRef Name="IdMateria" />
             <PropertyRef Name="año" />
+            <PropertyRef Name="IdCurso" />
           </Key>
-          <Property Name="NroCurso" Type="int" Nullable="false" />
-          <Property Name="DivisionCurso" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IdMateria" Type="int" Nullable="false" />
           <Property Name="año" Type="date" Nullable="false" />
+          <Property Name="IdCurso" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Evaluacion">
           <Key>
@@ -99,7 +97,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Mensaje">
@@ -375,17 +373,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Asiste_Curso">
+        <Association Name="FK_Asiste_Curso1">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
           <End Role="Asiste" Type="Self.Asiste" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Curso">
-              <PropertyRef Name="Nro" />
-              <PropertyRef Name="Division" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Asiste">
-              <PropertyRef Name="NroCurso" />
-              <PropertyRef Name="DivisionCurso" />
+              <PropertyRef Name="IdCurso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -403,17 +399,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Dicta_Curso">
+        <Association Name="FK_Dicta_Curso1">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
           <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Curso">
-              <PropertyRef Name="Nro" />
-              <PropertyRef Name="Division" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Dicta">
-              <PropertyRef Name="NroCurso" />
-              <PropertyRef Name="DivisionCurso" />
+              <PropertyRef Name="IdCurso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -527,7 +521,7 @@
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Tutor" EntitySet="Tutor" />
           </AssociationSet>
-          <AssociationSet Name="FK_Asiste_Curso" Association="Self.FK_Asiste_Curso">
+          <AssociationSet Name="FK_Asiste_Curso1" Association="Self.FK_Asiste_Curso1">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Asiste" EntitySet="Asiste" />
           </AssociationSet>
@@ -535,7 +529,7 @@
             <End Role="Evaluacion" EntitySet="Evaluacion" />
             <End Role="Califica" EntitySet="Califica" />
           </AssociationSet>
-          <AssociationSet Name="FK_Dicta_Curso" Association="Self.FK_Dicta_Curso">
+          <AssociationSet Name="FK_Dicta_Curso1" Association="Self.FK_Dicta_Curso1">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Dicta" EntitySet="Dicta" />
           </AssociationSet>
@@ -569,15 +563,14 @@
         <EntityType Name="Asiste">
           <Key>
             <PropertyRef Name="DniAlumno" />
-            <PropertyRef Name="NroCurso" />
-            <PropertyRef Name="DivisionCurso" />
+            <PropertyRef Name="año" />
+            <PropertyRef Name="IdCurso" />
           </Key>
           <Property Name="DniAlumno" Type="Int32" Nullable="false" />
-          <Property Name="NroCurso" Type="Int32" Nullable="false" />
-          <Property Name="DivisionCurso" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="año" Type="DateTime" Precision="0" />
+          <Property Name="año" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdCurso" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Alumno" Relationship="Self.FK__Asiste__DniAlumn__693CA210" FromRole="Asiste" ToRole="Alumno" />
-          <NavigationProperty Name="Curso" Relationship="Self.FK_Asiste_Curso" FromRole="Asiste" ToRole="Curso" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Asiste_Curso1" FromRole="Asiste" ToRole="Curso" />
         </EntityType>
         <EntityType Name="Califica">
           <Key>
@@ -605,26 +598,25 @@
         </EntityType>
         <EntityType Name="Curso">
           <Key>
-            <PropertyRef Name="Nro" />
-            <PropertyRef Name="Division" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Nro" Type="Int32" Nullable="false" />
           <Property Name="Division" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Asiste" Relationship="Self.FK_Asiste_Curso" FromRole="Curso" ToRole="Asiste" />
-          <NavigationProperty Name="Dicta" Relationship="Self.FK_Dicta_Curso" FromRole="Curso" ToRole="Dicta" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nivel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Asiste" Relationship="Self.FK_Asiste_Curso1" FromRole="Curso" ToRole="Asiste" />
+          <NavigationProperty Name="Dicta" Relationship="Self.FK_Dicta_Curso1" FromRole="Curso" ToRole="Dicta" />
         </EntityType>
         <EntityType Name="Dicta">
           <Key>
-            <PropertyRef Name="NroCurso" />
-            <PropertyRef Name="DivisionCurso" />
             <PropertyRef Name="IdMateria" />
             <PropertyRef Name="año" />
+            <PropertyRef Name="IdCurso" />
           </Key>
-          <Property Name="NroCurso" Type="Int32" Nullable="false" />
-          <Property Name="DivisionCurso" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdMateria" Type="Int32" Nullable="false" />
           <Property Name="año" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Curso" Relationship="Self.FK_Dicta_Curso" FromRole="Dicta" ToRole="Curso" />
+          <Property Name="IdCurso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Dicta_Curso1" FromRole="Dicta" ToRole="Curso" />
           <NavigationProperty Name="Materia" Relationship="Self.FK__Dicta__año__70DDC3D8" FromRole="Dicta" ToRole="Materia" />
         </EntityType>
         <EntityType Name="Evaluacion">
@@ -668,7 +660,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Dicta" Relationship="Self.FK__Dicta__año__70DDC3D8" FromRole="Materia" ToRole="Dicta" />
           <NavigationProperty Name="Evaluacion" Relationship="Self.FK__Evaluacio__Nombr__5CD6CB2B" FromRole="Materia" ToRole="Evaluacion" />
@@ -835,17 +827,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Asiste_Curso">
+        <Association Name="FK_Asiste_Curso1">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
           <End Role="Asiste" Type="Self.Asiste" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Curso">
-              <PropertyRef Name="Nro" />
-              <PropertyRef Name="Division" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Asiste">
-              <PropertyRef Name="NroCurso" />
-              <PropertyRef Name="DivisionCurso" />
+              <PropertyRef Name="IdCurso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -887,17 +877,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Dicta_Curso">
+        <Association Name="FK_Dicta_Curso1">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
           <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Curso">
-              <PropertyRef Name="Nro" />
-              <PropertyRef Name="Division" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Dicta">
-              <PropertyRef Name="NroCurso" />
-              <PropertyRef Name="DivisionCurso" />
+              <PropertyRef Name="IdCurso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1075,7 +1063,7 @@
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="Paga" EntitySet="Paga" />
           </AssociationSet>
-          <AssociationSet Name="FK_Asiste_Curso" Association="Self.FK_Asiste_Curso">
+          <AssociationSet Name="FK_Asiste_Curso1" Association="Self.FK_Asiste_Curso1">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Asiste" EntitySet="Asiste" />
           </AssociationSet>
@@ -1091,7 +1079,7 @@
             <End Role="Cuota" EntitySet="Cuota" />
             <End Role="Paga" EntitySet="Paga" />
           </AssociationSet>
-          <AssociationSet Name="FK_Dicta_Curso" Association="Self.FK_Dicta_Curso">
+          <AssociationSet Name="FK_Dicta_Curso1" Association="Self.FK_Dicta_Curso1">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Dicta" EntitySet="Dicta" />
           </AssociationSet>
@@ -1158,9 +1146,8 @@
             <EntityTypeMapping TypeName="ColegioModel.Asiste">
               <MappingFragment StoreEntitySet="Asiste">
                 <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
-                <ScalarProperty Name="NroCurso" ColumnName="NroCurso" />
-                <ScalarProperty Name="DivisionCurso" ColumnName="DivisionCurso" />
                 <ScalarProperty Name="año" ColumnName="año" />
+                <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1188,16 +1175,17 @@
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="Nro" ColumnName="Nro" />
                 <ScalarProperty Name="Division" ColumnName="Division" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Dicta">
             <EntityTypeMapping TypeName="ColegioModel.Dicta">
               <MappingFragment StoreEntitySet="Dicta">
-                <ScalarProperty Name="NroCurso" ColumnName="NroCurso" />
-                <ScalarProperty Name="DivisionCurso" ColumnName="DivisionCurso" />
                 <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
                 <ScalarProperty Name="año" ColumnName="año" />
+                <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1330,7 +1318,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

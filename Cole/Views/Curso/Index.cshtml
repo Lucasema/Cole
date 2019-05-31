@@ -1,25 +1,49 @@
-﻿@model IEnumerable<Cole.Models.Materia>
+﻿@model IEnumerable<Cole.Models.Curso>
 
 @{
     Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
-    ViewBag.Title = "Materias";
+    ViewBag.Title = "Cursos";
 }
 
 
 <div class="mdl-grid">
 
 
-    <h2 class="mdl-cell--12-col">Listado de materias</h2>
+    <h2 class="mdl-cell--12-col">Listado de cursos</h2>
     <div class="mdl-cell--8-col" style="display:contents">
 
         <form method="post" action="Index" class="mdl-cell--6-col">
 
-           
-            <div class="mdl-textfield mdl-js-textfield" style="width:150px">
-                <input class="mdl-textfield__input text-box single-line" id="valor" name="valor" type="text">
-                <label class="mdl-textfield__label">
-                </label>
+            <div class="mdc-select" id="SelectNro">
+
+                <i class="mdc-select__dropdown-icon"></i>
+                @Html.DropDownList("nro",(IEnumerable<SelectListItem>)ViewBag.Numeros, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px", @id = "nro"})
+
+                <label for="SearchBy" class="mdc-floating-label">Nro del curso</label>
+                <div class="mdc-line-ripple"></div>
             </div>
+
+            
+
+
+            <div class="mdc-select" id="SelectDiv">
+
+                <i class="mdc-select__dropdown-icon"></i>
+                @Html.DropDownList("division", (IEnumerable<SelectListItem>)ViewBag.Divisiones, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px" , @id = "division"})
+
+                <label for="SearchBy" class="mdc-floating-label">Div del curso</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <script>
+
+                const selectNro = new mdc.select.MDCSelect(document.getElementById("SelectNro"));
+                const selectDiv = new mdc.select.MDCSelect(document.getElementById("SelectDiv"));
+    
+            </script>
+
+
+
 
             <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
                 <i class="material-icons">search</i>
@@ -40,7 +64,11 @@
         <thead>
             <tr>
                 <th>
-                    Nombre
+                    Numero
+                </th>
+
+                <th>
+                    Division
                 </th>
 
                 <th></th>
@@ -61,9 +89,13 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
+                            @Html.DisplayFor(modelItem => item.Nro)
                         </td>
-                        
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Division)
+                        </td>
+
                         <td>
                             @Html.ActionLink("Editar", "Edit", new { id = item.Id })
                         </td>

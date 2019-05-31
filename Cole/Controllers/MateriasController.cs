@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Cole.Models;
+using Cole.Servicios;
 
 namespace Cole.Controllers
 {
@@ -18,6 +19,18 @@ namespace Cole.Controllers
         public ActionResult Index()
         {
             return View(db.Materia.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult Index(string valor)
+        {
+            if (valor != "")
+            {
+                List<Materia> materias = MateriaServicio.Buscar(valor);
+                return View(materias);
+            }
+
+            return Index();
         }
 
         // GET: Materias/Details/5
@@ -46,13 +59,22 @@ namespace Cole.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nombre")] Materia materia)
+        public ActionResult Create( Materia materia)
         {
+
             if (ModelState.IsValid)
             {
-                db.Materia.Add(materia);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (!MateriaServicio.Existe(materia.Nombre))
+                {
+
+                    db.Materia.Add(materia);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+
+                ViewBag.MateriaDuplicada = "Ya existe una materia con ese nombre.";
+                
             }
 
             return View(materia);

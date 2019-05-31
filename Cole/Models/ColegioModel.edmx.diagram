@@ -4,35 +4,35 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="08f0d02056394d7ab07a04a194476cc6" Name="Diagram1">
-        <EntityTypeShape EntityType="ColegioModel.Alumno" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Asiste" Width="1.5" PointX="7.5" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Califica" Width="1.5" PointX="10.5" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Cuota" Width="1.5" PointX="8.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Curso" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Dicta" Width="1.5" PointX="11.25" PointY="21.625" IsExpanded="true" />
+      <Diagram DiagramId="71eabd89c591437eb458b02d5b4d1901" Name="Diagram1">
+        <EntityTypeShape EntityType="ColegioModel.Alumno" Width="1.5" PointX="5.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Asiste" Width="1.5" PointX="7.5" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Califica" Width="1.5" PointX="10.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Cuota" Width="1.5" PointX="8.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Curso" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Dicta" Width="1.5" PointX="10.25" PointY="22" IsExpanded="true" />
         <EntityTypeShape EntityType="ColegioModel.Evaluacion" Width="1.5" PointX="8.25" PointY="24.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ColegioModel.Inasistencia" Width="1.5" PointX="7.5" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Institucion" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Materia" Width="1.5" PointX="6" PointY="25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Mensaje" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Paga" Width="1.5" PointX="10.5" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Persona" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Profesor" Width="1.5" PointX="3" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Publicacion" Width="1.5" PointX="8.25" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Titulo" Width="1.5" PointX="5.25" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ColegioModel.Tutor" Width="1.5" PointX="3" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Institucion" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Materia" Width="1.5" PointX="6" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Mensaje" Width="1.5" PointX="3" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Paga" Width="1.5" PointX="10.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Persona" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Profesor" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Publicacion" Width="1.5" PointX="8.25" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Titulo" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColegioModel.Tutor" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
         <AssociationConnector Association="ColegioModel.FK__Alumno__Dni__4E88ABD4" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Alumno__DniTutor__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Asiste__DniAlumn__693CA210" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Califica__DniAlu__74AE54BC" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Inasisten__DniAl__656C112C" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Paga__DniAlumno__6D0D32F4" ManuallyRouted="false" />
-        <AssociationConnector Association="ColegioModel.FK_Asiste_Curso" ManuallyRouted="false" />
+        <AssociationConnector Association="ColegioModel.FK_Asiste_Curso1" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Califica__DniPro__75A278F5" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK_Califica_Evaluacion" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Paga__FechaDelMe__6E01572D" ManuallyRouted="false" />
-        <AssociationConnector Association="ColegioModel.FK_Dicta_Curso" ManuallyRouted="false" />
+        <AssociationConnector Association="ColegioModel.FK_Dicta_Curso1" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Dicta__año__70DDC3D8" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Evaluacio__Nombr__5CD6CB2B" ManuallyRouted="false" />
         <AssociationConnector Association="ColegioModel.FK__Inasisten__DniPr__66603565" ManuallyRouted="false" />

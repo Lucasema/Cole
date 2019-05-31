@@ -151,6 +151,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\CursoController.cs" />
     <Compile Include="Controllers\MateriasController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\ProfesorsController.cs" />
@@ -232,7 +233,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\AlumnoServicio.cs" />
     <Compile Include="Servicios\CurrentDateAttribute.cs" />
+    <Compile Include="Servicios\CursoServicio.cs" />
     <Compile Include="Servicios\LoginServicio.cs" />
+    <Compile Include="Servicios\MateriaServicio.cs" />
     <Compile Include="Servicios\ProfesorServicio.cs" />
     <Compile Include="Servicios\RolesColegio.cs" />
     <Compile Include="Controllers\TutorsController.cs" />
@@ -251,6 +254,7 @@
     <Content Include="Content\mdc.select.css" />
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
+    <Content Include="Content\ValidacionCrearMateria.js" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
     <Content Include="Content\ValidacionesCrearProfesor.js" />
     <Content Include="Content\ValidacionesCrearTutor.js" />
@@ -345,6 +349,11 @@
     <Content Include="Views\Materias\Details.cshtml" />
     <Content Include="Views\Materias\Edit.cshtml" />
     <Content Include="Views\Materias\Index.cshtml" />
+    <Content Include="Views\Curso\Create.cshtml" />
+    <Content Include="Views\Curso\Delete.cshtml" />
+    <Content Include="Views\Curso\Details.cshtml" />
+    <Content Include="Views\Curso\Edit.cshtml" />
+    <Content Include="Views\Curso\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
