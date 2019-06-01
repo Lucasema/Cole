@@ -87,7 +87,7 @@ namespace Cole.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nro,Division")] Curso curso)
+        public ActionResult Create(Curso curso)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +106,16 @@ namespace Cole.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Curso.Find(id);
+
+            Curso curso = db.Curso.Include(c => c.Asiste).Where(c => c.Id == id).First();
+
+            List<Alumno> AlumnosDelCurso = db.Database.SqlQuery<Alumno>(
+                "SELECT * " +
+                "FROM Alumno " +
+                "WHERE Alumno.Dni IN " +
+                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso == @p0", id.ToString()
+                ).ToList<Alumno>();
+
             if (curso == null)
             {
                 return HttpNotFound();

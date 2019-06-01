@@ -1,49 +1,88 @@
 ﻿@model Cole.Models.Curso
 
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
 }
 
-<h2>Create</h2>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+    <div class="mdl-grid col-md-12">
+        <div class="mdl-layout-spacer">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <figure class="front">
+                    <div class="mdl-card-wide mdl-shadow--6dp">
+                        <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+                            <h2 class="mdl-card__title-text">Añadir Curso</h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text" style="display:table-cell">
+
+                            <div class="mdl-grid col-md-12">
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="nro">
+
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Nro, new { htmlAttributes = new { @class = "mdl-textfield__input", @type = "number" } })
+                                        <label class="mdl-textfield__label" for="nro">
+                                            Número
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @if (ViewBag.MateriaDuplicada != null)
+                                            {
+                                                <span id="errorNro">@ViewBag.MateriaDuplicada</span>
+                                            }
+                                            @Html.ValidationMessageFor(model => model.Nro, "", new { @id = "errorNro" })
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="division">
+
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Division, new { htmlAttributes = new { @class = "mdl-textfield__input", @type = "text" } })
+                                        <label class="mdl-textfield__label" for="division">
+                                            Division
+                                        </label>
+                                        <span class="mdl-textfield__error">
+                                            @if (ViewBag.MateriaDuplicada != null)
+                                            {
+                                                <span id="errorDivision">@ViewBag.MateriaDuplicada</span>
+                                            }
+                                            @Html.ValidationMessageFor(model => model.Division, "", new { @id = "errorDivision" })
+                                        </span>
+                                    </div>
+                                </div>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Curso</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nro, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nro, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nro, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                <br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Division, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Division, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Division, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+
+                                <div class="mdl-card__actions mdl-card--border">
+                                    <div class="mdl-grid">
+                                        <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </figure>
+            }
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    <script src="~/Content/ValidacionCrearMateria.js"></script>
+</body>
+</html>
