@@ -37,6 +37,16 @@ namespace Cole.Servicios
 
             return alumnos;
         }
-        
+
+
+        public static bool Existe(int dni)
+        {
+            Alumno alumno = db.Database.SqlQuery<Alumno>("SELECT * FROM Alumno WHERE Dni = @p0", dni).FirstOrDefault();
+
+            return alumno != null;
+        }
     }
+
+
+    
 }

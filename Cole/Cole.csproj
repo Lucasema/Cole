@@ -256,6 +256,7 @@
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\ValidacionCrearMateria.js" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
+    <Content Include="Content\ValidacionesCrearCurso.js" />
     <Content Include="Content\ValidacionesCrearProfesor.js" />
     <Content Include="Content\ValidacionesCrearTutor.js" />
     <Content Include="Content\window-date-picker.css" />
@@ -354,6 +355,7 @@
     <Content Include="Views\Curso\Details.cshtml" />
     <Content Include="Views\Curso\Edit.cshtml" />
     <Content Include="Views\Curso\Index.cshtml" />
+    <Content Include="Views\Curso\EditarAlumnosPorCurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

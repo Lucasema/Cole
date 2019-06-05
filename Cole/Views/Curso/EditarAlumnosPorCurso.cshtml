@@ -1,0 +1,148 @@
+﻿@model IEnumerable<Cole.Models.Persona>
+
+
+@{
+    ViewBag.Title = "EditarAlumnosPorCurso";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+
+    <div class="mdl-grid">
+
+        <h2 class="mdl-cell--12-col">Editar alumnos del curso</h2>
+
+
+        <form method="post" action="/Curso/FiltrarAlumnosPorAño" class="mdl-cell--12-col">
+
+            <style>
+                input[type=number]::-webkit-inner-spin-button {
+                    opacity: 1
+                }
+            </style>
+
+            <div class="mdl-cell--8-col" style="display:contents">
+
+                <input value=@ViewBag.idCurso id="idCurso" name="idCurso" hidden />
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarAlumno">
+
+                    <div class="col-md-10">
+                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@DateTime.Now.Year step="1" min="2014" maxlength="4"/>
+                        <label class="mdl-textfield__label" for="nro">
+                            Filtrar por año
+                        </label>
+                        <span class="mdl-textfield__error">
+
+                        </span>
+                    </div>
+                </div>
+
+
+                <button class="mdl-button mdl-js-button mdl-button--icon" type="submit">
+                    <i class="material-icons">search</i>
+                </button>
+
+
+            </div>
+        </form>
+
+        <form method="post" action="/Curso/AñadirAlumnoAlCurso" class="mdl-cell--12-col">
+
+
+
+            <div class="mdl-cell--8-col" style="display:contents">
+
+
+                <input value=@ViewBag.idCurso id="idCurso" name="idCurso" hidden />
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarAlumno">
+
+                    <div class="col-md-10">
+                        <input class="mdl-textfield__input" type="number" id="dni" name="dni" />
+                        <label class="mdl-textfield__label" for="nro">
+                            D.N.I. del alumno
+                        </label>
+                        <span class="mdl-textfield__error">
+
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarAlumno">
+
+                    <div class="col-md-10">
+                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@DateTime.Now.Year step="1" min="2014" maxlength="4" />
+                        <label class="mdl-textfield__label" for="nro">
+                            Año del cursado
+                        </label>
+                        <span class="mdl-textfield__error">
+
+                        </span>
+                    </div>
+                </div>
+
+
+                <button class="mdl-button mdl-js-button mdl-button--icon" type="submit">
+                    <i class="material-icons">add</i>
+
+                </button>
+
+
+            </div>
+
+            <text style="color:red;text-align:center" id="errorAñadirAlumno">@ViewBag.ErrorAñadirAlumno</text>
+
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col" id="tabla">
+                <thead>
+                    <tr>
+                        <th>
+                            D.N.I.
+                        </th>
+
+                        <th>
+                            Nombre
+                        </th>
+
+                        <th>
+                            Apellido
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="4" style="color:red;text-align:center">El curso no contiene alumnos</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dni)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Apellido)
+                                </td>
+
+                            </tr>
+                        }
+
+                    }
+
+                </tbody>
+            </table>
+        </form>
+
+    </div>

@@ -89,11 +89,23 @@ namespace Cole.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Curso curso)
         {
+
+
+            
             if (ModelState.IsValid)
             {
-                db.Curso.Add(curso);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //comprueba que no exista un curso con ese nro y division
+                if(!CursoServicio.Existe(curso.Nro, curso.Division))
+                {
+
+                    db.Curso.Add(curso);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+
+                //si ya existe un curso con ese nro y division, se lo muestra por mensaje
+                ViewBag.KeyCursoDuplicado = "Ya existe un curso con ese número y division.";
             }
 
             return View(curso);
@@ -109,13 +121,7 @@ namespace Cole.Controllers
 
             Curso curso = db.Curso.Include(c => c.Asiste).Where(c => c.Id == id).First();
 
-            List<Alumno> AlumnosDelCurso = db.Database.SqlQuery<Alumno>(
-                "SELECT * " +
-                "FROM Alumno " +
-                "WHERE Alumno.Dni IN " +
-                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso == @p0", id.ToString()
-                ).ToList<Alumno>();
-
+            
             if (curso == null)
             {
                 return HttpNotFound();
@@ -123,13 +129,77 @@ namespace Cole.Controllers
             return View(curso);
         }
 
+
+
+        public ActionResult EditarAlumnosPorCurso(int idCurso)
+        {
+
+            List<Persona> AlumnosDelCurso = db.Database.SqlQuery<Persona>(
+                "SELECT * " +
+                "FROM Persona " +
+                "WHERE Persona.Dni IN " +
+                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso = @p0)", idCurso.ToString()
+                ).ToList<Persona>();
+
+            ViewBag.idCurso = idCurso;
+
+
+            return View("EditarAlumnosPorCurso", AlumnosDelCurso);
+
+
+        }
+
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult AñadirAlumnoAlCurso(int dni, int idCurso, int año)
+        {
+            if (AlumnoServicio.Existe(dni))
+            {
+
+                if (!CursoServicio.Asiste(dni, idCurso, año))
+                {
+
+                    Asiste a = new Asiste();
+
+                    a.año = DateTime.Parse("01/01/"+año.ToString());
+                    a.DniAlumno = dni;
+                    a.IdCurso = idCurso;
+
+
+                    db.Asiste.Add(a);
+                    db.SaveChanges();
+
+                }
+                else
+                {
+                    ViewBag.ErrorAñadirAlumno = "Ya existe este alumno en el curso.";
+                }
+
+
+            }
+            else
+            {
+                ViewBag.ErrorAñadirAlumno = "El alumno no existe.";
+            }
+            
+            return EditarAlumnosPorCurso(idCurso);
+
+        }
+
         // POST: Curso/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Nro,Division")] Curso curso)
+        public ActionResult Edit( Curso curso)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(curso).State = EntityState.Modified;

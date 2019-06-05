@@ -11,7 +11,7 @@
 
     <h2 class="mdl-cell--12-col">Listado de cursos</h2>
     <div class="mdl-cell--8-col" style="display:contents">
-
+        
         <form method="post" action="Index" class="mdl-cell--6-col">
 
             <div class="mdc-select" id="SelectNro">
@@ -60,7 +60,7 @@
 
     </div>
     <br />
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--8-col">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col">
         <thead>
             <tr>
                 <th>
@@ -69,6 +69,10 @@
 
                 <th>
                     Division
+                </th>
+
+                <th>
+                    Nivel
                 </th>
 
                 <th></th>
@@ -80,7 +84,7 @@
             @if (Model.Count() == 0)
             {
                 <tr>
-                    <td colspan="2" style="color:red;text-align:center">No se han encontrado coincidencias</td>
+                    <td colspan="3" style="color:red;text-align:center">No se han encontrado coincidencias</td>
                 </tr>
             }
             else
@@ -97,7 +101,12 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                            @Html.DisplayFor(modelItem => item.Nivel)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) 
+                            @Html.ActionLink("Añadir o quitar alumnos", "EditarAlumnosPorCurso", new { idCurso = item.Id })
                         </td>
 
                     </tr>

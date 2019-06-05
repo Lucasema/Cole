@@ -38,10 +38,7 @@
                                             Número
                                         </label>
                                         <span class="mdl-textfield__error">
-                                            @if (ViewBag.MateriaDuplicada != null)
-                                            {
-                                                <span id="errorNro">@ViewBag.MateriaDuplicada</span>
-                                            }
+
                                             @Html.ValidationMessageFor(model => model.Nro, "", new { @id = "errorNro" })
                                         </span>
                                     </div>
@@ -55,26 +52,48 @@
                                             Division
                                         </label>
                                         <span class="mdl-textfield__error">
-                                            @if (ViewBag.MateriaDuplicada != null)
-                                            {
-                                                <span id="errorDivision">@ViewBag.MateriaDuplicada</span>
-                                            }
+
                                             @Html.ValidationMessageFor(model => model.Division, "", new { @id = "errorDivision" })
                                         </span>
                                     </div>
                                 </div>
 
+                                <div class="mdl-grid col-md-12">
+
+                                    <div class="col-md-10">
+                                        <div class="mdc-select" style="height:47px; width:300px" id="selectNivel">
+                                            <i class="mdc-select__dropdown-icon"></i>
+                                            <select id="Nivel" class="mdc-select__native-control" name="Nivel">
+                                                <option value="primario">Primaria</option>
+                                                <option value="secundario">Secundaria</option>
+                                            </select>
+                                            <label for="Nivel" class="mdc-floating-label">Nivel</label>
+                                            <div class="mdc-line-ripple"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <script>
+
+                                    const selectNivel = new mdc.select.MDCSelect(document.getElementById("selectNivel"));
+
+                                </script>
+
 
                                 <br />
 
 
+                                <text style="color:red;text-align:center" id="errorDuplicado">@ViewBag.KeyCursoDuplicado</text>
 
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <div class="mdl-grid">
-                                        <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
-                                    </div>
+                            </div>
+
+                            <div class="mdl-card__actions mdl-card--border">
+                                <div class="mdl-grid">
+                                    <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
                                 </div>
                             </div>
+
 
 
                         </div>
@@ -83,6 +102,6 @@
             }
         </div>
     </div>
-    <script src="~/Content/ValidacionCrearMateria.js"></script>
+    <script src="~/Content/ValidacionesCrearCurso.js"></script>
 </body>
 </html>
