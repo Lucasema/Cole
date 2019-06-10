@@ -302,12 +302,24 @@ namespace Cole.Controllers
 
 
         [HttpPost]
-        public ActionResult AñadirInasistencias(List<int> dniAlumnos)
+        public ActionResult AñadirInasistencias(List<int> dnisFaltaCompleta, List<int> dnisMediaFalta)
         {
+            List<int> faltaymedia = dnisFaltaCompleta.Intersect(dnisMediaFalta).ToList();
 
+            List<int> faltaCompleta = dnisFaltaCompleta.Except(faltaymedia).ToList().Except(dnisMediaFalta).ToList();
+
+            List<int> mediaFalta = dnisMediaFalta.Except(faltaymedia).ToList().Except(dnisFaltaCompleta).ToList();
+
+
+            foreach(int dni in dnisFaltaCompleta)
+            {
+                Inasistencia i = new Inasistencia();
+
+            }
 
 
             return Index();
         }
+
     }
 }

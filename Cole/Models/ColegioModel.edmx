@@ -80,7 +80,7 @@
           <Property Name="DniAlumno" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="date" Nullable="false" />
           <Property Name="EsMedia" Type="bit" />
-          <Property Name="DniProfesor" Type="int" />
+          <Property Name="Completa" Type="bit" />
         </EntityType>
         <EntityType Name="Institucion">
           <Key>
@@ -263,18 +263,6 @@
             </Principal>
             <Dependent Role="Inasistencia">
               <PropertyRef Name="DniAlumno" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Inasisten__DniPr__66603565">
-          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
-          <End Role="Inasistencia" Type="Self.Inasistencia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profesor">
-              <PropertyRef Name="Dni" />
-            </Principal>
-            <Dependent Role="Inasistencia">
-              <PropertyRef Name="DniProfesor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -498,10 +486,6 @@
             <End Role="Alumno" EntitySet="Alumno" />
             <End Role="Inasistencia" EntitySet="Inasistencia" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inasisten__DniPr__66603565" Association="Self.FK__Inasisten__DniPr__66603565">
-            <End Role="Profesor" EntitySet="Profesor" />
-            <End Role="Inasistencia" EntitySet="Inasistencia" />
-          </AssociationSet>
           <AssociationSet Name="FK__Instituci__DniAd__7A672E12" Association="Self.FK__Instituci__DniAd__7A672E12">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Institucion" EntitySet="Institucion" />
@@ -658,9 +642,8 @@
           <Property Name="DniAlumno" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EsMedia" Type="Boolean" />
-          <Property Name="DniProfesor" Type="Int32" />
+          <Property Name="Completa" Type="Boolean" />
           <NavigationProperty Name="Alumno" Relationship="Self.FK__Inasisten__DniAl__656C112C" FromRole="Inasistencia" ToRole="Alumno" />
-          <NavigationProperty Name="Profesor" Relationship="Self.FK__Inasisten__DniPr__66603565" FromRole="Inasistencia" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="Institucion">
           <Key>
@@ -739,7 +722,6 @@
           <Property Name="Dni" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Califica" Relationship="Self.FK__Califica__DniPro__75A278F5" FromRole="Profesor" ToRole="Califica" />
           <NavigationProperty Name="Dicta" Relationship="Self.FK_Dicta_Profesor" FromRole="Profesor" ToRole="Dicta" />
-          <NavigationProperty Name="Inasistencia" Relationship="Self.FK__Inasisten__DniPr__66603565" FromRole="Profesor" ToRole="Inasistencia" />
           <NavigationProperty Name="Persona" Relationship="Self.FK__Profesor__Dni__52593CB8" FromRole="Profesor" ToRole="Persona" />
           <NavigationProperty Name="Titulo" Relationship="Self.FK__Titulo__Dni__5441852A" FromRole="Profesor" ToRole="Titulo" />
           <NavigationProperty Name="Publicacion" Relationship="Self.FK_Publicacion_Profesor" FromRole="Profesor" ToRole="Publicacion" />
@@ -945,18 +927,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inasisten__DniPr__66603565">
-          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
-          <End Role="Inasistencia" Type="Self.Inasistencia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profesor">
-              <PropertyRef Name="Dni" />
-            </Principal>
-            <Dependent Role="Inasistencia">
-              <PropertyRef Name="DniProfesor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Instituci__DniAd__7A672E12">
           <End Role="Persona" Type="Self.Persona" Multiplicity="0..1" />
           <End Role="Institucion" Type="Self.Institucion" Multiplicity="*" />
@@ -1127,10 +1097,6 @@
             <End Role="Materia" EntitySet="Materia" />
             <End Role="Evaluacion" EntitySet="Evaluacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inasisten__DniPr__66603565" Association="Self.FK__Inasisten__DniPr__66603565">
-            <End Role="Profesor" EntitySet="Profesor" />
-            <End Role="Inasistencia" EntitySet="Inasistencia" />
-          </AssociationSet>
           <AssociationSet Name="FK__Instituci__DniAd__7A672E12" Association="Self.FK__Instituci__DniAd__7A672E12">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Institucion" EntitySet="Institucion" />
@@ -1242,7 +1208,7 @@
                 <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="EsMedia" ColumnName="EsMedia" />
-                <ScalarProperty Name="DniProfesor" ColumnName="DniProfesor" />
+                <ScalarProperty Name="Completa" ColumnName="Completa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

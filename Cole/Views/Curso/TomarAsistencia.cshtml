@@ -43,7 +43,7 @@
                                 <div class="mdc-checkbox">
                                     <input type="checkbox"
                                            class="mdc-checkbox__native-control"
-                                           id="checkbox-1" value=@item.Dni />
+                                            value=@item.Dni id="completa" name="completa"/>
                                     <div class="mdc-checkbox__background">
                                         <svg class="mdc-checkbox__checkmark"
                                              viewBox="0 0 24 24">
@@ -60,7 +60,7 @@
                                 <div class="mdc-checkbox">
                                     <input type="checkbox"
                                            class="mdc-checkbox__native-control"
-                                           id="checkbox-1" value=@item.Dni />
+                                            value=@item.Dni id="media" name="media"/>
                                     <div class="mdc-checkbox__background">
                                         <svg class="mdc-checkbox__checkmark"
                                              viewBox="0 0 24 24">
@@ -117,23 +117,47 @@
 
                 var listaInasistentes = document.getElementsByClassName("mdc-checkbox");
 
+                var cuentaCompletas = 0;
+                var cuentaMedias = 0;
+
                 for (var i = 0; i < listaInasistentes.length; i++) {
 
                     var checkActual = new mdc.checkbox.MDCCheckbox(listaInasistentes[i]);
 
+
                     if (checkActual.checked) {
 
-                        var input = document.createElement("input");
 
-                        input.id = "dniAlumnos_" + i.toString();
-                        input.name = "dniAlumnos[" + i.toString() + "]";
-                        input.type = "number";
+                        if (listaInasistentes[i].firstElementChild.name == "completa") {
+
+                            var input = document.createElement("input");
+
+                            input.id = "dnisFaltaCompleta_" + cuentaCompletas.toString();
+                            input.name = "dnisFaltaCompleta[" + cuentaCompletas.toString() + "]";
+                            input.type = "number";
 
 
-                        alert(checkActual.value);
-                        input.value = checkActual.value;
+                            input.value = checkActual.value;
 
-                        form.append(input);
+                            form.append(input);
+                            cuentaCompletas++;
+
+                        } else {
+
+                            var input = document.createElement("input");
+
+                            input.id = "dnisMediaFalta_" + cuentaMedias.toString();
+                            input.name = "dnisMediaFalta[" + cuentaMedias.toString() + "]";
+                            input.type = "number";
+
+
+                            input.value = checkActual.value;
+
+                            form.append(input);
+
+                            cuentaMedias++;
+                        }
+                        
 
                     }
                     
