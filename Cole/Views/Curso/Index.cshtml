@@ -105,8 +105,9 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) 
-                            @Html.ActionLink("Añadir o quitar alumnos", "EditarAlumnosPorCurso", new { idCurso = item.Id })
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Añadir o quitar alumnos", "EditarAlumnosPorCurso", new { idCurso = item.Id, año = @Int32.Parse(DateTime.Now.Year.ToString()) }) |
+                            @Html.ActionLink("Tomar asistencia", "TomarAsistencia", new { idCurso = item.Id })
                         </td>
 
                     </tr>

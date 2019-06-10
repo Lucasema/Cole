@@ -23,6 +23,8 @@ namespace Cole.Controllers
             return View(db.Curso.ToList());
         }
 
+        
+
         private void CargarDropdowns()
         {
             IEnumerable<SelectListItem> nro = db.Database.SqlQuery<Int32>("select distinct(Nro) from Curso order by Nro").Select(c => new SelectListItem
@@ -60,6 +62,7 @@ namespace Cole.Controllers
             }
             return Index();
         }
+
 
         // GET: Curso/Details/5
         public ActionResult Details(int? id)
@@ -131,22 +134,31 @@ namespace Cole.Controllers
 
 
 
-        public ActionResult EditarAlumnosPorCurso(int idCurso)
+        public ActionResult EditarAlumnosPorCurso(int idCurso, int? año)
         {
 
-            List<Persona> AlumnosDelCurso = db.Database.SqlQuery<Persona>(
+            if (año != null)
+            {
+                List<Persona> AlumnosDelCurso = db.Database.SqlQuery<Persona>(
                 "SELECT * " +
                 "FROM Persona " +
                 "WHERE Persona.Dni IN " +
-                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso = @p0)", idCurso.ToString()
+                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso = @p0 AND Asiste.Año = @p1)", idCurso.ToString(), DateTime.Parse("01/01/"+año.ToString())
                 ).ToList<Persona>();
 
-            ViewBag.idCurso = idCurso;
+                ViewBag.idCurso = idCurso;
 
+                ViewBag.viendoAño = DateTime.Parse("01/01/" + año.ToString()).Year;
 
-            return View("EditarAlumnosPorCurso", AlumnosDelCurso);
+                return View("EditarAlumnosPorCurso", AlumnosDelCurso);
 
+            }
+            else
+            {
+                ViewBag.ErrorBuscarAño = "Ingrese un año.";
+            }
 
+            return EditarAlumnosPorCurso(idCurso, Int32.Parse(DateTime.Now.Year.ToString()));
         }
 
 
@@ -156,40 +168,71 @@ namespace Cole.Controllers
 
 
         [HttpPost]
-        public ActionResult AñadirAlumnoAlCurso(int dni, int idCurso, int año)
+        public ActionResult AñadirAlumnoAlCurso(int? dni, int idCurso, int? año)
         {
-            if (AlumnoServicio.Existe(dni))
+            
+            if (dni != null && año!=null )
             {
+                int dni1 = (int)dni;
+                int año1 = (int)año;
 
-                if (!CursoServicio.Asiste(dni, idCurso, año))
+                if (AlumnoServicio.Existe(dni1))
                 {
 
-                    Asiste a = new Asiste();
+                    if (!CursoServicio.Asiste(dni1, idCurso, año1))
+                    {
 
-                    a.año = DateTime.Parse("01/01/"+año.ToString());
-                    a.DniAlumno = dni;
-                    a.IdCurso = idCurso;
+                        Asiste a = new Asiste();
+
+                        a.año = DateTime.Parse("01/01/" + año.ToString());
+                        a.DniAlumno = dni1;
+                        a.IdCurso = idCurso;
 
 
-                    db.Asiste.Add(a);
-                    db.SaveChanges();
+                        db.Asiste.Add(a);
+                        db.SaveChanges();
+
+                    }
+                    else
+                    {
+                        ViewBag.ErrorAñadirAlumno = "Ya existe este alumno en el curso.";
+                    }
+
 
                 }
                 else
                 {
-                    ViewBag.ErrorAñadirAlumno = "Ya existe este alumno en el curso.";
+                    ViewBag.ErrorAñadirAlumno = "El alumno no existe.";
                 }
 
-
+                return EditarAlumnosPorCurso(idCurso, año);
             }
             else
             {
-                ViewBag.ErrorAñadirAlumno = "El alumno no existe.";
+                ViewBag.ErrorAñadirAlumno = "Complete los campos.";
             }
             
-            return EditarAlumnosPorCurso(idCurso);
+
+            return EditarAlumnosPorCurso(idCurso, Int32.Parse(DateTime.Now.Year.ToString()) );
 
         }
+
+        [HttpPost]
+        public ActionResult EliminarAlumno(int dni, int idCurso, int año)
+        {
+            if (AlumnoServicio.Existe(dni))
+            {
+
+                Asiste a = db.Asiste.Find(dni, DateTime.Parse("01/01/" + año.ToString()), idCurso);
+                db.Asiste.Remove(a);
+                db.SaveChanges();
+
+            }
+
+            return EditarAlumnosPorCurso(idCurso, año);
+
+        }
+
 
         // POST: Curso/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
@@ -242,6 +285,29 @@ namespace Cole.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+        public ActionResult TomarAsistencia(int idCurso)
+        {
+
+            List<Persona> alumnos = db.Database.SqlQuery<Persona>("SELECT * " +
+                "FROM Persona " +
+                "WHERE Persona.Dni IN " +
+                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso= @p0 AND Asiste.año = @p1)", idCurso, "01/01/"+DateTime.Now.Year.ToString()).ToList();
+
+            return View(alumnos);
+        }
+
+
+        [HttpPost]
+        public ActionResult AñadirInasistencias(List<int> dniAlumnos)
+        {
+
+
+
+            return Index();
         }
     }
 }

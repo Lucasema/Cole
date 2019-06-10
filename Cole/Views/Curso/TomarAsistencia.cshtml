@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Cole.Models.Persona>
+    @{
+        ViewBag.Title = "TomarAsistencia";
+        Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+    }
+    <div class="mdl-grid">
+
+        <h2 class="mdl-cell--12-col">Asistencia </h2>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col" id="tabla">
+            <thead>
+                <tr>
+                    <th style="text-align:left">
+                        Nombre y apellido
+                    </th>
+                    <th style="text-align:left">
+                        Falta
+                    </th>
+                    <th style="text-align:left">
+                        Media falta
+                    </th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="3" style="color:red;text-align:center">El curso no contiene alumnos</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:left">
+                                @Html.DisplayFor(modelItem => item.Apellido), @Html.DisplayFor(modelItem => item.Nombre)
+
+                            </td>
+                            <td>
+                                <div class="mdc-checkbox">
+                                    <input type="checkbox"
+                                           class="mdc-checkbox__native-control"
+                                           id="checkbox-1" value=@item.Dni />
+                                    <div class="mdc-checkbox__background">
+                                        <svg class="mdc-checkbox__checkmark"
+                                             viewBox="0 0 24 24">
+                                            <path class="mdc-checkbox__checkmark-path"
+                                                  fill="none"
+                                                  d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                        </svg>
+                                        <div class="mdc-checkbox__mixedmark"></div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="mdc-checkbox">
+                                    <input type="checkbox"
+                                           class="mdc-checkbox__native-control"
+                                           id="checkbox-1" value=@item.Dni />
+                                    <div class="mdc-checkbox__background">
+                                        <svg class="mdc-checkbox__checkmark"
+                                             viewBox="0 0 24 24">
+                                            <path class="mdc-checkbox__checkmark-path"
+                                                  fill="none"
+                                                  d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                                        </svg>
+                                        <div class="mdc-checkbox__mixedmark"></div>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+
+                    <tr>
+                        <td colspan="3">
+
+                            <input type="button" value="Aceptar" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" id="boton" />
+
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+        <form method="post" action="AñadirInasistencias" hidden id="form">
+
+
+            <input type="submit" id="enviar"/>
+        </form>
+
+
+        <link href="~/Content/mdc.checkbox.min.css" rel="stylesheet" />
+        <script src="~/Content/mdc.checkbox.min.js"></script>
+
+        <script>
+            var checkboxs = document.querySelectorAll('.mdc-checkbox');
+
+            for (var i = 0; i < checkboxs.length; i++) {
+                var checkbox = new mdc.checkbox.MDCCheckbox(checkboxs[i]);
+            }
+
+            const form = document.getElementById("form");
+
+            const boton = document.getElementById("boton");
+
+            const enviar = document.getElementById("enviar");
+
+
+            boton.onclick = function () {
+
+                var listaInasistentes = document.getElementsByClassName("mdc-checkbox");
+
+                for (var i = 0; i < listaInasistentes.length; i++) {
+
+                    var checkActual = new mdc.checkbox.MDCCheckbox(listaInasistentes[i]);
+
+                    if (checkActual.checked) {
+
+                        var input = document.createElement("input");
+
+                        input.id = "dniAlumnos_" + i.toString();
+                        input.name = "dniAlumnos[" + i.toString() + "]";
+                        input.type = "number";
+
+
+                        alert(checkActual.value);
+                        input.value = checkActual.value;
+
+                        form.append(input);
+
+                    }
+                    
+                }
+
+                enviar.click();
+
+            }
+        </script>
+    </div>

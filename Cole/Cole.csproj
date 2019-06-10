@@ -249,6 +249,8 @@
     <Content Include="Content\DatePickerStyle.css" />
     <Content Include="Content\Google classroom.png" />
     <Content Include="Content\InstanciadorDatepicker.js" />
+    <Content Include="Content\mdc.checkbox.min.css" />
+    <Content Include="Content\mdc.checkbox.min.js" />
     <Content Include="Content\mdc.chips.css" />
     <Content Include="Content\mdc.chips.js" />
     <Content Include="Content\mdc.select.css" />
@@ -259,6 +261,7 @@
     <Content Include="Content\ValidacionesCrearCurso.js" />
     <Content Include="Content\ValidacionesCrearProfesor.js" />
     <Content Include="Content\ValidacionesCrearTutor.js" />
+    <Content Include="Content\ValidacionesEditarAlumnosPorCurso.js" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -356,6 +359,7 @@
     <Content Include="Views\Curso\Edit.cshtml" />
     <Content Include="Views\Curso\Index.cshtml" />
     <Content Include="Views\Curso\EditarAlumnosPorCurso.cshtml" />
+    <Content Include="Views\Curso\TomarAsistencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

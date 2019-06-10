@@ -12,28 +12,23 @@
         <h2 class="mdl-cell--12-col">Editar alumnos del curso</h2>
 
 
-        <form method="post" action="/Curso/FiltrarAlumnosPorAño" class="mdl-cell--12-col">
+        <form method="post" action="/Curso/EditarAlumnosPorCurso" class="mdl-cell--12-col">
 
-            <style>
-                input[type=number]::-webkit-inner-spin-button {
-                    opacity: 1
-                }
-            </style>
 
             <div class="mdl-cell--8-col" style="display:contents">
 
                 <input value=@ViewBag.idCurso id="idCurso" name="idCurso" hidden />
 
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarAlumno">
+                <text style="margin-right:20px">Viendo el año:</text>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="buscarPorAño">
 
                     <div class="col-md-10">
-                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@DateTime.Now.Year step="1" min="2014" maxlength="4"/>
+                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@ViewBag.viendoAño step="1" min="2014" maxlength="4" />
                         <label class="mdl-textfield__label" for="nro">
                             Filtrar por año
                         </label>
-                        <span class="mdl-textfield__error">
-
-                        </span>
+                        <span class="mdl-textfield__error" id="errorBuscarAño">@ViewBag.ErrorBuscarAño</span>
                     </div>
                 </div>
 
@@ -55,7 +50,9 @@
 
                 <input value=@ViewBag.idCurso id="idCurso" name="idCurso" hidden />
 
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarAlumno">
+                <text style="margin-right:20px">Añadir alumno:</text>
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="dniAlumno">
 
                     <div class="col-md-10">
                         <input class="mdl-textfield__input" type="number" id="dni" name="dni" />
@@ -68,7 +65,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarAlumno">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarEnAño">
 
                     <div class="col-md-10">
                         <input class="mdl-textfield__input" type="number" id="año" name="año" value=@DateTime.Now.Year step="1" min="2014" maxlength="4" />
@@ -91,6 +88,8 @@
             </div>
 
             <text style="color:red;text-align:center" id="errorAñadirAlumno">@ViewBag.ErrorAñadirAlumno</text>
+
+        </form>
 
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col" id="tabla">
                 <thead>
@@ -136,6 +135,26 @@
                                     @Html.DisplayFor(modelItem => item.Apellido)
                                 </td>
 
+                                <td>
+
+                                    <form method="post" action="~/Curso/EliminarAlumno">
+
+                                        <input value="@item.Dni" id="dni" name="dni" hidden />
+                                        <input value="@ViewBag.idCurso" id="idCurso" name="idCurso" hidden />
+                                        <input value="@ViewBag.viendoAño" id="año" name="año" hidden />
+
+                                        <button class="mdl-button mdl-js-button" type="submit">
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true" style="color:red">delete</i>
+                                            @*@Html.ActionLink("Eliminar", "EliminarAlumno", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: new { dni = item.Dni, idCurso = ViewBag.idCurso, año = ViewBag.viendoAño })*@
+
+                                        </button>
+                                    </form>
+
+
+
+                                    
+                                </td>
+
                             </tr>
                         }
 
@@ -143,6 +162,9 @@
 
                 </tbody>
             </table>
-        </form>
+        
+
+
+            <script src="~/Content/ValidacionesEditarAlumnosPorCurso.js"></script>
 
     </div>

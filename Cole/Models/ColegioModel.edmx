@@ -60,6 +60,7 @@
           <Property Name="IdMateria" Type="int" Nullable="false" />
           <Property Name="año" Type="date" Nullable="false" />
           <Property Name="IdCurso" Type="int" Nullable="false" />
+          <Property Name="DniProfesor" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Evaluacion">
           <Key>
@@ -411,6 +412,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Dicta_Profesor">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Dicta">
+              <PropertyRef Name="DniProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Publicacion_Materia">
           <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
           <End Role="Publicacion" Type="Self.Publicacion" Multiplicity="*" />
@@ -533,6 +546,10 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Dicta" EntitySet="Dicta" />
           </AssociationSet>
+          <AssociationSet Name="FK_Dicta_Profesor" Association="Self.FK_Dicta_Profesor">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Dicta" EntitySet="Dicta" />
+          </AssociationSet>
           <AssociationSet Name="FK_Publicacion_Materia" Association="Self.FK_Publicacion_Materia">
             <End Role="Materia" EntitySet="Materia" />
             <End Role="Publicacion" EntitySet="Publicacion" />
@@ -616,8 +633,10 @@
           <Property Name="IdMateria" Type="Int32" Nullable="false" />
           <Property Name="año" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IdCurso" Type="Int32" Nullable="false" />
+          <Property Name="DniProfesor" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Curso" Relationship="Self.FK_Dicta_Curso1" FromRole="Dicta" ToRole="Curso" />
           <NavigationProperty Name="Materia" Relationship="Self.FK__Dicta__año__70DDC3D8" FromRole="Dicta" ToRole="Materia" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK_Dicta_Profesor" FromRole="Dicta" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="Evaluacion">
           <Key>
@@ -719,6 +738,7 @@
           </Key>
           <Property Name="Dni" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Califica" Relationship="Self.FK__Califica__DniPro__75A278F5" FromRole="Profesor" ToRole="Califica" />
+          <NavigationProperty Name="Dicta" Relationship="Self.FK_Dicta_Profesor" FromRole="Profesor" ToRole="Dicta" />
           <NavigationProperty Name="Inasistencia" Relationship="Self.FK__Inasisten__DniPr__66603565" FromRole="Profesor" ToRole="Inasistencia" />
           <NavigationProperty Name="Persona" Relationship="Self.FK__Profesor__Dni__52593CB8" FromRole="Profesor" ToRole="Persona" />
           <NavigationProperty Name="Titulo" Relationship="Self.FK__Titulo__Dni__5441852A" FromRole="Profesor" ToRole="Titulo" />
@@ -898,6 +918,18 @@
             </Principal>
             <Dependent Role="Dicta">
               <PropertyRef Name="IdMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dicta_Profesor">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
+          <End Role="Dicta" Type="Self.Dicta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Dni" />
+            </Principal>
+            <Dependent Role="Dicta">
+              <PropertyRef Name="DniProfesor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1087,6 +1119,10 @@
             <End Role="Materia" EntitySet="Materia" />
             <End Role="Dicta" EntitySet="Dicta" />
           </AssociationSet>
+          <AssociationSet Name="FK_Dicta_Profesor" Association="Self.FK_Dicta_Profesor">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Dicta" EntitySet="Dicta" />
+          </AssociationSet>
           <AssociationSet Name="FK__Evaluacio__Nombr__5CD6CB2B" Association="Self.FK__Evaluacio__Nombr__5CD6CB2B">
             <End Role="Materia" EntitySet="Materia" />
             <End Role="Evaluacion" EntitySet="Evaluacion" />
@@ -1186,6 +1222,7 @@
                 <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
                 <ScalarProperty Name="año" ColumnName="año" />
                 <ScalarProperty Name="IdCurso" ColumnName="IdCurso" />
+                <ScalarProperty Name="DniProfesor" ColumnName="DniProfesor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

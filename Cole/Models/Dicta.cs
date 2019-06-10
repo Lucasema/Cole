@@ -17,8 +17,10 @@ namespace Cole.Models
         public int IdMateria { get; set; }
         public System.DateTime año { get; set; }
         public int IdCurso { get; set; }
+        public int DniProfesor { get; set; }
     
         public virtual Curso Curso { get; set; }
         public virtual Materia Materia { get; set; }
+        public virtual Profesor Profesor { get; set; }
     }
 }
