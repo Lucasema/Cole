@@ -360,6 +360,7 @@
     <Content Include="Views\Curso\Index.cshtml" />
     <Content Include="Views\Curso\EditarAlumnosPorCurso.cshtml" />
     <Content Include="Views\Curso\TomarAsistencia.cshtml" />
+    <Content Include="Views\Alumno\_LayoutAlumno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

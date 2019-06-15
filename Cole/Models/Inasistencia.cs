@@ -20,5 +20,17 @@ namespace Cole.Models
         public Nullable<bool> Completa { get; set; }
     
         public virtual Alumno Alumno { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Inasistencia)
+            {
+                Inasistencia otro = (Inasistencia)obj;
+
+                return (otro.DniAlumno == this.DniAlumno && otro.Fecha == this.Fecha);
+            }
+
+            return false;
+        }
     }
 }

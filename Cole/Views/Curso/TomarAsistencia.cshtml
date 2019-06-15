@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Cole.Models.Persona>
+@using Cole.Models;
     @{
         ViewBag.Title = "TomarAsistencia";
         Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
@@ -41,9 +42,26 @@
                             </td>
                             <td>
                                 <div class="mdc-checkbox">
-                                    <input type="checkbox"
-                                           class="mdc-checkbox__native-control"
-                                            value=@item.Dni id="completa" name="completa"/>
+                                    @{ 
+                                        Inasistencia i = new Inasistencia();
+                                        i.DniAlumno = item.Dni;
+                                        i.Fecha = DateTime.Today;
+
+                                        if (ViewBag.inasistenciasCompletas.Contains(i)) {
+
+                                            <input type="checkbox"
+                                                    class="mdc-checkbox__native-control"
+                                                    value=@item.Dni id="completa" name="completa"
+                                                    checked />
+
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox"
+                                                    class="mdc-checkbox__native-control"
+                                                    value=@item.Dni id="completa" name="completa" />
+                                        }
+                                    }
                                     <div class="mdc-checkbox__background">
                                         <svg class="mdc-checkbox__checkmark"
                                              viewBox="0 0 24 24">
@@ -58,9 +76,25 @@
 
                             <td>
                                 <div class="mdc-checkbox">
-                                    <input type="checkbox"
-                                           class="mdc-checkbox__native-control"
-                                            value=@item.Dni id="media" name="media"/>
+
+                                    @{
+                                        Inasistencia i2 = new Inasistencia();
+                                        i2.DniAlumno = item.Dni;
+                                        i2.Fecha = DateTime.Today;
+
+                                        if (ViewBag.inasistenciasMedias.Contains(i2))
+                                        {
+                                            <input type="checkbox"
+                                                   class="mdc-checkbox__native-control"
+                                                   value=@item.Dni id="media" name="media" checked />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox"
+                                                   class="mdc-checkbox__native-control"
+                                                   value=@item.Dni id="media" name="media" />
+                                        }
+                                    }
                                     <div class="mdc-checkbox__background">
                                         <svg class="mdc-checkbox__checkmark"
                                              viewBox="0 0 24 24">
