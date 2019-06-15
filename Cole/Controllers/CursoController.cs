@@ -322,91 +322,87 @@ namespace Cole.Controllers
 
             ViewBag.inasistenciasCompletas = inasistenciasCompletas;
             ViewBag.inasistenciasMedias = inasistenciasMedias;
+            ViewBag.idCurso = idCurso;
 
             return View(alumnos);
         }
 
 
         [HttpPost]
-        public ActionResult AñadirInasistencias(List<int> dnisFaltaCompleta, List<int> dnisMediaFalta)
+        public ActionResult AñadirInasistencias(int idCurso, List<int> dnisFaltaCompleta, List<int> dnisMediaFalta)
         {
+            //se obtienen de nuevo todos los alumnos para ese curso
+            List<Persona> alumnos = db.Database.SqlQuery<Persona>("SELECT * " +
+                "FROM Persona " +
+                "WHERE Persona.Dni IN " +
+                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso= @p0 AND Asiste.año = @p1)", idCurso, "01/01/"+DateTime.Today.Year.ToString()).ToList();
+
+
+            //se eliminan las inasistencias si ya las hubo, para realizar nuevas actualizadas
+            foreach (Persona a in alumnos)
+            {
+                Inasistencia i = db.Inasistencia.Find(a.Dni, DateTime.Today);
+
+                if(i != null)
+                {
+                    db.Inasistencia.Remove(i);
+                }
+            }
 
             
-            
-
             db.SaveChanges();
 
 
-
-
-            if (dnisFaltaCompleta != null && dnisMediaFalta != null)
+            if (dnisFaltaCompleta == null)
             {
-
-                List<int> faltaymedia = dnisFaltaCompleta.Intersect(dnisMediaFalta).ToList();
-
-                foreach (int dni in faltaymedia)
-                {
-                    Inasistencia i = new Inasistencia();
-                    i.DniAlumno = dni;
-                    i.Fecha = DateTime.Now;
-                    i.EsMedia = true;
-                    i.Completa = true;
-
-                    db.Inasistencia.Add(i);
-
-                }
-
-                List<int> faltaCompleta = dnisFaltaCompleta.Except(faltaymedia).ToList().Except(dnisMediaFalta).ToList();
-
-                
-
-                List<int> mediaFalta = dnisMediaFalta.Except(faltaymedia).ToList().Except(dnisFaltaCompleta).ToList();
-
-                foreach (int dni in mediaFalta)
-                {
-                    Inasistencia i = new Inasistencia();
-                    i.DniAlumno = dni;
-                    i.Fecha = DateTime.Now;
-                    i.EsMedia = true;
-                    i.Completa = false;
-
-                    db.Inasistencia.Add(i);
-
-                }
-            } else {
-
-                if (dnisFaltaCompleta != null)
-                {
-                    foreach (int dni in dnisFaltaCompleta)
-                    {
-                        Inasistencia i = new Inasistencia();
-                        i.DniAlumno = dni;
-                        i.Fecha = DateTime.Now;
-                        i.EsMedia = false;
-                        i.Completa = true;
-
-                        db.Inasistencia.Add(i);
-
-                    }
-                }
-
-                if (dnisMediaFalta != null)
-                {
-                    foreach (int dni in dnisMediaFalta)
-                    {
-                        Inasistencia i = new Inasistencia();
-                        i.DniAlumno = dni;
-                        i.Fecha = DateTime.Now;
-                        i.EsMedia = true;
-                        i.Completa = false;
-
-                        db.Inasistencia.Add(i);
-
-                    }
-                }
-
-
+                dnisFaltaCompleta = new List<int>();
             }
+
+            if (dnisMediaFalta == null)
+            {
+                dnisMediaFalta = new List<int>();
+            }
+
+            List<int> faltaymedia = dnisFaltaCompleta.Intersect(dnisMediaFalta).ToList();
+
+            List<int> faltaCompleta = dnisFaltaCompleta.Except(faltaymedia).ToList().Except(dnisMediaFalta).ToList();
+
+            List<int> mediaFalta = dnisMediaFalta.Except(faltaymedia).ToList().Except(dnisFaltaCompleta).ToList();
+
+            foreach(int dni in faltaymedia)
+            {
+                Inasistencia i = new Inasistencia();
+
+                i.DniAlumno = dni;
+                i.Fecha = DateTime.Today;
+                i.Completa = true;
+                i.EsMedia = true;
+
+                db.Inasistencia.Add(i);
+            }
+
+            foreach(int dni in faltaCompleta)
+            {
+                Inasistencia i = new Inasistencia();
+                i.DniAlumno = dni;
+                i.Fecha = DateTime.Today;
+                i.Completa = true;
+                i.EsMedia = false;
+
+                db.Inasistencia.Add(i);
+            }
+
+            foreach(int dni in mediaFalta)
+            {
+                Inasistencia i = new Inasistencia();
+                i.DniAlumno = dni;
+                i.Fecha = DateTime.Today;
+                i.Completa = false;
+                i.EsMedia = true;
+
+                db.Inasistencia.Add(i);
+            }
+
 
             db.SaveChanges();
 
