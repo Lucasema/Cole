@@ -12,7 +12,7 @@
     <h2 class="mdl-cell--12-col">Listado de cursos</h2>
     <div class="mdl-cell--8-col" style="display:contents">
         
-        <form method="post" action="Index" class="mdl-cell--6-col">
+        <form method="post" action="Index" class="mdl-cell--8-col">
 
             <div class="mdc-select" id="SelectNro">
 
@@ -42,17 +42,12 @@
     
             </script>
 
-
-
-
             <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
                 <i class="material-icons">search</i>
             </button>
-
         </form>
-        <div class="mdl-cell--2-col">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px">
-
+        <div class="mdl-cell--3-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; margin-left:50px">
                 @Html.ActionLink("Crear nuevo", "Create", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: null)
             </button>
         </div>
@@ -107,7 +102,8 @@
                         <td>
                             @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
                             @Html.ActionLink("Añadir o quitar alumnos", "EditarAlumnosPorCurso", new { idCurso = item.Id, año = @Int32.Parse(DateTime.Now.Year.ToString()) }) |
-                            @Html.ActionLink("Tomar asistencia", "TomarAsistencia", new { idCurso = item.Id })
+                            @Html.ActionLink("Tomar asistencia", "TomarAsistencia", new { idCurso = item.Id }) |
+                            @Html.ActionLink("Ver inasistencias", "VerInasistencias", new { idCurso = item.Id })
                         </td>
 
                     </tr>

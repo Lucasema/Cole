@@ -21,7 +21,12 @@ namespace Cole.Controllers
         {
             CargarDropdowns();
 
-            return View(db.Curso.ToList());
+
+            List<Curso> cursos = db.Curso.ToList();
+
+            cursos.Sort();
+
+            return View(cursos);
         }
 
         
@@ -324,6 +329,12 @@ namespace Cole.Controllers
             ViewBag.inasistenciasMedias = inasistenciasMedias;
             ViewBag.idCurso = idCurso;
 
+            Curso curso = db.Curso.Find(idCurso);
+
+            ViewBag.nroyDivision = curso.Nro.ToString() + "° " + curso.Division;
+
+            alumnos.Sort();
+
             return View(alumnos);
         }
 
@@ -408,6 +419,38 @@ namespace Cole.Controllers
 
 
             return RedirectToAction("Index", "Curso");
+        }
+
+
+        public ActionResult VerInasistencias(int idCurso)
+        {
+            List<Persona> alumnos = db.Database.SqlQuery<Persona>("SELECT * " +
+                "FROM Persona " +
+                "WHERE Persona.Dni IN " +
+                "(SELECT DniAlumno FROM Asiste WHERE Asiste.IdCurso= @p0 AND Asiste.año = @p1)", idCurso, "01/01/" + DateTime.Today.Year.ToString()).ToList();
+
+
+            alumnos.Sort();
+
+
+            Curso curso = db.Curso.Find(idCurso);
+
+            ViewBag.nroyDivision = curso.Nro.ToString() + "° " + curso.Division;
+
+
+            return View(alumnos);
+
+        }
+
+        public ActionResult DetallesInasistencia(int Dni)
+        {
+            Persona p = db.Persona.Find(Dni);
+
+            ViewBag.ApYNom = p.Apellido + " " + p.Nombre;
+
+            List<Inasistencia> inasistencias = db.Inasistencia.Where<Inasistencia>(x => x.DniAlumno == Dni && x.Fecha.Year == DateTime.Today.Year).ToList();
+
+            return View(inasistencias);
         }
 
     }

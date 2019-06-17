@@ -13,7 +13,7 @@ namespace Cole.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class Curso
+    public partial class Curso : IComparable<Curso>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Curso()
@@ -32,5 +32,32 @@ namespace Cole.Models
         public virtual ICollection<Asiste> Asiste { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dicta> Dicta { get; set; }
+
+        public int CompareTo(Curso other)
+        {
+            if (this.Nivel == "secundario" && other.Nivel == "primario")
+            {
+                return -1;
+
+            } else if (this.Nivel == "primario" && other.Nivel == "secundario") {
+                return 1;
+            }
+            else
+            {
+
+                if (this.Nro < other.Nro)
+                {
+                    return -1;
+                }
+                else if(this.Nro > other.Nro)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return this.Division.CompareTo(other.Division);
+                }
+            }
+        }
     }
 }

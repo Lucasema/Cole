@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Cole.Models.Inasistencia>
+@{
+    ViewBag.Title = "DetallesInasistencia";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+<div class="mdl-grid">
+
+    <h2 class="mdl-cell--12-col" style="text-align:center">Inasistencias @ViewBag.ApYNom</h2>
+
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--6-col" id="tabla" style="margin-right:auto; margin-left:auto">
+        <thead>
+            <tr>
+                <th style="text-align:center">
+                    Fecha
+                </th>
+                <th style="text-align:center">
+                    Cantidad
+                </th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3" style="color:red;text-align:center">El alumno no tiene faltas</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center">
+                           @item.Fecha.ToShortDateString()
+                        </td>
+
+
+                        @{ 
+                            float cantidadInasistencias = 0;
+
+                            if(item.Completa == true)
+                            {
+                                cantidadInasistencias++;
+                            }
+
+                            if(item.EsMedia == true)
+                            {
+                                cantidadInasistencias += (float)0.5;
+                            }
+
+                            <td style="text-align:center">
+                                @cantidadInasistencias.ToString()
+                            </td>
+                        }
+                        
+
+                    </tr>
+                }
+
+
+
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>

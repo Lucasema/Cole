@@ -14,7 +14,7 @@ namespace Cole.Models
     using System.ComponentModel.DataAnnotations;
     using Cole.Servicios;
     
-    public partial class Persona
+    public partial class Persona : IComparable<Persona>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Persona()
@@ -68,5 +68,17 @@ namespace Cole.Models
         public virtual ICollection<Mensaje> Mensaje1 { get; set; }
         public virtual Profesor Profesor { get; set; }
         public virtual Tutor Tutor { get; set; }
+
+        public int CompareTo(Persona other)
+        {
+            if (this.Apellido.CompareTo(other.Apellido) != 0)
+            {
+                return this.Apellido.CompareTo(other.Apellido);
+            }
+            else
+            {
+                return this.Nombre.CompareTo(other.Nombre);
+            }
+        }
     }
 }

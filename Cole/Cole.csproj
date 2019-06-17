@@ -361,6 +361,8 @@
     <Content Include="Views\Curso\EditarAlumnosPorCurso.cshtml" />
     <Content Include="Views\Curso\TomarAsistencia.cshtml" />
     <Content Include="Views\Alumno\_LayoutAlumno.cshtml" />
+    <Content Include="Views\Curso\VerInasistencias.cshtml" />
+    <Content Include="Views\Curso\DetallesInasistencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

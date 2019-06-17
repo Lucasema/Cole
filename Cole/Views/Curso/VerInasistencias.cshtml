@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Cole.Models.Persona>
+@using Cole.Models;
+@{
+    ViewBag.Title = "VerAsistencias";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+    <div class="mdl-grid">
+
+        <h2 class="mdl-cell--12-col">Inasistencias @ViewBag.nroyDivision</h2>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col" id="tabla">
+            <thead>
+                <tr>
+                    <th style="text-align:left">
+                        Nombre y apellido
+                    </th>
+                    <th style="text-align:center">
+                        Cantidad de Faltas
+                    </th>
+                    <th style="text-align:center">
+                        
+                    </th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="3" style="color:red;text-align:center">El curso no contiene alumnos</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+            <tr>
+                <td style="text-align:left">
+                    @Html.DisplayFor(modelItem => item.Apellido), @Html.DisplayFor(modelItem => item.Nombre)
+
+                </td>
+
+                @{
+
+
+                    ColegioEntities db = new ColegioEntities();
+
+                    List<Inasistencia> ins = db.Inasistencia.Where<Inasistencia>(x => x.DniAlumno == item.Dni && x.Fecha.Year == DateTime.Today.Year).ToList();
+
+                    float totalInasistencia = 0;
+
+                    foreach (Inasistencia i in ins)
+                    {
+                        if (i.Completa == true)
+                        {
+                            totalInasistencia++;
+                        }
+
+                        if (i.EsMedia == true)
+                        {
+                            totalInasistencia += (float)0.5;
+                        }
+                    }
+
+                                <td style="text-align:center">@totalInasistencia.ToString()</td>
+                        
+                 }
+
+
+
+
+                    <td>@Html.ActionLink("Detalles", "DetallesInasistencia", new { Dni = item.Dni })</td>
+
+                </tr>
+                    }
+
+                    
+
+                }
+
+            </tbody>
+        </table>
+
+
+
+    </div>
