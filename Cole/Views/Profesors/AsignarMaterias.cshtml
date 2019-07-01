@@ -1,0 +1,105 @@
+﻿@model List<Cole.Models.Dicta>
+
+@{
+    ViewBag.Title = "AsignarMaterias";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+    <div class="mdl-grid">
+
+        <h2 class="mdl-cell--12-col">Lista de materias de @ViewBag.NomYapellido </h2>
+
+        <form method="post" action="/Profesors/AñadirDictado" class="mdl-cell--12-col">
+
+            <input id="Dni" name="Dni" value=@ViewBag.dni hidden />
+
+            <div class="mdc-select" id="SelectMateria">
+
+                <i class="mdc-select__dropdown-icon"></i>
+                @Html.DropDownList("materia", (IEnumerable<SelectListItem>)ViewBag.materias, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px", @id = "materia" })
+
+                <label for="SearchBy" class="mdc-floating-label">Materia</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <div class="mdc-select" id="SelectCurso">
+
+                <i class="mdc-select__dropdown-icon"></i>
+                @Html.DropDownList("curso", (IEnumerable<SelectListItem>)ViewBag.cursos, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px", @id = "curso" })
+
+                <label for="SearchBy" class="mdc-floating-label">Curso</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <script>
+                const selectCurso = new mdc.select.MDCSelect(document.getElementById("SelectCurso"));
+            </script>
+
+            <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
+                <i class="material-icons">add</i>
+            </button>
+
+            <text style="color:red">@ViewBag.errorExiste</text>
+
+        </form>
+
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col" id="tabla">
+            <thead>
+                <tr>
+                    <th style="text-align:left">
+                        Nombre de la materia
+                    </th>
+
+                    <th style="text-align:left">
+                        Curso
+                    </th>
+
+                    <td style="text-align:left"></td>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="3" style="color:red;text-align:center">El profesor no tiene materias asignadas.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:left">
+                                @Html.DisplayFor(modelItem => item.Materia.Nombre)
+                            </td>
+
+                            <td style="text-align:left">
+                                @item.Curso.Nro @item.Curso.Division
+                            </td>
+
+
+                            <td style="text-align:left">
+                                <form method="post" action="~/Profesors/EliminarDictado">
+
+                                    <input value="@item.IdMateria" id="materia" name="materia" hidden />
+                                    <input value="@item.IdCurso" id="curso" name="curso" hidden />
+                                    <input value="@item.DniProfesor" id="Dni" name="Dni" hidden />
+
+                                    <button class="mdl-button mdl-js-button" type="submit" style="float:right">
+                                        <i class="material-icons mdc-button__icon" aria-hidden="true" style="color:red">delete</i>
+
+                                    </button>
+                                </form>
+                            </td>
+
+                        </tr>
+                    }
+
+                }
+
+            </tbody>
+        </table>
+    </div>

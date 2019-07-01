@@ -2,7 +2,16 @@
 @using Cole.Models;
     @{
         ViewBag.Title = "TomarAsistencia";
-        Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+
+        if(ViewBag.Role == "Profesor")
+        {
+            Layout = "~/Views/Profesors/_LayoutProfesor.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+        }
+        
     }
     <div class="mdl-grid">
 

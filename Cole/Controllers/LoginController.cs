@@ -59,7 +59,9 @@ namespace Cole.Controllers
                     else if (LoginServicio.EsProfesor(persona.Dni))
                     {
                         HttpContext.Session["Role"] = "Profesor";
-                        return View();
+                        HttpContext.Session["Dni"] = persona.Dni;
+
+                        return RedirectToAction("CursosPorProfe", "Curso");
                     }
                 }
             }

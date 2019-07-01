@@ -1,13 +1,14 @@
-﻿@model IEnumerable<Cole.Models.Profesor>
+﻿@model IEnumerable<Cole.Models.Evaluacion>
 
 @{
-    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
-    ViewBag.Title = "Profesores";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Profesors/_LayoutProfesor.cshtml";
 }
 <div class="mdl-grid">
 
 
-    <h2 class="mdl-cell--12-col">Listado de profesores</h2>
+    <h2 class="mdl-cell--12-col">Listado de evaluaciones</h2>
+
     <div class="mdl-cell--12-col" style="display:contents">
 
         <form method="post" action="Index" class="mdl-cell--10-col">
@@ -30,18 +31,15 @@
             </div>
 
             <script>
-
-                //este script evita que se ingresen numeros cuando se trata de buscar por dni+
-
                 var dropdown = document.getElementById("campo");
 
                 var valor = document.getElementById("valor");
 
-                dropdown.onchange = function () {
-                    if (dropdown.value == "dni") {
-                        valor.type = "number";
-                    } else {
-                        valor.type = "text";
+                dropdown.onchange= function(){
+                    if(dropdown.value=="dni"){
+                    valor.type="number";
+                    }else{
+                    valor.type="text";
                     }
                 }
             </script>
@@ -52,6 +50,7 @@
             </button>
 
         </form>
+
         <div class="mdl-cell--2-col">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px">
 
@@ -66,31 +65,23 @@
         <thead>
             <tr>
                 <th>
-                    D.N.I.
+                    Fecha
                 </th>
 
                 <th>
-                    Nombre
+                    Materia
                 </th>
 
                 <th>
-                    Apellido
+                    Título
                 </th>
 
                 <th>
-                    Teléfono celular
-                </th>
-                <th>
-                    Teléfono fijo
+                    Tipo
                 </th>
 
-                <th>
-                    Domicilio
-                </th>
-                <th>
-                    Nacionalidad
-                </th>
-
+                
+                
                 <th></th>
             </tr>
         </thead>
@@ -100,7 +91,7 @@
             @if (Model.Count() == 0)
             {
                 <tr>
-                    <td colspan="8" style="color:red;text-align:center">No se han encontrado registros</td>
+                    <td colspan="5" style="color:red;text-align:center">No tiene evaluaciones.</td>
                 </tr>
             }
             else
@@ -109,36 +100,22 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Dni)
+                            @item.Fecha.ToShortDateString()
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Nombre)
+                            @Html.DisplayFor(modelItem => item.Materia)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Apellido)
+                            @Html.DisplayFor(modelItem => item.Titulo)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Persona.TelCelular)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.TelFijo)
+                            @Html.DisplayFor(modelItem => item.Tipo)
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Domicilio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Persona.Nacionalidad)
-                        </td>
-
-
-
-
-                        <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.Dni }) |
-                            @Html.ActionLink("Detalles", "Details", new { id = item.Dni }) |
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Dni }) |
-                            @Html.ActionLink("Asignar materias", "AsignarMaterias", "Profesors", new { Dni = item.Dni }, null) 
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
                         </td>
                     </tr>
                 }

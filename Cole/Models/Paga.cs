@@ -22,5 +22,17 @@ namespace Cole.Models
     
         public virtual Alumno Alumno { get; set; }
         public virtual Cuota Cuota { get; set; }
+
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Paga)
+            {
+                Paga other = (Paga)obj;
+                return (this.DniAlumno == other.DniAlumno && this.FechaDelMes == other.FechaDelMes);
+            }
+
+            return false;
+        }
     }
 }

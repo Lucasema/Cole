@@ -1,0 +1,59 @@
+﻿@model Cole.Models.Paga
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Paga</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NroRecibo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NroRecibo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPago)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lugar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lugar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Alumno.Dni)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alumno.Dni)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cuota.FechaDelMes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cuota.FechaDelMes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

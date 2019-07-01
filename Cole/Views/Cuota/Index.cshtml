@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Cole.Models.Cuota>
+@using System.Globalization;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+    
+    
+
+    <div class="mdl-grid">
+
+        <h2 class="mdl-cell--12-col">Listado de cuotas</h2>
+
+        <form method="post" action="Index" controller="Cuota" class="mdl-cell--10-col">
+
+            <div class="mdc-select" id="selectAño">
+                <i class="mdc-select__dropdown-icon"></i>
+                <select id="año" class="mdc-select__native-control" style="height:45px" name="año">
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+                <label for="SearchBy" class="mdc-floating-label">Año</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <button type="submit" id="enviar" hidden></button>
+
+        </form>
+        <script>
+
+
+        var selectAño = document.getElementById("año");
+
+        selectAño.value = @ViewBag.año ;
+
+        selectAño.onchange = function () {
+            var enviar = document.getElementById("enviar");
+            enviar.click();
+        }
+        </script>
+
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col">
+            <thead>
+                <tr>
+                    <th style="text-align:left">
+                        Mes
+                    </th>
+
+                    <th style="text-align:left">
+                        Monto
+                    </th>
+
+                    <th style="text-align:left">
+                    </th>
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @for (int i = 1; i < 13; i++)
+                {
+
+                    var c = Model.Where(x => x.FechaDelMes.Month == i).FirstOrDefault();
+
+                    if (c != null)
+                    {
+                        <tr>
+                            <td style="text-align:left">
+                                @c.FechaDelMes.ToString("MMMM", CultureInfo.CreateSpecificCulture("es"))
+                            </td>
+                            <td style="text-align:left">
+                               $ @c.Monto
+                            </td>
+
+                            <td style="text-align:left">
+                                <button style="float:left" class="mdl-button mdl-js-button" type="button" id="@c.FechaDelMes" onclick="location.href='@Url.Action("Edit", "Cuota", new { fechaCuota = c.FechaDelMes })';return false;">
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                                    <div class="mdl-tooltip" for="@c.FechaDelMes">
+                                        Editar
+                                    </div>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td style="text-align:left">
+                                @DateTime.Parse("01/" + i.ToString() + "/" + @ViewBag.año.ToString()).ToString("MMMM", CultureInfo.CreateSpecificCulture("es"))
+                            </td>
+                            <td style="color:red; text-align:left">
+                                No definido
+                            </td>
+
+                            <td style="text-align:left">
+                                <button style="float:left" class="mdl-button mdl-js-button" type="button" id="@DateTime.Parse("01/" + i.ToString() + "/" + @ViewBag.año.ToString())" onclick="location.href='@Url.Action("Create", "Cuota", new { fechaCuota = @DateTime.Parse("01/" + i.ToString() + "/" + @ViewBag.año.ToString()) })';return false;">
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
+                                    <div class="mdl-tooltip" for="@DateTime.Parse("01/" + i.ToString() + "/" + @ViewBag.año.ToString())">
+                                        Añadir
+                                    </div>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>

@@ -35,7 +35,7 @@ namespace Cole.Servicios
 
             //busca el alumno, si lo encuentra asigna 1
             var esAlumno = db.Database.SqlQuery<int>(
-                "select count Dni" +
+                "select count(Dni) " +
                 "from Alumno " +
                 "where Dni = @p0",dni
                 ).First();
@@ -55,7 +55,7 @@ namespace Cole.Servicios
 
             //busca el profesor, si lo encuentra asigna 1
             var esProfesor = db.Database.SqlQuery<int>(
-                "select count Dni" +
+                "select count(Dni) " +
                 "from Profesor " +
                 "where Dni = @p0", dni
                 ).First();

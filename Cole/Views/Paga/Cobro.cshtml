@@ -1,0 +1,308 @@
+﻿@model List<Cole.Models.Paga>
+@using System.Globalization;
+@{
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+    ViewBag.Title = "Cobro";
+}
+    <div class="mdl-grid">
+
+
+        <h2 class="mdl-cell--12-col">Cobrar cuotas</h2>
+        <div class="mdl-cell--12-col" style="display:contents">
+
+            <form method="post" action="AñadirCobro" class="mdl-cell--10-col">
+                <div id="listaPagos">
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        string id = "pagos_" + i.ToString() + "__FechaDelMes";
+                        string name = "pagos[" + i.ToString() + "].FechaDelMes";
+                        var value = Model[i].FechaDelMes.ToString();
+                        <input value=@value name=@name id=@id hidden />
+
+                        id = "pagos_" + i.ToString() + "__DniAlumno";
+                        name = "pagos[" + i.ToString() + "].DniAlumno";
+                        value = Model[i].DniAlumno.ToString();
+                        <input value=@value name=@name id=@id hidden />
+
+                        id = "pagos_" + i.ToString() + "__Lugar";
+                        name = "pagos[" + i.ToString() + "].Lugar";
+                        value = Model[i].Lugar.ToString();
+                        <input value=@value name=@name id=@id hidden />
+
+                        id = "pagos_" + i.ToString() + "__NroRecibo";
+                        name = "pagos[" + i.ToString() + "].NroRecibo";
+                        value = Model[i].NroRecibo.ToString();
+                        <input value=@value name=@name id=@id hidden />
+
+                        id = "pagos_" + i.ToString() + "__FechaPago";
+                        name = "pagos[" + i.ToString() + "].FechaPago";
+                        value = Model[i].FechaPago.ToString();
+                        <input value=@value name=@name id=@id hidden />
+
+                        id = "pagos_" + i.ToString() + "__Cuota___Monto";
+                        name = "pagos[" + i.ToString() + "].Cuota.Monto";
+                        value = Model[i].Cuota.Monto.ToString();
+                        <input value=@value name=@name id=@id hidden />
+
+                    }
+                </div>
+
+                <div class="mdl-textfield mdl-js-textfield" style="width:150px" id="textfieldCliente">
+                    <input class="mdl-textfield__input text-box single-line" id="nombreCliente" name="nombreCliente" type="text" value=@ViewBag.nombreCliente>
+                    <label class="mdl-textfield__label">
+                        Cliente
+                    </label>
+                    <span class="mdl-textfield__error" id="errorCliente">@ViewBag.errorCliente</span>
+                </div>
+
+
+                <div class="mdl-textfield mdl-js-textfield" style="width:150px" id="textfieldDni">
+                    <input class="mdl-textfield__input text-box single-line" id="dni" name="dni" type="number" value=@ViewBag.ultimoIngreso>
+                    <label class="mdl-textfield__label">
+                        D.N.I. del alumno
+                    </label>
+                    <span class="mdl-textfield__error" id="errorDni">@ViewBag.errorDni</span>
+                </div>
+
+                <div class="mdc-select">
+                    <i class="mdc-select__dropdown-icon"></i>
+                    <select id="mes" class="mdc-select__native-control" style="height:45px" name="mes">
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+
+                    </select>
+                    <label for="SearchBy" class="mdc-floating-label">Mes</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <div class="mdc-select" id="selectAño">
+                    <i class="mdc-select__dropdown-icon"></i>
+                    <select id="año" class="mdc-select__native-control" style="height:45px" name="año">
+                        <option value="2014" >2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                    <label for="SearchBy" class="mdc-floating-label">Año</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <input type="text" id="lugar" name="lugar" value="Coronel Du Graty, Chaco" hidden />
+                <input type="number" id="nroRecibo" name="nroRecibo" value=@ViewBag.nroRecibo hidden />
+
+                <script>
+                    var select2 = new mdc.select.MDCSelect(document.getElementById("selectAño"));
+                </script>
+
+
+
+
+                <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
+                    <i class="material-icons">add</i>
+                </button>
+
+
+                <text style="color:red">@ViewBag.errorRepetido @ViewBag.errorCuotaExiste</text>
+            </form>
+
+
+
+            <form method="post" action="EliminarAlumno" id="eliminar" hidden>
+                <input type="number" id="nroRecibo" name="nroRecibo" value=@ViewBag.nroRecibo hidden />
+                <button type="submit" id="aceptarEliminar"></button>
+            </form>
+
+
+
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <script>
+            document.title = "Recibo N°" + " @ViewBag.nroRecibo ";
+
+
+
+            function coso(indice) {
+
+
+                var listaPagos = document.getElementById("listaPagos");
+
+                var formEliminar = document.getElementById("eliminar");
+
+                formEliminar.appendChild(listaPagos);
+
+                var inputIndice = document.createElement("input");
+                inputIndice.name = "indice";
+                inputIndice.id = "indice";
+                inputIndice.value = indice;
+
+                formEliminar.appendChild(inputIndice);
+
+                var aceptarEliminar = document.getElementById("aceptarEliminar");
+
+                aceptarEliminar.click();
+
+            }
+
+            function imprimirYenviar() {
+                //Get the HTML of div
+                var divElements = document.getElementById("tabla").outerHTML;
+                //Get the HTML of whole page
+                var oldPage = document.body.innerHTML;
+
+
+                if (document.getElementById("total") != null) {
+
+                    var monto = document.getElementById("total").innerHTML;
+
+                    var nombreCliente = document.getElementById("nombreCliente").value;
+
+                    if (nombreCliente != "" && nombreCliente != null) {
+
+                        var texto = "Recibo de parte de " + nombreCliente + " el monto total de " + monto + " en concepto de: ";
+
+                        //Reset the page's HTML with div's HTML only
+                        document.body.innerHTML =
+                            "<html><head><title></title></head><body> <h2>Colegio San Agustin U.E.G.P. N°222</h2> <br/> " +
+                            "<h4 >Recibo N°" + @ViewBag.nroRecibo + "</h4><br/>" +
+                            "<text style='font-size:15px'> " + texto + "</text><br/>" + "<div style='margin-left:100px'>" +
+                            divElements + "</div> <br/><text style='font-size:15px'>Firma y aclaración: </text></body>";
+                        //Print Page
+                        window.print();
+                        //Restore orignal HTML
+                        document.body.innerHTML = oldPage;
+
+
+                        var formGuardar = document.getElementById("formGuardar");
+
+                        var listaPagos = document.getElementById("listaPagos"); 
+
+                        formGuardar.appendChild(listaPagos);
+
+                        var botonGuardar = document.getElementById("botonGuardar");
+
+                        botonGuardar.click();
+
+                    } else {
+                        document.getElementById("errorCliente").innerHTML = "Ingrese el nombre de cliente.";
+
+                        var textfield = document.getElementById("textfieldCliente");
+
+                        textfield.classList.add("is-invalid");
+                        textfield.classList.add("is-dirty");
+                    }
+
+                }
+
+
+
+            }
+
+
+
+        </script>
+        <br />
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col" id="tabla" style="font-size:15px">
+
+
+            <thead>
+                <tr>
+                    <th style="font-size:15px">
+                        D.N.I. del alumno
+                    </th>
+
+                    <th style="font-size:15px">
+                        Mes pagado
+                    </th>
+
+                    <th style="font-size:15px">
+                        Monto
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="8" style="color:red;text-align:center">No se han encontrado elementos</td>
+                    </tr>
+                }
+                else
+                {
+                    float total = 0;
+                    foreach (var item in Model)
+                    {
+                        total += (float)item.Cuota.Monto;
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DniAlumno)
+                            </td>
+
+                            <td>
+                                @item.FechaDelMes.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")) de @item.FechaDelMes.Year
+                            </td>
+
+                            <td>
+                                $ @Html.DisplayFor(modelItem => item.Cuota.Monto)
+                            </td>
+
+                            <td>
+
+
+
+                                <button class="mdl-button mdl-js-button" type="button" id="botonEliminar" onclick="coso(@Model.IndexOf(item) )">
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true" style="color:red">delete</i>
+                                </button>
+
+                            </td>
+
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2" style="text-align:left">Total</td>
+                        <td id="total">$ @total</td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="mdl-cell--12-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; float:right" onclick="imprimirYenviar();">
+                Guardar e imprimir
+            </button>
+        </div>
+
+        <form action="GuardarCobro" method="post" hidden id="formGuardar">
+
+            <button type="submit" id="botonGuardar"></button>
+        </form>
+
+        <script src="~/Content/ValidacionesCobrar.js"></script>
+    </div>

@@ -151,8 +151,11 @@
   <ItemGroup>
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\CuotaController.cs" />
     <Compile Include="Controllers\CursoController.cs" />
+    <Compile Include="Controllers\EvaluacionController.cs" />
     <Compile Include="Controllers\MateriasController.cs" />
+    <Compile Include="Controllers\PagaController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\ProfesorsController.cs" />
     <Compile Include="Filters\Autorizar.cs" />
@@ -247,6 +250,7 @@
     <Content Include="Content\css_layout_dissmisable_drawer2.css" />
     <Content Include="Content\Datepicker.js" />
     <Content Include="Content\DatePickerStyle.css" />
+    <Content Include="Content\examen_icono.png" />
     <Content Include="Content\Google classroom.png" />
     <Content Include="Content\InstanciadorDatepicker.js" />
     <Content Include="Content\mdc.checkbox.min.css" />
@@ -257,6 +261,8 @@
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\ValidacionCrearMateria.js" />
+    <Content Include="Content\ValidacionesBuscarPagos.js" />
+    <Content Include="Content\ValidacionesCobrar.js" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
     <Content Include="Content\ValidacionesCrearCurso.js" />
     <Content Include="Content\ValidacionesCrearProfesor.js" />
@@ -363,6 +369,26 @@
     <Content Include="Views\Alumno\_LayoutAlumno.cshtml" />
     <Content Include="Views\Curso\VerInasistencias.cshtml" />
     <Content Include="Views\Curso\DetallesInasistencia.cshtml" />
+    <Content Include="Views\Paga\Create.cshtml" />
+    <Content Include="Views\Paga\Delete.cshtml" />
+    <Content Include="Views\Paga\Details.cshtml" />
+    <Content Include="Views\Paga\Edit.cshtml" />
+    <Content Include="Views\Paga\Index.cshtml" />
+    <Content Include="Views\Paga\Cobro.cshtml" />
+    <Content Include="Views\Paga\Reimprimir.cshtml" />
+    <Content Include="Views\Cuota\Create.cshtml" />
+    <Content Include="Views\Cuota\Delete.cshtml" />
+    <Content Include="Views\Cuota\Details.cshtml" />
+    <Content Include="Views\Cuota\Edit.cshtml" />
+    <Content Include="Views\Cuota\Index.cshtml" />
+    <Content Include="Views\Profesors\AsignarMaterias.cshtml" />
+    <Content Include="Views\Profesors\_LayoutProfesor.cshtml" />
+    <Content Include="Views\Curso\CursosPorProfe.cshtml" />
+    <Content Include="Views\Evaluacion\Create.cshtml" />
+    <Content Include="Views\Evaluacion\Delete.cshtml" />
+    <Content Include="Views\Evaluacion\Details.cshtml" />
+    <Content Include="Views\Evaluacion\Edit.cshtml" />
+    <Content Include="Views\Evaluacion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

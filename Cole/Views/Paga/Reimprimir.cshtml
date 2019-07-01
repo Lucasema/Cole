@@ -1,0 +1,105 @@
+﻿@model List<Cole.Models.Paga>
+@using System.Globalization;
+@{
+    ViewBag.Title = "Reimprimir";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col" id="tabla" style="font-size:15px">
+
+
+        <thead>
+            <tr>
+                <th style="font-size:15px">
+                    D.N.I. del alumno
+                </th>
+
+                <th style="font-size:15px">
+                    Mes pagado
+                </th>
+
+                <th style="font-size:15px">
+                    Monto
+                </th>
+
+            </tr>
+        </thead>
+
+
+        <tbody>
+
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="8" style="color:red;text-align:center">No se han encontrado elementos</td>
+                </tr>
+            }
+            else
+            {
+                float total = 0;
+                foreach (var item in Model)
+                {
+                    total += (float)item.Cuota.Monto;
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DniAlumno)
+                        </td>
+
+                        <td>
+                            @item.FechaDelMes.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")) de @item.FechaDelMes.Year
+                        </td>
+
+                        <td>
+                            $ @Html.DisplayFor(modelItem => item.Cuota.Monto)
+                        </td>
+
+
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2" style="text-align:left">Total</td>
+                    <td id="total">$ @ViewBag.total</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+<script>
+        document.title = "Recibo N°" + " @Model[0].NroRecibo ";
+
+        var divElements = document.getElementById("tabla").outerHTML;
+
+        var texto = "Recibo el día " + " @Model[0].FechaPago.Value.ToShortDateString() " + " de parte de " + "____________________________________________________________________" + " el monto total de " + @ViewBag.total + " en concepto de: ";
+
+
+    var botonImprimir = document.createElement("button");
+
+    botonImprimir.type = "button";
+    botonImprimir.innerHTML = "imprimir";
+
+    
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML =
+            "<html><head><title></title></head><body> <h2>Colegio San Agustin U.E.G.P. N°222</h2> <br/> " +
+            "<h4 >Recibo N°" + @Model[0].NroRecibo + "</h4><br/>" +
+            "<text style='font-size:15px'> " + texto + "</text><br/>" + "<div>" +
+            divElements + "</div> <br/><text style='font-size:15px'>Firma y aclaración: </text> </body>";
+    //Print Page
+
+
+    botonImprimir.onclick = function () {
+
+        botonImprimir.hidden = true;
+
+        window.print();
+        var a = document.createElement("a");
+        a.href = "/Paga/Index";
+        a.click();
+
+    }
+
+    document.body.appendChild(botonImprimir);
+        
+</script>
+
+

@@ -23,6 +23,97 @@ namespace Cole.Controllers
             return View(profesor.ToList());
         }
 
+
+        public ActionResult AsignarMaterias(int Dni)
+        {
+           
+            List<Dicta> dicta = db.Dicta.Include(x => x.Materia).Include(x => x.Curso).Where(x => x.DniProfesor == Dni && x.año.Year == DateTime.Today.Year).ToList();
+
+            CargarVistaDictados(Dni);
+
+            return View(dicta);
+        }
+
+        
+
+        public void CargarVistaDictados(int Dni)
+        {
+             Persona profe = db.Persona.Find(Dni);
+
+            ViewBag.NomYapellido = profe.Nombre + " " + profe.Apellido;
+            ViewBag.dni = Dni;
+
+            IEnumerable<SelectListItem> materias = db.Materia.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Nombre.ToString()
+
+            }).OrderBy(x => x.Text);
+
+            ViewBag.materias = materias;
+
+            IEnumerable<SelectListItem> cursos = db.Curso.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Nro.ToString() + " " + c.Division
+
+            }).OrderBy(x => x.Text);
+
+            ViewBag.cursos = cursos;
+
+        }
+
+
+
+        [HttpPost]
+        public ActionResult AñadirDictado(int materia, int curso, int Dni)
+        {
+            //ya existe el dictado
+
+            Dicta d = new Dicta();
+
+            d.IdMateria = materia;
+            d.IdCurso = curso;
+            d.DniProfesor = Dni;
+            d.año = DateTime.Parse("01/01/" + DateTime.Today.Year);
+
+            if(db.Dicta.Find(d.IdMateria, d.año, d.IdCurso) == null)
+            {
+                db.Dicta.Add(d);
+                db.SaveChanges();
+            }
+            else
+            {
+                ViewBag.errorExiste = "Esa materia ya está asignada a un profesor.";
+            }
+
+            CargarVistaDictados(Dni);
+
+            List<Dicta> dicta = db.Dicta.Include(x => x.Materia).Include(x => x.Curso).Where(x => x.DniProfesor == Dni && x.año.Year == DateTime.Today.Year).ToList();
+
+            return View("AsignarMaterias", dicta);
+        }
+
+        [HttpPost]
+        public ActionResult EliminarDictado(int materia, int curso, int Dni)
+        {
+
+            Dicta d = db.Dicta.Find(materia, DateTime.Parse("01/01/" + DateTime.Today.Year), curso);
+
+            db.Dicta.Remove(d);
+            db.SaveChanges();
+
+            CargarVistaDictados(Dni);
+
+            List<Dicta> dicta = db.Dicta.Include(x => x.Materia).Include(x => x.Curso).Where(x => x.DniProfesor == Dni && x.año.Year == DateTime.Today.Year).ToList();
+
+            return View("AsignarMaterias", dicta);
+
+        }
+
+
+
+
         [HttpPost]
         public ActionResult Index(string campo, string valor)
         {

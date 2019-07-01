@@ -16,6 +16,7 @@ namespace Cole.Controllers
     {
         private ColegioEntities db = new ColegioEntities();
 
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Curso
         public ActionResult Index()
         {
@@ -25,6 +26,21 @@ namespace Cole.Controllers
             List<Curso> cursos = db.Curso.ToList();
 
             cursos.Sort();
+
+            return View(cursos);
+        }
+
+
+        [Filters.Autorizar(Roles = "Profesor")]
+        public ActionResult CursosPorProfe()
+        {
+            int Dni = (int)HttpContext.Session["Dni"];
+
+            Persona p = db.Persona.Find(Dni);
+
+            ViewBag.nomYap = p.Nombre + " " + p.Apellido;
+
+            List<Curso> cursos = db.Database.SqlQuery<Curso>("SELECT * FROM Curso WHERE Id IN (SELECT IdCurso FROM Dicta WHERE DniProfesor = @p0)", Dni).ToList();
 
             return View(cursos);
         }
@@ -335,6 +351,12 @@ namespace Cole.Controllers
 
             alumnos.Sort();
 
+            if(HttpContext.Session["Role"] != null && HttpContext.Session["Role"].ToString() == "Profesor")
+            {
+                ViewBag.Role = "Profesor";
+            }
+
+
             return View(alumnos);
         }
 
@@ -418,6 +440,11 @@ namespace Cole.Controllers
             db.SaveChanges();
 
 
+            if(HttpContext.Session["Role"].ToString() == "Profesor")
+            {
+                return RedirectToAction("CursosPorProfe");
+            }
+
             return RedirectToAction("Index", "Curso");
         }
 
@@ -437,6 +464,11 @@ namespace Cole.Controllers
 
             ViewBag.nroyDivision = curso.Nro.ToString() + "° " + curso.Division;
 
+            if(HttpContext.Session["Role"] != null && HttpContext.Session["Role"].ToString() == "Profesor")
+            {
+                ViewBag.Role = "Profesor";
+            }
+
 
             return View(alumnos);
 
@@ -449,6 +481,11 @@ namespace Cole.Controllers
             ViewBag.ApYNom = p.Apellido + " " + p.Nombre;
 
             List<Inasistencia> inasistencias = db.Inasistencia.Where<Inasistencia>(x => x.DniAlumno == Dni && x.Fecha.Year == DateTime.Today.Year).ToList();
+
+            if (HttpContext.Session["Role"] != null && HttpContext.Session["Role"].ToString() == "Profesor")
+            {
+                ViewBag.Role = "Profesor";
+            }
 
             return View(inasistencias);
         }
