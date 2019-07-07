@@ -1,0 +1,199 @@
+﻿@model IEnumerable<Cole.Models.Persona>
+@{
+    ViewBag.Title = "Calificar";
+    Layout = "~/Views/Profesors/_LayoutProfesor.cshtml";
+}
+
+    <div class="mdl-grid">
+
+
+        <h2 class="mdl-cell--12-col">"@ViewBag.nombreEvaluacion" - @ViewBag.nombreMateria</h2>
+
+        <div class="mdl-cell--12-col" style="display:contents">
+
+            <form method="post" action="FiltrarCalificaciones">
+
+
+
+                <div class="mdc-select" id="selectCurso" style="margin-left:10px">
+
+                    <i class="mdc-select__dropdown-icon"></i>
+                    @Html.DropDownList("idCurso", (IEnumerable<SelectListItem>)ViewBag.cursos, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px", @id = "idCurso" })
+
+                    <label for="SearchBy" class="mdc-floating-label">Filtrar curso</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <script>
+                    var selectCurso = document.getElementById("idCurso");
+                    selectCurso.value = @ViewBag.cursoBuscado ;
+                </script>
+
+                <div class="mdc-select" id="selectAño">
+                    <i class="mdc-select__dropdown-icon"></i>
+                    <select id="año" class="mdc-select__native-control" style="height:45px" name="año">
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                    <label for="SearchBy" class="mdc-floating-label">Año</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+                <script>
+                    var select2 = new mdc.select.MDCSelect(document.getElementById("selectAño"));
+
+                    var selectAño = document.getElementById("año");
+                    selectAño.value = @ViewBag.añoBuscado ;
+                </script>
+
+                <input name="idMateria" id="idMateria" value="@ViewBag.idMateria" hidden />
+                <input name="idEvaluacion" id="idEvaluacion" value="@ViewBag.idEvaluacion" hidden />
+
+
+
+
+                <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
+                    <i class="material-icons">search</i>
+                </button>
+            </form>
+
+            
+
+        </div>
+
+        <br />
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col">
+            <thead>
+                <tr>
+                    <th style="text-align:left">
+                        Nombre y apellido
+                    </th>
+
+                    <th style="text-align:left">
+                        Nota
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="5" style="color:red;text-align:center">No se encontraron alumnos.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:left">
+                                @item.Apellido, @item.Nombre
+                            </td>
+                            <td style="text-align:left">
+                                @{
+                                    var calificacion = item.Alumno.Califica.FirstOrDefault(x => x.Evaluacion.Id == ViewBag.idEvaluacion);
+
+                                    if (calificacion == null)
+                                    {
+                                        <text >sin nota</text>
+                                    }
+                                    else
+                                    {
+                                        if (calificacion.Nota < 11)
+                                        {
+                                            <text>@calificacion.Nota</text>
+                                        }
+                                        else
+                                        {
+                                            switch (calificacion.Nota)
+                                            {
+                                                case 11: <text>E.P.</text> ; break;
+                                                case 12: <text>A</text> ; break;
+                                                case 13: <text>S</text> ; break;
+                                            }
+                                        }
+                                    }
+
+                                }
+
+
+
+                            </td>
+
+                            <td>
+                                <button style="float:right" class="mdl-button mdl-js-button" type="button" id="boton @ViewBag.idEvaluacion @item.Dni" onclick="mostrarForm('form @ViewBag.idEvaluacion @item.Dni', 'boton @ViewBag.idEvaluacion @item.Dni');">
+
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                                    <div class="mdl-tooltip" for="boton @ViewBag.idEvaluacion @item.Dni">
+                                        Editar
+                                    </div>
+
+                                </button>
+
+                                <form method="post" action="EditarNota" id="form @ViewBag.idEvaluacion @item.Dni" hidden>
+                                    <input id="dniAlumno" name="dniAlumno" value="@item.Dni" hidden />
+                                    <input id="idEvaluacion" name="idEvaluacion" value="@ViewBag.idEvaluacion" hidden />
+                                    <input id="idMateria" name="idMateria" value="@ViewBag.idMateria" hidden />
+
+                                    <div class="mdc-select col-md-6" id="select @ViewBag.idEvaluacion @item.Dni" style="margin-left:10px">
+                                        <i class="mdc-select__dropdown-icon"></i>
+                                        <select id="nota" name="nota" class="mdc-select__native-control" required>
+                                            <option value=1>1</option>
+                                            <option value=2>2</option>
+                                            <option value=3>3</option>
+                                            <option value=4>4</option>
+                                            <option value=5>5</option>
+                                            <option value=6>6</option>
+                                            <option value=7>7</option>
+                                            <option value=8>8</option>
+                                            <option value=9>9</option>
+                                            <option value=10>10</option>
+                                            <option value=11>E.P.</option>
+                                            <option value=12>A</option>
+                                            <option value=13>S</option>
+                                        </select>
+                                        <label for="SearchBy" class="mdc-floating-label">Nota</label>
+                                        <div class="mdc-line-ripple"></div>
+                                    </div>
+
+                                    <script>
+                                        var selectNota = new mdc.select.MDCSelect(document.getElementById("select @ViewBag.idEvaluacion @item.Dni"));
+                                    </script>
+
+                                    <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
+                                        <i class="material-icons">save</i>
+                                    </button>
+
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                                    }
+            </tbody>
+        </table>
+
+    </div>
+
+<script>
+    function mostrarForm(nombreForm, nombreBoton) {
+                                        var form = document.getElementById(nombreForm);
+                                        var boton = document.getElementById(nombreBoton);
+                                        boton.hidden = true;
+                                        form.hidden = false;
+                                    }
+</script>

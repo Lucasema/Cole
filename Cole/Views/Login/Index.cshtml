@@ -19,48 +19,47 @@
                         <h2 class="mdl-card__title-text">Iniciar sesión</h2>
                     </div>
                     <div class="mdl-card__supporting-text">
-                        
+
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            
-                        <div>
-                            @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
-                            @if (ViewBag.errorDni == null)
-                            {
-                                <label class="mdl-textfield__label" for="Dni">
-                                    
-                                    Dni
-                                </label>
-                            }
-                            else
-                            {
-                                <span class="mdl-textfield__label" for="Dni">
-                                    @ViewBag.errorDni
-                                </span>
-                            }
-                            
-                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield" style="width:300px" id="textfieldDni" >
+                            <input class="mdl-textfield__input text-box single-line" id="Dni" name="Dni" type="number">
+                            <label class="mdl-textfield__label">
+                                D.N.I.
+                            </label>
+                            <span class="mdl-textfield__error" id="errorDni">@ViewBag.errorDni</span>
                         </div>
 
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            
-                            <div>
-                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "mdl-textfield__input", @Type="password" } })
-                                @if (ViewBag.errorContraseña == null)
-                                {
-                                    <label class="mdl-textfield__label" for="Contraseña">
-
-                                        Contraseña
-                                    </label>
-                                }
-                                else
-                                {
-                                    <span class="mdl-textfield__label" for="Contraseña">
-                                        @ViewBag.errorContraseña
-                                    </span>
-                                }
-                            </div>
+                        <div class="mdl-textfield mdl-js-textfield" style="width:300px" id="textfieldContraseña" >
+                            <input class="mdl-textfield__input text-box single-line" id="Contraseña" name="Contraseña" type="password">
+                            <label class="mdl-textfield__label">
+                                Contraseña
+                            </label>
+                            <span class="mdl-textfield__error" id="errorContraseña">@ViewBag.errorContraseña</span>
                         </div>
+
+
+                        <text style="color:red" id="error">@ViewBag.error</text>
+
+                        <script>
+                            if (document.getElementById("errorDni").innerHTML != "") {
+                                document.getElementById("textfieldDni").classList.add("is-invalid");
+                                document.getElementById("textfieldDni").classList.add("is-dirty");
+                            }
+
+                            if (document.getElementById("errorContraseña").innerHTML != "") {
+                                document.getElementById("textfieldContraseña").classList.add("is-invalid");
+                                document.getElementById("textfieldContraseña").classList.add("is-dirty");
+                            }
+
+
+                            if (document.getElementById("error").innerHTML != "") {
+                                document.getElementById("textfieldContraseña").classList.add("is-invalid");
+                                document.getElementById("textfieldContraseña").classList.add("is-dirty");
+                                document.getElementById("textfieldDni").classList.add("is-invalid");
+                                document.getElementById("textfieldDni").classList.add("is-dirty");
+                            }
+                        </script>
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
                         <div class="mdl-grid">

@@ -11,69 +11,117 @@
         }
 }
 
-<div class="mdl-grid">
+    <div class="mdl-grid" id="imprimir">
 
-    <h2 class="mdl-cell--12-col" style="text-align:center">Inasistencias @ViewBag.ApYNom</h2>
-
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--6-col" id="tabla" style="margin-right:auto; margin-left:auto">
-        <thead>
-            <tr>
-                <th style="text-align:center">
-                    Fecha
-                </th>
-                <th style="text-align:center">
-                    Cantidad
-                </th>
-            </tr>
-        </thead>
+        <h4 class="mdl-cell--12-col" style="text-align:center">Inasistencias @ViewBag.ApYNom al @DateTime.Today.ToShortDateString() </h4>
 
 
-        <tbody>
-            @if (Model.Count() == 0)
-            {
-                <tr>
-                    <td colspan="3" style="color:red;text-align:center">El alumno no tiene faltas</td>
-                </tr>
+        <div class="mdl-cell--10-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="float:right;margin-right:65px" onclick="imprimir(); return false;" type="button" id="botonImprimir">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">print</i>
+                Imprimir
+            </button>
+        </div>
+
+        <div class="mdl-cell--12-col">
+        </div>
+
+        <br />
+
+        <script>
+            function imprimir() {
+
+                var boton = document.getElementById("botonImprimir");
+
+                boton.hidden = true;
+
+                var backup = document.body.innerHTML;
+
+                var imprimir = document.getElementById("imprimir").innerHTML;
+
+
+
+                document.body.innerHTML = imprimir;
+
+                window.print();
+
+                document.body.innerHTML = backup;
+
+                document.getElementById("botonImprimir").hidden = false;
             }
-            else
-            {
-                foreach (var item in Model)
+        </script>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--6-col" id="tabla" style="margin-right:auto; margin-left:auto">
+            <thead>
+                <tr>
+                    <th style="text-align:center">
+                        Fecha
+                    </th>
+                    <th style="text-align:center">
+                        Cantidad
+                    </th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
                 {
                     <tr>
-                        <td style="text-align:center">
-                           @item.Fecha.ToShortDateString()
-                        </td>
+                        <td colspan="3" style="color:red;text-align:center">El alumno no tiene faltas</td>
+                    </tr>
+                }
+                else
+                {
+                    float totalInasistencias = 0;
+                    foreach (var item in Model)
+                    {
 
-
-                        @{ 
-                            float cantidadInasistencias = 0;
-
-                            if(item.Completa == true)
-                            {
-                                cantidadInasistencias++;
-                            }
-
-                            if(item.EsMedia == true)
-                            {
-                                cantidadInasistencias += (float)0.5;
-                            }
-
+                        <tr>
                             <td style="text-align:center">
-                                @cantidadInasistencias.ToString()
+                                @item.Fecha.ToShortDateString()
                             </td>
-                        }
-                        
 
+
+                            @{
+                                float cantidadInasistencias = 0;
+
+                                if (item.Completa == true)
+                                {
+                                    cantidadInasistencias++;
+                                }
+
+                                if (item.EsMedia == true)
+                                {
+                                    cantidadInasistencias += (float)0.5;
+                                }
+
+                                <td style="text-align:center">
+                                    @cantidadInasistencias.ToString()
+                                </td>
+
+                                totalInasistencias += cantidadInasistencias;
+                            }
+
+
+                        </tr>
+
+                    }
+
+
+                    <tr>
+                        <td style="text-align:center">
+                            Total
+                        </td>
+                        <td style="text-align:center">
+                            @totalInasistencias
+                        </td>
                     </tr>
                 }
 
-
-
-            }
-
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
 
 
-</div>
+    </div>

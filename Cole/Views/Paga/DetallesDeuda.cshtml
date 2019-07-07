@@ -1,0 +1,77 @@
+﻿@model IEnumerable <Cole.Models.Cuota>
+@using System.Globalization;
+@{
+    ViewBag.Title = "DetallesDeuda";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+    <div class="mdl-grid" id="imprimir">
+
+        <h2 class="mdl-cell--12-col">Cuotas adeudadas de @ViewBag.nombreYapellido al @DateTime.Today.ToShortDateString() </h2>
+        
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--6-col" style="margin-left:auto; margin-right:auto">
+            <thead>
+                <tr>
+                    <th style="text-align:left">
+                        Fecha
+                    </th>
+
+                    <th style="text-align:left">
+                        Monto
+                    </th>
+
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:left">
+                            @item.FechaDelMes.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")) de @item.FechaDelMes.Year
+                        </td>
+                        <td style="text-align:left">
+                            $ @item.Monto
+                        </td>
+
+                    </tr>
+                }
+
+                <tr>
+                    <td style="text-align: left">
+                        Total
+                    </td>
+                    <td style="text-align: left">
+                        $ @ViewBag.totalDeuda
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mdl-cell--10-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; float:right; margin-right:90px" onclick="imprimir();" id="boton">
+                Imprimir
+            </button>
+        </div>
+
+        <script>
+        function imprimir() {
+            document.getElementById("boton").hidden = true;
+
+            var backup = document.body.innerHTML;
+
+            var imprimir = document.getElementById("imprimir").innerHTML;
+
+            document.body.innerHTML = imprimir;
+
+            window.print();
+
+            document.body.innerHTML = backup;
+
+            document.getElementById("boton").hidden = false;
+
+        }
+        </script>
+    </div>

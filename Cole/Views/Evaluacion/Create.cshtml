@@ -4,57 +4,136 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Profesors/_LayoutProfesor.cshtml";
 }
+<!DOCTYPE html>
 
-<h2>Create</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Crear Evaluación</title>
+</head>
+<body>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Evaluacion</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="mdl-grid col-md-12">
+        <div class="mdl-layout-spacer">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <figure class="front">
+                    <div class="mdl-card-wide mdl-shadow--6dp">
+                        <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+                            <h2 class="mdl-card__title-text">Añadir evaluación</h2>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdMateria, "IdMateria", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdMateria", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdMateria, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="mdl-card__supporting-text" style="display:table-cell">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                            <div class="mdl-grid col-md-12">
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-left:10px; width:300px" id="textfieldFecha" >
+                                    
+                                        <input class="mdl-textfield__input text-box single-line" id="Fecha" name="Fecha" type="text" >
+                                        <label class="mdl-textfield__label">
+                                            Fecha
+                                        </label>
+                                        <span class="mdl-textfield__error" id="errorFechaDesde">@ViewBag.errorFecha</span>
+
+                                </div>
+                                <div id="contenedor1"></div>
+
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-left:10px; width:300px" id="textfieldTitulo" >
+
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
+                                        <label class="mdl-textfield__label" for="Titulo">
+                                            Título
+                                        </label>
+                                        <span class="mdl-textfield__error" id="errorTitulo">@ViewBag.errorTitulo</span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="mdl-grid col-md-12">
+
+                                <div class="mdc-select col-md-6" id="SelectMateria" style="margin-left:10px; width:300px">
+
+                                    <i class="mdc-select__dropdown-icon"></i>
+                                    @Html.DropDownList("IdMateria", (IEnumerable<SelectListItem>)ViewBag.materias, htmlAttributes: new { @class = "mdc-select__native-control", @id = "IdMateria" })
+
+                                    <label for="SearchBy" class="mdc-floating-label">Materia</label>
+                                    <div class="mdc-line-ripple"></div>
+                                </div>
+
+                                <div class="mdc-select col-md-6" id="selectTipo" style="margin-left:10px; width:300px">
+                                    <i class="mdc-select__dropdown-icon"></i>
+                                    <select id="Tipo" name="Tipo" class="mdc-select__native-control">
+                                        <option value="escrita">Escrita</option>
+                                        <option value="oral">Oral</option>
+                                        <option value="trabajo practico">Trabajo práctico</option>
+                                    </select>
+                                    <label for="SearchBy" class="mdc-floating-label">Buscar por</label>
+                                    <div class="mdc-line-ripple"></div>
+                                </div>
+
+
+                            </div>
+
+
+                            <br />
+                            <text style="color:red">@ViewBag.errorEvaluacionExiste</text>
+
+                            <div class="mdl-card__actions mdl-card--border">
+                                <div class="mdl-grid">
+                                    <input type="submit" value="Añadir" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </figure>
+            }
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <script src="~/Content/window-date-picker.js"></script>
+
+    <script>
+        const selectTipo = new mdc.select.MDCSelect(document.getElementById("selectTipo"));
+
+        const SelectMateria = new mdc.select.MDCSelect(document.getElementById("SelectMateria"));
+
+        WindowDatePicker.createLanguage('es', {
+            DAYS_ABBR: ['', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'],
+            MONTHS: ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            MONTHS_ABBR: ['', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            AM_PM: ['AM', 'PM'],
+            BUTTONS: ['Aceptar', 'Cancelar'],
+            INVALID_DATE: 'Fecha inválida'
+        });
+
+        const pickerFecha = new WindowDatePicker({
+            el: '#contenedor1',
+            toggleEl: '#Fecha',
+            inputEl: '#Fecha',
+            lang: 'es'
+        });
+
+        pickerFecha.el.addEventListener('wdp.change', () => {
+            document.getElementById("Fecha").parentElement.classList.add("is-dirty");
+        });
+
+    </script>
+    <script src="~/Content/ValidacionesCrearEvaluacion.js"></script>
+    <script>
+        if ("@ViewBag.ultimaFecha" != "") {
+        var inputfecha = document.getElementById("Fecha");
+        inputfecha.value = "@ViewBag.ultimaFecha";
+        inputfecha.parentElement.classList.add("is-dirty");
+    }
+    </script>
+</body>
+</html>

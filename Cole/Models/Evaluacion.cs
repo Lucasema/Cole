@@ -23,7 +23,8 @@ namespace Cole.Models
         public System.DateTime Fecha { get; set; }
         public string Titulo { get; set; }
         public string Tipo { get; set; }
-        public Nullable<int> IdMateria { get; set; }
+        public int IdMateria { get; set; }
+        public int Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Califica> Califica { get; set; }

@@ -1,0 +1,220 @@
+﻿@using Cole.Models
+@model IEnumerable<Cole.Models.DeudaModel>
+
+@{
+    ViewBag.Title = "Deuda";
+    Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
+}
+    <div class="mdl-grid">
+
+
+        <h2 class="mdl-cell--12-col">Listado de deudas</h2>
+
+        <div class="mdl-cell--12-col" style="display:contents">
+
+            <div class="mdc-select">
+                <i class="mdc-select__dropdown-icon"></i>
+                <select class="mdc-select__native-control" style="height:45px" id="selectFiltro">
+                    <option value="dni">D.N.I</option>
+                    <option value="curso">Curso</option>
+                </select>
+                <label for="SearchBy" class="mdc-floating-label">Filtrar por</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+
+            <form method="post" action="BuscarDeudaPorDni" class="mdl-cell--8-col" id="formBuscarPorDni">
+
+                <div class="mdl-textfield mdl-js-textfield" style="width:150px; margin-left:10px">
+                    <input class="mdl-textfield__input text-box single-line" id="Dni" name="Dni" type="number">
+                    <label class="mdl-textfield__label">
+                    </label>
+                </div>
+
+                <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit" id="buscar">
+                    <i class="material-icons">search</i>
+                    <div class="mdl-tooltip" for="buscar">
+                        Buscar
+                    </div>
+                </button>
+
+                <text style="color:red">@ViewBag.errorDni</text>
+
+            </form>
+
+            <form method="post" action="BuscarDeudaPorCurso" class="mdl-cell--12-col" id="formBuscarPorCurso" hidden>
+
+                <div class="mdc-select" id="selectCurso">
+
+                    <i class="mdc-select__dropdown-icon"></i>
+                    @Html.DropDownList("IdCurso", (IEnumerable<SelectListItem>)ViewBag.cursos, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px", @id = "IdCurso" })
+
+                    <label for="SearchBy" class="mdc-floating-label">Curso</label>
+                    <div class="mdc-line-ripple"></div>
+                </div>
+
+
+                <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit" id="buscarCurso">
+                    <i class="material-icons">search</i>
+                    <div class="mdl-tooltip" for="buscar">
+                        Buscar
+                    </div>
+                </button>
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; float:right" onclick="imprimir(); return false;" type="button">
+                    Imprimir
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">print</i>
+                </button>
+            </form>
+
+
+            <script>
+            var selectCurso = new mdc.select.MDCSelect(document.getElementById("selectCurso"));
+
+
+            var selectFiltro = document.getElementById("selectFiltro");
+
+            var formDni = document.getElementById("formBuscarPorDni");
+
+            var formCurso = document.getElementById("formBuscarPorCurso");
+
+            selectFiltro.onchange = function () {
+                if (selectFiltro.value == "dni") {
+                    formDni.hidden = false;
+                    formCurso.hidden = true;
+
+                } else {
+                    formDni.hidden = true;
+                    formCurso.hidden = false;
+                    document.getElementById("buscarCurso").click();
+                }
+            }
+
+
+            if ("@ViewBag.ultimaBusqueda" == "dni") {
+                document.getElementById("Dni").value = @ViewBag.valorBuscado ;
+            } else if ( "@ViewBag.ultimaBusqueda" == "curso" ){
+                selectFiltro.value = "curso";
+
+                document.getElementById("selectCurso").value = @ViewBag.valorBuscado ;
+
+                formDni.hidden = true;
+                formCurso.hidden = false;
+            }
+
+
+
+            function imprimir() {
+                var tabla = document.getElementById("tabla");
+
+                var backup = document.body.innerHTML;
+
+                document.body.innerHTML = "<html><head><title></title></head><body><h4>Lista de deudas del curso " + "@ViewBag.nroYdivision"+"</h4>" + tabla.outerHTML + "</body></html>";
+
+                window.print();
+
+                document.body.innerHTML = backup;
+
+
+            }
+            </script>
+
+        </div>
+        <br />
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col" id="tabla">
+            <thead>
+                <tr>
+                    <th>
+                        D.N.I.
+                    </th>
+
+                    <th>
+                        Apellido y nombre
+                    </th>
+
+                    <th>
+                        Cuotas adeudadas
+                    </th>
+
+                    <th>
+                        Monto total
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="4" style="color:red;text-align:center">No hay deudas</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (DeudaModel item in Model)
+                    {
+                        if (item.CuotasAdeudadas.Count > 2)
+                        {
+                            <tr class="mdl-color--red-500">
+                                <td>
+                                    @item.Dni
+                                </td>
+                                <td>
+                                    @item.NombreYapellido
+                                </td>
+                                <td>
+                                    @item.CuotasAdeudadas.Count
+                                </td>
+                                <td>
+                                    $ @item.TotalDeuda
+                                </td>
+
+                                <td>
+                                    <button style="float:right" class="mdl-button mdl-js-button" type="button" id="@item.Dni" onclick="location.href='@Url.Action("DetallesDeuda", "Paga", new { Dni = item.Dni, NombreYapellido = item.NombreYapellido, CuotasAdeudadas = (List<Cuota>)item.CuotasAdeudadas, TotalDeuda = item.TotalDeuda })';return false;">
+                                        <i class="material-icons mdc-button__icon" aria-hidden="true">search</i>
+                                        <div class="mdl-tooltip" for="@item.Dni">
+                                            Detalles
+                                        </div>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    @item.Dni
+                                </td>
+                                <td>
+                                    @item.NombreYapellido
+                                </td>
+                                <td>
+                                    @item.CuotasAdeudadas.Count
+                                </td>
+                                <td>
+                                    $ @item.TotalDeuda
+                                </td>
+
+                                <td>
+                                    <button style="float:right" class="mdl-button mdl-js-button" type="button" id="@item.Dni" onclick="location.href='@Url.Action("DetallesDeuda", "Paga", new { Dni = item.Dni, NombreYapellido = item.NombreYapellido, CuotasAdeudadas = (List<Cuota>)item.CuotasAdeudadas, TotalDeuda = item.TotalDeuda })';return false;">
+                                        <i class="material-icons mdc-button__icon" aria-hidden="true">search</i>
+                                        <div class="mdl-tooltip" for="@item.Dni">
+                                            Detalles
+                                        </div>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="mdl-layout-spacer"></div>
+        <text>*Los registros coloreados en rojo indican alumnos que adeudan mas de dos cuotas.</text>
+    </div>
+

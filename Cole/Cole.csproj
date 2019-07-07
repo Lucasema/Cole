@@ -197,6 +197,7 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeudaModel.cs" />
     <Compile Include="Models\Dicta.cs">
       <DependentUpon>ColegioModel.tt</DependentUpon>
     </Compile>
@@ -261,10 +262,12 @@
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
     <Content Include="Content\ValidacionCrearMateria.js" />
+    <Content Include="Content\ValidacionesBuscarEvaluaciones.js" />
     <Content Include="Content\ValidacionesBuscarPagos.js" />
     <Content Include="Content\ValidacionesCobrar.js" />
     <Content Include="Content\ValidacionesCrearAlumno.js" />
     <Content Include="Content\ValidacionesCrearCurso.js" />
+    <Content Include="Content\ValidacionesCrearEvaluacion.js" />
     <Content Include="Content\ValidacionesCrearProfesor.js" />
     <Content Include="Content\ValidacionesCrearTutor.js" />
     <Content Include="Content\ValidacionesEditarAlumnosPorCurso.js" />
@@ -389,6 +392,9 @@
     <Content Include="Views\Evaluacion\Details.cshtml" />
     <Content Include="Views\Evaluacion\Edit.cshtml" />
     <Content Include="Views\Evaluacion\Index.cshtml" />
+    <Content Include="Views\Evaluacion\Calificar.cshtml" />
+    <Content Include="Views\Paga\Deuda.cshtml" />
+    <Content Include="Views\Paga\DetallesDeuda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

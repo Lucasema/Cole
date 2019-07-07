@@ -11,54 +11,143 @@
 
     <div class="mdl-cell--12-col" style="display:contents">
 
-        <form method="post" action="Index" class="mdl-cell--10-col">
+        <div class="mdc-select">
+            <i class="mdc-select__dropdown-icon"></i>
+            <select id="buscarPor" class="mdc-select__native-control" style="height:45px">
+                <option value="fecha">Fecha</option>
+                <option value="materia">Materia</option>
+            </select>
+            <label for="SearchBy" class="mdc-floating-label">Buscar por</label>
+            <div class="mdc-line-ripple"></div>
+        </div>
 
-            <div class="mdc-select">
-                <i class="mdc-select__dropdown-icon"></i>
-                <select id="campo" class="mdc-select__native-control" style="height:45px" name="campo">
-                    <option value="dni">dni</option>
-                    <option value="apellido">Apellido</option>
-                </select>
-                <label for="SearchBy" class="mdc-floating-label">Buscar por</label>
-                <div class="mdc-line-ripple"></div>
-            </div>
+        <form method="post" action="BuscarPorFecha" class="mdl-cell--8-col" id="formBuscarFecha">
 
-
-            <div class="mdl-textfield mdl-js-textfield" style="width:150px">
-                <input class="mdl-textfield__input text-box single-line" id="valor" name="valor" type="number">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty" style="margin-left:10px; width:150px" id="textfieldDesde">
+                <input class="mdl-textfield__input text-box single-line" id="desde" name="desde" type="text" >
                 <label class="mdl-textfield__label">
+                    Desde
                 </label>
+                <span class="mdl-textfield__error" id="errorFechaDesde">@ViewBag.errorFechaDesde</span>
+                <div id="contenedor1"></div>
             </div>
 
-            <script>
-                var dropdown = document.getElementById("campo");
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty" style="margin-left:10px; width:150px" id="textfieldHasta">
+                <input class="mdl-textfield__input text-box single-line" id="hasta" name="hasta" type="text" >
+                <label class="mdl-textfield__label">
+                    Hasta
+                </label>
+                <span class="mdl-textfield__error" id="errorFechaHasta">@ViewBag.errorFechaHasta</span>
+                <div id="contenedor2"></div>
+            </div>
 
-                var valor = document.getElementById("valor");
 
-                dropdown.onchange= function(){
-                    if(dropdown.value=="dni"){
-                    valor.type="number";
-                    }else{
-                    valor.type="text";
-                    }
-                }
-            </script>
 
 
             <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
                 <i class="material-icons">search</i>
             </button>
 
+            <text style="color:red">@ViewBag.errorIntervalo</text>
+
         </form>
 
-        <div class="mdl-cell--2-col">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px">
+        <form action="BuscarPorMateria" method="post" hidden id="formBuscarMateria" class="mdl-cell--8-col">
+            <div class="mdc-select" id="SelectMateria" style="margin-left:10px">
 
-                @Html.ActionLink("Crear nuevo", "Create", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: null)
+                <i class="mdc-select__dropdown-icon"></i>
+                @Html.DropDownList("materia", (IEnumerable<SelectListItem>)ViewBag.materias, htmlAttributes: new { @class = "mdc-select__native-control", @style = "height:45px; width:120px", @id = "materia" })
+
+                <label for="SearchBy" class="mdc-floating-label">Materia</label>
+                <div class="mdc-line-ripple"></div>
+            </div>
+
+            <button class="mdl-button mdl-js-button mdl-button--icon" type="submit" value="Submit">
+                <i class="material-icons">search</i>
+            </button>
+        </form>
+
+        <div class="mdl-cell--2-col" style="margin-left:76px">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; float:right">
+
+                @Html.ActionLink("Crear nueva", "Create", htmlAttributes: new { @Style = "text-decoration: none; color:white; margin-left:0px" }, routeValues: null)
             </button>
         </div>
 
+        <script src="~/Content/window-date-picker.js"></script>
 
+        <script>
+
+            var selectBuscarPor = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+
+            var selectMateria = new mdc.select.MDCSelect(document.getElementById("SelectMateria"));
+
+            selectBuscarPor.root_.onchange = function () {
+                if (selectBuscarPor.value == "fecha") {
+                    document.getElementById("formBuscarMateria").hidden = true;
+                    document.getElementById("formBuscarFecha").hidden = false;
+                } else if (selectBuscarPor.value == "materia") {
+                    document.getElementById("formBuscarMateria").hidden = false;
+                    document.getElementById("formBuscarFecha").hidden = true;
+                }
+            }
+
+
+            selectBuscarPor.value = "@ViewBag.buscar";
+
+            if (selectBuscarPor.value == "") {
+                selectBuscarPor.value = "fecha";
+            }
+
+            selectBuscarPor.root_.onchange();
+
+            WindowDatePicker.createLanguage('es', {
+                DAYS_ABBR: ['', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'],
+                MONTHS: ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                MONTHS_ABBR: ['', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                AM_PM: ['AM', 'PM'],
+                BUTTONS: ['Aceptar', 'Cancelar'],
+                INVALID_DATE: 'Fecha inválida'
+            });
+
+            const pickerDesde = new WindowDatePicker({
+                el: '#contenedor1',
+                toggleEl: '#desde',
+                inputEl: '#desde',
+                lang: 'es'
+            });
+
+
+
+            const pickerHasta = new WindowDatePicker({
+                el: '#contenedor2',
+                toggleEl: '#hasta',
+                inputEl: '#hasta',
+                lang: 'es'
+            });
+
+            pickerDesde.el.addEventListener('wdp.change', () => {
+                document.getElementById("desde").parentElement.classList.add("is-dirty");
+            });
+
+            pickerHasta.el.addEventListener('wdp.change', () => {
+                document.getElementById("hasta").parentElement.classList.add("is-dirty");
+            });
+
+
+
+
+            if ("@ViewBag.desde" != "") {
+
+                var desde = document.getElementById("desde");
+                desde.value = "@ViewBag.desde";
+            }
+
+            if ( "@ViewBag.hasta" != "") {
+                document.getElementById("hasta").value = "@ViewBag.hasta";
+            }
+
+        </script>
     </div>
     <br />
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--12-col">
@@ -80,8 +169,6 @@
                     Tipo
                 </th>
 
-                
-                
                 <th></th>
             </tr>
         </thead>
@@ -103,7 +190,7 @@
                             @item.Fecha.ToShortDateString()
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Materia)
+                            @Html.DisplayFor(modelItem => item.Materia.Nombre)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Titulo)
@@ -113,9 +200,27 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+
+                            <button style="float:right" class="mdl-button mdl-js-button" type="button" id="@item.Titulo @item.Fecha.ToShortDateString()" onclick="location.href='@Url.Action("Edit", "Evaluacion", new { id = item.Id })';return false;">
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                                <div class="mdl-tooltip" for="@item.Titulo @item.Fecha.ToShortDateString()">
+                                    Editar
+                                </div>
+                            </button>
+
+                            <button style="float:right" class="mdl-button mdl-js-button" type="button" id="@item.Fecha.ToShortDateString() @item.Titulo" onclick="location.href='@Url.Action("Delete", "Evaluacion", new { id = item.Id })';return false;">
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                                <div class="mdl-tooltip" for="@item.Fecha.ToShortDateString() @item.Titulo">
+                                    Eliminar
+                                </div>
+                            </button>
+
+                            <button style="float:right" class="mdl-button mdl-js-button" type="button" id="calificar @item.Titulo @item.Fecha.ToShortDateString()" onclick="location.href='@Url.Action("Calificar", "Evaluacion", new { idMateria = item.Materia.Id , idEvaluacion = item.Id })';return false;">
+                                <img src="~/Content/examen_icono.png" style="width:24px" />
+                                <div class="mdl-tooltip" for="calificar @item.Titulo @item.Fecha.ToShortDateString()">
+                                    Calificar
+                                </div>
+                            </button>
                         </td>
                     </tr>
                 }
@@ -124,3 +229,4 @@
     </table>
 
 </div>
+<script src="~/Content/ValidacionesBuscarEvaluaciones.js"></script>

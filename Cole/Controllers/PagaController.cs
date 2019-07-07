@@ -25,7 +25,7 @@ namespace Cole.Controllers
                 paga = new List<Paga>();
             }
 
-            return View(paga.ToList());
+            return View(paga);
         }
 
 
@@ -117,7 +117,7 @@ namespace Cole.Controllers
             db.SaveChanges();
 
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 
@@ -358,6 +358,335 @@ namespace Cole.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public void CargarDropdownsCursos()
+        {
+            IEnumerable<SelectListItem> cursos = db.Curso.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Nro.ToString() + " " + c.Division
+
+            }).OrderBy(x => x.Text);
+
+            ViewBag.cursos = cursos;
+        }
+
+
+        public ActionResult Deuda()
+        {
+
+            CargarDropdownsCursos();
+
+
+            List<Alumno> alumnos = db.Alumno.ToList();
+
+            foreach(Alumno a in alumnos)
+            {
+                a.Persona = db.Persona.Find(a.Dni);
+            }
+
+            List<DeudaModel> deudas = new List<DeudaModel>();
+
+            foreach(Alumno p in alumnos)
+            {
+                List<DateTime> añosCursados = db.Database.SqlQuery<DateTime>("SELECT año FROM Asiste WHERE DniAlumno = @p0", p.Dni).ToList();
+
+                List<DateTime> mesesAdeudados = new List<DateTime>();
+
+                foreach(DateTime dt in añosCursados)
+                {
+                    if (dt.Year < DateTime.Today.Year)
+                    {
+                        for (int i = 1; i<13; i++)
+                        {
+                            mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+
+                        }
+                    }
+                    else
+                    {
+                        if(dt.Year == DateTime.Today.Year)
+                        {
+                            for (int i = 1; i < DateTime.Today.Month; i++)
+                            {
+                                mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+                            }
+                        }
+                    }
+                }
+
+                List<DateTime> mesesPagados = db.Database.SqlQuery<DateTime>("SELECT FechaDelMes FROM Paga WHERE DniAlumno = @p0", p.Dni).ToList();
+
+                mesesAdeudados = mesesAdeudados.Except(mesesPagados).ToList();
+
+                List<Cuota> cuotasAdeudadas = new List<Cuota>();
+
+                float totalDeuda = 0;
+
+                foreach(DateTime dt in mesesAdeudados)
+                {
+                    Cuota c = db.Cuota.Where(x => x.FechaDelMes == dt).FirstOrDefault();
+
+                    if(c != null)
+                    {
+                        cuotasAdeudadas.Add(c);
+                        totalDeuda += (float)c.Monto;
+                    }
+                }
+
+                if(cuotasAdeudadas.Count > 0)
+                {
+                    DeudaModel d = new DeudaModel();
+                    d.CuotasAdeudadas = cuotasAdeudadas;
+                    d.Dni = p.Dni;
+                    d.NombreYapellido = p.Persona.Apellido + " " + p.Persona.Nombre;
+                    d.TotalDeuda = totalDeuda;
+                    deudas.Add(d);
+                }
+
+
+            }
+
+            deudas.Sort();
+
+            ViewBag.ultimaBusqueda = "";
+            ViewBag.valorBuscado = 0 ;
+
+
+            return View(deudas);
+        }
+
+        public ActionResult DetallesDeuda(int Dni, string NombreYapellido, float TotalDeuda)
+        {
+            List<DateTime> añosCursados = db.Database.SqlQuery<DateTime>("SELECT año FROM Asiste WHERE DniAlumno = @p0", Dni).ToList();
+
+            List<DateTime> mesesAdeudados = new List<DateTime>();
+
+            foreach (DateTime dt in añosCursados)
+            {
+                if (dt.Year < DateTime.Today.Year)
+                {
+                    for (int i = 1; i < 13; i++)
+                    {
+                        mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+
+                    }
+                }
+                else
+                {
+                    if (dt.Year == DateTime.Today.Year)
+                    {
+                        for (int i = 1; i < DateTime.Today.Month; i++)
+                        {
+                            mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+                        }
+                    }
+                }
+            }
+
+            List<DateTime> mesesPagados = db.Database.SqlQuery<DateTime>("SELECT FechaDelMes FROM Paga WHERE DniAlumno = @p0", Dni).ToList();
+
+            mesesAdeudados = mesesAdeudados.Except(mesesPagados).ToList();
+
+            List<Cuota> cuotasAdeudadas = new List<Cuota>();
+
+            foreach (DateTime dt in mesesAdeudados)
+            {
+                Cuota c = db.Cuota.Where(x => x.FechaDelMes == dt).FirstOrDefault();
+
+                if (c != null)
+                {
+                    cuotasAdeudadas.Add(c);
+                }
+            }
+
+
+            ViewBag.nombreYapellido = NombreYapellido;
+            ViewBag.totalDeuda = TotalDeuda;
+
+            return View(cuotasAdeudadas);
+        }
+
+        [HttpPost]
+        public ActionResult BuscarDeudaPorDni(int? Dni)
+        {
+            CargarDropdownsCursos();
+
+            List<DeudaModel> deudas = new List<DeudaModel>();
+
+            if(Dni != null)
+            {
+
+                if (Servicios.AlumnoServicio.Existe((int)Dni))
+                {
+                    Persona p = db.Persona.Find(Dni);
+
+                    List<DateTime> añosCursados = db.Database.SqlQuery<DateTime>("SELECT año FROM Asiste WHERE DniAlumno = @p0", Dni).ToList();
+
+                    List<DateTime> mesesAdeudados = new List<DateTime>();
+
+                    foreach (DateTime dt in añosCursados)
+                    {
+                        if (dt.Year < DateTime.Today.Year)
+                        {
+                            for (int i = 1; i < 13; i++)
+                            {
+                                mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+
+                            }
+                        }
+                        else
+                        {
+                            if (dt.Year == DateTime.Today.Year)
+                            {
+                                for (int i = 1; i < DateTime.Today.Month; i++)
+                                {
+                                    mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+                                }
+                            }
+                        }
+                    }
+
+                    List<DateTime> mesesPagados = db.Database.SqlQuery<DateTime>("SELECT FechaDelMes FROM Paga WHERE DniAlumno = @p0", p.Dni).ToList();
+
+                    mesesAdeudados = mesesAdeudados.Except(mesesPagados).ToList();
+
+                    List<Cuota> cuotasAdeudadas = new List<Cuota>();
+
+                    float totalDeuda = 0;
+
+                    foreach (DateTime dt in mesesAdeudados)
+                    {
+                        Cuota c = db.Cuota.Where(x => x.FechaDelMes == dt).FirstOrDefault();
+
+                        if (c != null)
+                        {
+                            cuotasAdeudadas.Add(c);
+                            totalDeuda += (float)c.Monto;
+                        }
+                    }
+
+                    if (cuotasAdeudadas.Count > 0)
+                    {
+                        DeudaModel d = new DeudaModel();
+                        d.CuotasAdeudadas = cuotasAdeudadas;
+                        d.Dni = p.Dni;
+                        d.NombreYapellido = p.Apellido + " " + p.Nombre;
+                        d.TotalDeuda = totalDeuda;
+                        deudas.Add(d);
+                    }
+
+                    deudas.Sort();
+
+                    ViewBag.ultimaBusqueda = "dni";
+                    ViewBag.valorBuscado = Dni;
+
+                    return View("Deuda", deudas);
+                }
+                else
+                {
+                    ViewBag.errorDni = "No existe el alumno.";
+                }
+
+            }
+            else
+            {
+                ViewBag.errorDni = "Ingrese un D.N.I.";
+            }
+
+            deudas.Sort();
+
+            ViewBag.ultimaBusqueda = "dni";
+            ViewBag.valorBuscado = Dni;
+
+            return View("Deuda", deudas);
+        }
+
+        public ActionResult BuscarDeudaPorCurso(int IdCurso)
+        {
+            CargarDropdownsCursos();
+
+
+            List<Alumno> alumnos = db.Database.SqlQuery<Alumno>("SELECT * FROM Alumno WHERE Dni IN (SELECT DniAlumno FROM Asiste WHERE IdCurso = @p0 and año = @p1)", IdCurso, DateTime.Parse("01/01/"+DateTime.Today.Year.ToString())).ToList();
+
+            foreach (Alumno a in alumnos)
+            {
+                a.Persona = db.Persona.Find(a.Dni);
+            }
+
+            List<DeudaModel> deudas = new List<DeudaModel>();
+
+            foreach (Alumno p in alumnos)
+            {
+                List<DateTime> añosCursados = db.Database.SqlQuery<DateTime>("SELECT año FROM Asiste WHERE DniAlumno = @p0", p.Dni).ToList();
+
+                List<DateTime> mesesAdeudados = new List<DateTime>();
+
+                foreach (DateTime dt in añosCursados)
+                {
+                    if (dt.Year < DateTime.Today.Year)
+                    {
+                        for (int i = 1; i < 13; i++)
+                        {
+                            mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+
+                        }
+                    }
+                    else
+                    {
+                        if (dt.Year == DateTime.Today.Year)
+                        {
+                            for (int i = 1; i < DateTime.Today.Month; i++)
+                            {
+                                mesesAdeudados.Add(DateTime.Parse("01/" + i.ToString() + "/" + dt.Year.ToString()));
+                            }
+                        }
+                    }
+                }
+
+                List<DateTime> mesesPagados = db.Database.SqlQuery<DateTime>("SELECT FechaDelMes FROM Paga WHERE DniAlumno = @p0", p.Dni).ToList();
+
+                mesesAdeudados = mesesAdeudados.Except(mesesPagados).ToList();
+
+                List<Cuota> cuotasAdeudadas = new List<Cuota>();
+
+                float totalDeuda = 0;
+
+                foreach (DateTime dt in mesesAdeudados)
+                {
+                    Cuota c = db.Cuota.Where(x => x.FechaDelMes == dt).FirstOrDefault();
+
+                    if (c != null)
+                    {
+                        cuotasAdeudadas.Add(c);
+                        totalDeuda += (float)c.Monto;
+                    }
+                }
+
+                if (cuotasAdeudadas.Count > 0)
+                {
+                    DeudaModel d = new DeudaModel();
+                    d.CuotasAdeudadas = cuotasAdeudadas;
+                    d.Dni = p.Dni;
+                    d.NombreYapellido = p.Persona.Apellido + " " + p.Persona.Nombre;
+                    d.TotalDeuda = totalDeuda;
+                    deudas.Add(d);
+                }
+
+
+            }
+
+            deudas.Sort();
+
+            Curso curso = db.Curso.Find(IdCurso);
+
+            ViewBag.ultimaBusqueda = "curso";
+            ViewBag.valorBuscado = IdCurso;
+            ViewBag.nroYdivision = curso.Nro.ToString() + " " + curso.Division;
+
+            return View("Deuda", deudas);
         }
     }
 }

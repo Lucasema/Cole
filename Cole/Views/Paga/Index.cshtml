@@ -22,7 +22,7 @@
             </div>
 
 
-            <form method="post" action="BuscarPagoPorDni" class="mdl-cell--10-col" id="formBuscarDni">
+            <form method="post" action="BuscarPagoPorDni" class="mdl-cell--9-col" id="formBuscarDni">
 
                 <div class="mdl-textfield mdl-js-textfield" style="width:150px;margin-left:10px" id="textDni">
                     <input class="mdl-textfield__input text-box single-line" id="dni" name="dni" type="number">
@@ -42,7 +42,7 @@
 
 
 
-            <form action="BuscarCobroPorFecha" method="post" id="formBuscarFecha" hidden>
+            <form action="BuscarCobroPorFecha" method="post" id="formBuscarFecha" class="mdl-cell--9-col" hidden>
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty" id="fechaDesde" style="margin-left:10px; width:150px">
 
@@ -76,6 +76,11 @@
                 <text style="color:red">@ViewBag.errorIntervalo</text>
 
             </form>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; float:right" onclick="location.href='@Url.Action("Cobro", "Paga")'; return false;" type="button">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">attach_money</i>
+                <span class="mdc-button__label">Cobrar</span>
+            </button>
 
 
             <script>

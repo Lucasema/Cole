@@ -12,9 +12,43 @@
             Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
         }
 }
-    <div class="mdl-grid">
+    <div class="mdl-grid" id="imprimir">
 
         <h2 class="mdl-cell--12-col">Inasistencias @ViewBag.nroyDivision</h2>
+
+        <div class="mdl-cell--10-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="margin-top:12px; float:right" onclick="imprimir()" type="button" id="botonImprimir">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">print</i>
+                <span class="mdc-button__label">Imprimir</span>
+            </button>
+        </div>
+        <div class="mdl-cell--12-col">
+        </div>
+        <script>
+            function imprimir() {
+
+                var boton = document.getElementById("botonImprimir");
+
+                boton.hidden = true;
+
+                var backup = document.body.innerHTML;
+
+                var imprimir = document.getElementById("imprimir").innerHTML;
+
+
+
+                document.body.innerHTML = imprimir;
+
+                window.print();
+
+                document.body.innerHTML = backup;
+
+                document.getElementById("botonImprimir").hidden = false;
+            }
+        </script>
+        <br />
+
+
 
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-cell--10-col" id="tabla">
             <thead>
@@ -26,7 +60,7 @@
                         Cantidad de Faltas
                     </th>
                     <th style="text-align:center">
-                        
+
                     </th>
                 </tr>
             </thead>
@@ -43,47 +77,54 @@
                 {
                     foreach (var item in Model)
                     {
-            <tr>
-                <td style="text-align:left">
-                    @Html.DisplayFor(modelItem => item.Apellido), @Html.DisplayFor(modelItem => item.Nombre)
+                        <tr>
+                            <td style="text-align:left">
+                                @Html.DisplayFor(modelItem => item.Apellido), @Html.DisplayFor(modelItem => item.Nombre)
 
-                </td>
+                            </td>
 
-                @{
+                            @{
 
 
-                    ColegioEntities db = new ColegioEntities();
+                                ColegioEntities db = new ColegioEntities();
 
-                    List<Inasistencia> ins = db.Inasistencia.Where<Inasistencia>(x => x.DniAlumno == item.Dni && x.Fecha.Year == DateTime.Today.Year).ToList();
+                                List<Inasistencia> ins = db.Inasistencia.Where<Inasistencia>(x => x.DniAlumno == item.Dni && x.Fecha.Year == DateTime.Today.Year).ToList();
 
-                    float totalInasistencia = 0;
+                                float totalInasistencia = 0;
 
-                    foreach (Inasistencia i in ins)
-                    {
-                        if (i.Completa == true)
-                        {
-                            totalInasistencia++;
-                        }
+                                foreach (Inasistencia i in ins)
+                                {
+                                    if (i.Completa == true)
+                                    {
+                                        totalInasistencia++;
+                                    }
 
-                        if (i.EsMedia == true)
-                        {
-                            totalInasistencia += (float)0.5;
-                        }
-                    }
+                                    if (i.EsMedia == true)
+                                    {
+                                        totalInasistencia += (float)0.5;
+                                    }
+                                }
 
                                 <td style="text-align:center">@totalInasistencia.ToString()</td>
-                        
-                 }
+
+                            }
 
 
 
 
-                    <td>@Html.ActionLink("Detalles", "DetallesInasistencia", new { Dni = item.Dni })</td>
+                            <td>
+                                <button class="mdl-button mdl-js-button" type="button" id="@item.Dni" onclick="location.href='@Url.Action("DetallesInasistencia", "Curso", new { Dni = item.Dni })';return false;">
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">search</i>
+                                    <div class="mdl-tooltip" for="@item.Dni">
+                                        Detalles
+                                    </div>
+                                </button>
+                            </td>
 
-                </tr>
+                        </tr>
                     }
 
-                    
+
 
                 }
 

@@ -25,53 +25,62 @@ namespace Cole.Controllers
         {
             ColegioEntities db = new ColegioEntities();
 
-            if(p.Dni == 0)
+            if(p.Dni != 0)
+            {
+
+                if (p.Contraseña != null && p.Contraseña != "")
+                {
+
+                    try
+                    {
+                        //busca la persona con el dni y contraseña dada
+                        var persona = db.Persona.Where(x => x.Dni == p.Dni && x.Contraseña == p.Contraseña).First();
+                        if (persona != null)
+                        {
+                            HttpContext.Session["IsAuthenticated"] = true;
+
+                            //si es el administrador
+                            if (LoginServicio.EsAdministrador(persona.Dni))
+                            {
+                                HttpContext.Session["Role"] = "Administrador";
+
+                                return RedirectToAction("Index", "Administrador");
+                            }
+                            else if (LoginServicio.EsAlumno(persona.Dni))
+                            {
+                                HttpContext.Session["Role"] = "Alumno";
+                                return View();
+                            }
+                            else if (LoginServicio.EsProfesor(persona.Dni))
+                            {
+                                HttpContext.Session["Role"] = "Profesor";
+                                HttpContext.Session["Dni"] = persona.Dni;
+
+                                return RedirectToAction("CursosPorProfe", "Curso");
+                            }
+                        }
+
+                        ViewBag.error = "D.N.I. o contraseña incorrecta.";
+                    }
+                    catch (Exception e)
+                    {
+                        ViewBag.error = "D.N.I. o contraseña incorrecta.";
+                    }
+
+
+                }
+                else
+                {
+                    ViewBag.errorContraseña = "Ingrese su contraseña";
+                }
+            }
+            else
             {
                 ViewBag.errorDni = "Ingrese un dni válido";
             }
 
-            if(p.Contraseña == null || p.Contraseña == "")
-            {
-                ViewBag.errorContraseña = "Ingrese su contraseña"; 
-            }
-            
 
-            try
-            {
-                //busca la persona con el dni y contraseña dada
-                var persona = db.Persona.Where(x => x.Dni == p.Dni && x.Contraseña == p.Contraseña).First();
-                if (persona != null)
-                {
-                    HttpContext.Session["IsAuthenticated"] = true;
-               
-                    //si es el administrador
-                    if (LoginServicio.EsAdministrador(persona.Dni))
-                    {
-                        HttpContext.Session["Role"] = "Administrador";
-                        
-                        return RedirectToAction("Index","Administrador");
-                    }
-                    else if (LoginServicio.EsAlumno(persona.Dni))
-                    {
-                        HttpContext.Session["Role"] = "Alumno";
-                        return View();
-                    }
-                    else if (LoginServicio.EsProfesor(persona.Dni))
-                    {
-                        HttpContext.Session["Role"] = "Profesor";
-                        HttpContext.Session["Dni"] = persona.Dni;
-
-                        return RedirectToAction("CursosPorProfe", "Curso");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                ViewBag.error = e.Message;
-            }
-
-            ViewBag.error = "D.N.I. o contraseña incorrecta.";
-            return View("Index");
+            return View("Index", p);
             
            
 

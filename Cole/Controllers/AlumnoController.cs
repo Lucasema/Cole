@@ -105,7 +105,9 @@ namespace Cole.Controllers
                         return View(alumno);
                     }
 
-                    if(db.Tutor.Find(alumno.DniTutor) != null)
+                    Tutor t = db.Tutor.Find(alumno.DniTutor);
+
+                    if (t != null)
                     {
                         object[] parametros = { alumno.Persona.Dni, alumno.Persona.Cuil, alumno.Persona.TelCelular, alumno.Persona.TelFijo, alumno.Persona.Dni.ToString(), alumno.Persona.Sexo, alumno.Persona.Domicilio, alumno.Persona.Nacionalidad, alumno.Persona.Nombre, alumno.Persona.Apellido, alumno.Persona.FechaNacimiento };
 

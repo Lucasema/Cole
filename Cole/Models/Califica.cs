@@ -16,9 +16,8 @@ namespace Cole.Models
     {
         public int DniAlumno { get; set; }
         public int DniProfesor { get; set; }
-        public System.DateTime FechaEvaluacion { get; set; }
-        public string TituloEvaluacion { get; set; }
         public Nullable<int> Nota { get; set; }
+        public int IdEvaluacion { get; set; }
     
         public virtual Alumno Alumno { get; set; }
         public virtual Profesor Profesor { get; set; }

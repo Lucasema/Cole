@@ -26,14 +26,12 @@
           <Key>
             <PropertyRef Name="DniAlumno" />
             <PropertyRef Name="DniProfesor" />
-            <PropertyRef Name="FechaEvaluacion" />
-            <PropertyRef Name="TituloEvaluacion" />
+            <PropertyRef Name="IdEvaluacion" />
           </Key>
           <Property Name="DniAlumno" Type="int" Nullable="false" />
           <Property Name="DniProfesor" Type="int" Nullable="false" />
-          <Property Name="FechaEvaluacion" Type="datetime" Nullable="false" />
-          <Property Name="TituloEvaluacion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Nota" Type="int" />
+          <Property Name="IdEvaluacion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Cuota">
           <Key>
@@ -64,13 +62,13 @@
         </EntityType>
         <EntityType Name="Evaluacion">
           <Key>
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="Titulo" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="Titulo" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="30" />
-          <Property Name="IdMateria" Type="int" />
+          <Property Name="IdMateria" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Inasistencia">
           <Key>
@@ -118,7 +116,7 @@
           </Key>
           <Property Name="DniAlumno" Type="int" Nullable="false" />
           <Property Name="FechaDelMes" Type="date" Nullable="false" />
-          <Property Name="NroRecibo" Type="int" />
+          <Property Name="NroRecibo" Type="int" Nullable="false" />
           <Property Name="FechaPago" Type="date" />
           <Property Name="Lugar" Type="varchar" MaxLength="32" />
         </EntityType>
@@ -243,7 +241,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Evaluacio__Nombr__5CD6CB2B">
-          <End Role="Materia" Type="Self.Materia" Multiplicity="0..1" />
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
           <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Materia">
@@ -374,17 +372,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Califica_Evaluacion">
+        <Association Name="FK_Califica_Evaluacion1">
           <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="1" />
           <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Evaluacion">
-              <PropertyRef Name="Fecha" />
-              <PropertyRef Name="Titulo" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Califica">
-              <PropertyRef Name="FechaEvaluacion" />
-              <PropertyRef Name="TituloEvaluacion" />
+              <PropertyRef Name="IdEvaluacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -522,7 +518,7 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Asiste" EntitySet="Asiste" />
           </AssociationSet>
-          <AssociationSet Name="FK_Califica_Evaluacion" Association="Self.FK_Califica_Evaluacion">
+          <AssociationSet Name="FK_Califica_Evaluacion1" Association="Self.FK_Califica_Evaluacion1">
             <End Role="Evaluacion" EntitySet="Evaluacion" />
             <End Role="Califica" EntitySet="Califica" />
           </AssociationSet>
@@ -577,17 +573,15 @@
           <Key>
             <PropertyRef Name="DniAlumno" />
             <PropertyRef Name="DniProfesor" />
-            <PropertyRef Name="FechaEvaluacion" />
-            <PropertyRef Name="TituloEvaluacion" />
+            <PropertyRef Name="IdEvaluacion" />
           </Key>
           <Property Name="DniAlumno" Type="Int32" Nullable="false" />
           <Property Name="DniProfesor" Type="Int32" Nullable="false" />
-          <Property Name="FechaEvaluacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TituloEvaluacion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nota" Type="Int32" />
+          <Property Name="IdEvaluacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Alumno" Relationship="Self.FK__Califica__DniAlu__74AE54BC" FromRole="Califica" ToRole="Alumno" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK__Califica__DniPro__75A278F5" FromRole="Califica" ToRole="Profesor" />
-          <NavigationProperty Name="Evaluacion" Relationship="Self.FK_Califica_Evaluacion" FromRole="Califica" ToRole="Evaluacion" />
+          <NavigationProperty Name="Evaluacion" Relationship="Self.FK_Califica_Evaluacion1" FromRole="Califica" ToRole="Evaluacion" />
         </EntityType>
         <EntityType Name="Cuota">
           <Key>
@@ -624,14 +618,14 @@
         </EntityType>
         <EntityType Name="Evaluacion">
           <Key>
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="Titulo" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Titulo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="IdMateria" Type="Int32" />
-          <NavigationProperty Name="Califica" Relationship="Self.FK_Califica_Evaluacion" FromRole="Evaluacion" ToRole="Califica" />
+          <Property Name="IdMateria" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Califica" Relationship="Self.FK_Califica_Evaluacion1" FromRole="Evaluacion" ToRole="Califica" />
           <NavigationProperty Name="Materia" Relationship="Self.FK__Evaluacio__Nombr__5CD6CB2B" FromRole="Evaluacion" ToRole="Materia" />
         </EntityType>
         <EntityType Name="Inasistencia">
@@ -687,7 +681,7 @@
           </Key>
           <Property Name="DniAlumno" Type="Int32" Nullable="false" />
           <Property Name="FechaDelMes" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="NroRecibo" Type="Int32" />
+          <Property Name="NroRecibo" Type="Int32" Nullable="false" />
           <Property Name="FechaPago" Type="DateTime" Precision="0" />
           <Property Name="Lugar" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Alumno" Relationship="Self.FK__Paga__DniAlumno__6D0D32F4" FromRole="Paga" ToRole="Alumno" />
@@ -853,17 +847,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Califica_Evaluacion">
+        <Association Name="FK_Califica_Evaluacion1">
           <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="1" />
           <End Role="Califica" Type="Self.Califica" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Evaluacion">
-              <PropertyRef Name="Fecha" />
-              <PropertyRef Name="Titulo" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Califica">
-              <PropertyRef Name="FechaEvaluacion" />
-              <PropertyRef Name="TituloEvaluacion" />
+              <PropertyRef Name="IdEvaluacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -916,7 +908,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Evaluacio__Nombr__5CD6CB2B">
-          <End Role="Materia" Type="Self.Materia" Multiplicity="0..1" />
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
           <End Role="Evaluacion" Type="Self.Evaluacion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Materia">
@@ -1073,7 +1065,7 @@
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Califica" EntitySet="Califica" />
           </AssociationSet>
-          <AssociationSet Name="FK_Califica_Evaluacion" Association="Self.FK_Califica_Evaluacion">
+          <AssociationSet Name="FK_Califica_Evaluacion1" Association="Self.FK_Califica_Evaluacion1">
             <End Role="Evaluacion" EntitySet="Evaluacion" />
             <End Role="Califica" EntitySet="Califica" />
           </AssociationSet>
@@ -1158,9 +1150,8 @@
               <MappingFragment StoreEntitySet="Califica">
                 <ScalarProperty Name="DniAlumno" ColumnName="DniAlumno" />
                 <ScalarProperty Name="DniProfesor" ColumnName="DniProfesor" />
-                <ScalarProperty Name="FechaEvaluacion" ColumnName="FechaEvaluacion" />
-                <ScalarProperty Name="TituloEvaluacion" ColumnName="TituloEvaluacion" />
                 <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="IdEvaluacion" ColumnName="IdEvaluacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1199,6 +1190,7 @@
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
