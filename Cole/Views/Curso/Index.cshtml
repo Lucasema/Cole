@@ -100,10 +100,42 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Añadir o quitar alumnos", "EditarAlumnosPorCurso", new { idCurso = item.Id, año = @Int32.Parse(DateTime.Now.Year.ToString()) }) |
-                            @Html.ActionLink("Tomar asistencia", "TomarAsistencia", new { idCurso = item.Id }) |
-                            @Html.ActionLink("Ver inasistencias", "VerInasistencias", new { idCurso = item.Id })
+
+                            <button style="float:right" class="mdl-button mdl-js-button" type="button" id="editar @item.Id" onclick="location.href='@Url.Action("Edit", "Curso", new { id = item.Id })';return false;">
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                                <div class="mdl-tooltip" for="editar @item.Id">
+                                    Editar
+                                </div>
+                            </button>
+
+                            <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="tomarAsistencia @item.Id" onclick="location.href='@Url.Action("TomarAsistencia", "Curso", new { idCurso = item.Id })';return false;">
+
+                                <img src="~/Content/tomar_Asistencia.png" style="width:24px" />
+                                <div class="mdl-tooltip" for="tomarAsistencia @item.Id">
+                                    Tomar asistencia
+                                </div>
+
+                            </button>
+
+                            <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="verAsistencia @item.Id" onclick="location.href='@Url.Action("VerInasistencias", "Curso", new { idCurso = item.Id })';return false;">
+
+                                <img src="~/Content/ver_inasistencia.png" style="width:24px" />
+                                <div class="mdl-tooltip" for="verAsistencia @item.Id">
+                                    Ver inasistencias
+                                </div>
+
+                            </button>
+
+                            <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="alumnos @item.Id" onclick="location.href='@Url.Action("EditarAlumnosPorCurso", "Curso", new { idCurso = item.Id, año = @Int32.Parse(DateTime.Now.Year.ToString()) })';return false;">
+
+                                <img src="~/Content/administrar_alumnos.png" style="width:24px"/>
+
+                                <div class="mdl-tooltip" for="alumnos @item.Id">
+                                    Administrar alumnos
+                                </div>
+
+                            </button>
+
                         </td>
 
                     </tr>

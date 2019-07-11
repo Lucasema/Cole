@@ -16,5 +16,11 @@ namespace Cole.Controllers
         {
             return View();
         }
+
+        [Filters.Autorizar(Roles = "Administrador")]
+        public ActionResult ManualAdministrador()
+        {
+            return View();
+        }
     }
 }

@@ -30,6 +30,8 @@
 
                             <div class="mdl-grid col-md-12">
 
+                                <input id="Dni" name="Dni" value="@Model.Persona.Dni" hidden />
+
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="ocupacionTutor">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Ocupacion, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
@@ -41,39 +43,37 @@
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-
-
-                            <div class="mdl-grid col-md-12">
-
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="nombre" style="padding-right:10px">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.Nombre, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
                                         <label class="mdl-textfield__label" for="Persona.Nombre">
-                                            Nombre del alumno
+                                            Nombre
                                         </label>
                                         <span class="mdl-textfield__error">
                                             @Html.ValidationMessageFor(model => model.Persona.Nombre, "", new { @id = "errorNombre" })
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+
+
+                            <div class="mdl-grid col-md-12">
+
+
+
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="apellido">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.Apellido, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
                                         <label class="mdl-textfield__label" for="Persona.Apellido">
-                                            Apellido del alumno
+                                            Apellido
                                         </label>
                                         <span class="mdl-textfield__error">
                                             @Html.ValidationMessageFor(model => model.Persona.Apellido, "", new { @id = "errorApellido" })
                                         </span>
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div class="mdl-grid col-md-12">
 
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="cuil" style="padding-right:10px">
@@ -87,6 +87,12 @@
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="mdl-grid col-md-12">
+
+
+
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="celu">
                                     <div class="col-md-10">
@@ -100,10 +106,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="mdl-grid col-md-12">
-
-
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="tel" style="padding-right:10px">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.TelFijo, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
@@ -115,6 +117,12 @@
                                         </span>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="mdl-grid col-md-12">
+
+
+
 
                                 <div class="col-md-10">
                                     <div class="mdc-select" style="height:47px; width:300px">
@@ -128,12 +136,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <div class="mdl-grid col-md-12">
-
-
-
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="domicilio">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.Domicilio, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
@@ -146,6 +148,14 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="mdl-grid col-md-12">
+
+
+
+
+
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="nacionalidad" style="padding-right:10px">
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.Nacionalidad, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
@@ -157,15 +167,6 @@
                                         </span>
                                     </div>
                                 </div>
-
-                            </div>
-
-
-
-                            <div class="mdl-grid col-md-12">
-
-
-
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty" id="fechaNacimiento">
                                     <div class="col-md-10">
@@ -181,10 +182,8 @@
 
                                 <div class="col-md-12" id="contenedor">
                                 </div>
+
                             </div>
-
-
-
 
 
 

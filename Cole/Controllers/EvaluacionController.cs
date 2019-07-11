@@ -150,7 +150,10 @@ namespace Cole.Controllers
 
                 if (evaluacion.Titulo != null)
                 {
-                    if (db.Evaluacion.Where(x => x.Fecha == evaluacion.Fecha && x.Titulo == evaluacion.Titulo).FirstOrDefault() == null)
+
+                    Evaluacion anterior = db.Evaluacion.Where(x => x.Fecha == evaluacion.Fecha && x.Titulo == evaluacion.Titulo).FirstOrDefault();
+
+                    if (anterior == null)
                     {
                         if (ModelState.IsValid)
                         {
@@ -217,7 +220,10 @@ namespace Cole.Controllers
 
                 if (evaluacion.Titulo != null)
                 {
-                    if (db.Evaluacion.Where(x => x.Fecha == evaluacion.Fecha && x.Titulo == evaluacion.Titulo).FirstOrDefault() == null)
+
+                    Evaluacion anterior = db.Evaluacion.Where(x => x.Fecha == evaluacion.Fecha && x.Titulo == evaluacion.Titulo).FirstOrDefault();
+
+                    if (anterior == null)
                     {
                         if (ModelState.IsValid)
                         {
@@ -231,9 +237,19 @@ namespace Cole.Controllers
                     }
                     else
                     {
+                        if (ModelState.IsValid)
+                        {
 
-                        ViewBag.ultimaFecha = evaluacion.Fecha.ToShortDateString();
-                        ViewBag.errorEvaluacionExiste = "Ya existe la evaluación.";
+                            anterior.Tipo = evaluacion.Tipo;
+                            anterior.Materia = evaluacion.Materia;
+
+                            db.Entry(anterior).State = EntityState.Modified;
+                            db.SaveChanges();
+
+
+
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
                 else

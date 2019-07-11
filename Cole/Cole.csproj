@@ -154,6 +154,7 @@
     <Compile Include="Controllers\CuotaController.cs" />
     <Compile Include="Controllers\CursoController.cs" />
     <Compile Include="Controllers\EvaluacionController.cs" />
+    <Compile Include="Controllers\InstitucionController.cs" />
     <Compile Include="Controllers\MateriasController.cs" />
     <Compile Include="Controllers\PagaController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
@@ -246,14 +247,19 @@
     <Compile Include="Servicios\TutorServicio.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\administrar_alumnos.png" />
+    <Content Include="Content\administrar_materias.png" />
     <Content Include="Content\css_layout_dissmisable_drawer.css" />
     <Content Include="Content\css_layout_dissmisable_drawer1.css" />
     <Content Include="Content\css_layout_dissmisable_drawer2.css" />
+    <Content Include="Content\cuotas.svg" />
     <Content Include="Content\Datepicker.js" />
     <Content Include="Content\DatePickerStyle.css" />
     <Content Include="Content\examen_icono.png" />
+    <Content Include="Content\facebook.png" />
     <Content Include="Content\Google classroom.png" />
     <Content Include="Content\InstanciadorDatepicker.js" />
+    <Content Include="Content\LogoTransparente.png" />
     <Content Include="Content\mdc.checkbox.min.css" />
     <Content Include="Content\mdc.checkbox.min.js" />
     <Content Include="Content\mdc.chips.css" />
@@ -261,6 +267,7 @@
     <Content Include="Content\mdc.select.css" />
     <Content Include="Content\mdc.select.js" />
     <Content Include="Content\teacher-icon.png" />
+    <Content Include="Content\tomar_Asistencia.png" />
     <Content Include="Content\ValidacionCrearMateria.js" />
     <Content Include="Content\ValidacionesBuscarEvaluaciones.js" />
     <Content Include="Content\ValidacionesBuscarPagos.js" />
@@ -271,6 +278,7 @@
     <Content Include="Content\ValidacionesCrearProfesor.js" />
     <Content Include="Content\ValidacionesCrearTutor.js" />
     <Content Include="Content\ValidacionesEditarAlumnosPorCurso.js" />
+    <Content Include="Content\ver_inasistencia.png" />
     <Content Include="Content\window-date-picker.css" />
     <Content Include="Content\window-date-picker.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -304,6 +312,7 @@
     <Content Include="Models\ColegioModel.edmx.diagram">
       <DependentUpon>ColegioModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -395,6 +404,13 @@
     <Content Include="Views\Evaluacion\Calificar.cshtml" />
     <Content Include="Views\Paga\Deuda.cshtml" />
     <Content Include="Views\Paga\DetallesDeuda.cshtml" />
+    <Content Include="Views\Institucion\Create.cshtml" />
+    <Content Include="Views\Institucion\Delete.cshtml" />
+    <Content Include="Views\Institucion\Details.cshtml" />
+    <Content Include="Views\Institucion\Edit.cshtml" />
+    <Content Include="Views\Institucion\Index.cshtml" />
+    <Content Include="Views\Administrador\ManualAdministrador.cshtml" />
+    <Content Include="Views\Profesors\ManualProfesor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

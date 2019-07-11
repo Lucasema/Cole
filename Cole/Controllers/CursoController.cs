@@ -101,6 +101,8 @@ namespace Cole.Controllers
             return View(curso);
         }
 
+
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Curso/Create
         public ActionResult Create()
         {
@@ -136,6 +138,7 @@ namespace Cole.Controllers
             return View(curso);
         }
 
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Curso/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -155,7 +158,7 @@ namespace Cole.Controllers
         }
 
 
-
+        [Filters.Autorizar(Roles = "Administrador")]
         public ActionResult EditarAlumnosPorCurso(int idCurso, int? año)
         {
 
@@ -188,7 +191,7 @@ namespace Cole.Controllers
 
 
 
-
+        [Filters.Autorizar(Roles = "Administrador")]
         [HttpPost]
         public ActionResult AñadirAlumnoAlCurso(int? dni, int idCurso, int? año)
         {
@@ -255,7 +258,7 @@ namespace Cole.Controllers
 
         }
 
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // POST: Curso/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -310,7 +313,7 @@ namespace Cole.Controllers
         }
 
 
-
+        [Filters.Autorizar(Roles = "Administrador, Profesor")]
         public ActionResult TomarAsistencia(int idCurso)
         {
 
@@ -360,7 +363,7 @@ namespace Cole.Controllers
             return View(alumnos);
         }
 
-
+        [Filters.Autorizar(Roles = "Administrador, Profesor")]
         [HttpPost]
         public ActionResult AñadirInasistencias(int idCurso, List<int> dnisFaltaCompleta, List<int> dnisMediaFalta)
         {
@@ -448,7 +451,7 @@ namespace Cole.Controllers
             return RedirectToAction("Index", "Curso");
         }
 
-
+        [Filters.Autorizar(Roles = "Administrador, Profesor")]
         public ActionResult VerInasistencias(int idCurso)
         {
             List<Persona> alumnos = db.Database.SqlQuery<Persona>("SELECT * " +
@@ -474,6 +477,8 @@ namespace Cole.Controllers
 
         }
 
+
+        [Filters.Autorizar(Roles = "Administrador, Profesor")]
         public ActionResult DetallesInasistencia(int Dni)
         {
             Persona p = db.Persona.Find(Dni);

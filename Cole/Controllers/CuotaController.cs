@@ -11,6 +11,7 @@ using System.Globalization;
 
 namespace Cole.Controllers
 {
+    [Filters.Autorizar(Roles = "Administrador")]
     public class CuotaController : Controller
     {
         private ColegioEntities db = new ColegioEntities();
@@ -34,14 +35,14 @@ namespace Cole.Controllers
         }
         // GET: Cuota
         [HttpPost]
-        public ActionResult Index(int año)
+        public ActionResult BuscarAño(int año)
         {
 
             List<Cuota> cuotas = db.Cuota.Where(x => x.FechaDelMes.Year == año).ToList();
 
             ViewBag.año = año;
 
-            return View(cuotas);
+            return View("Index", cuotas);
 
         }
 

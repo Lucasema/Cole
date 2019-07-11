@@ -81,10 +81,17 @@ namespace Cole.Controllers
 
 
             return View("Index", p);
-            
            
+        }
+        [Filters.Autorizar(Roles = "Administrador, Profesor")]
+        public ActionResult Logout()
+        {
+            HttpContext.Session["IsAuthenticated"] = null;
+            HttpContext.Session["Dni"] = null;
+            HttpContext.Session["Role"] = null;
 
-            
+            return RedirectToAction("Index");
+
         }
     }
 }

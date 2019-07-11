@@ -11,6 +11,7 @@ using Cole.Models;
 
 namespace Cole.Servicios
 {
+    [Filters.Autorizar(Roles = "Administrador")]
     public class TutorsController : Controller
     {
         private ColegioEntities db = new ColegioEntities();
@@ -116,7 +117,7 @@ namespace Cole.Servicios
         [ValidateAntiForgeryToken]
         public ActionResult Edit( Tutor tutor)
         {
-            tutor.Dni = tutor.Persona.Dni;
+            tutor.Persona.Dni = tutor.Dni;
             
             if (ModelState.IsValid)
             {

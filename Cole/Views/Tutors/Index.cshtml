@@ -80,21 +80,11 @@
                 <th>
                     Teléfono celular
                 </th>
-                <th>
-                    Teléfono fijo
-                </th>
 
                 <th>
                     Domicilio
                 </th>
-                <th>
-                    Nacionalidad
-                </th>
-                <th>
-                    Ocupacion
-                </th>
                 
-
                 <th></th>
             </tr>
         </thead>
@@ -124,26 +114,36 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Persona.TelCelular)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Persona.TelFijo)
-                    </td>
 
                     <td>
                         @Html.DisplayFor(modelItem => item.Persona.Domicilio)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Persona.Nacionalidad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ocupacion)
-                    </td>
 
 
 
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.Dni }) |
-                        @Html.ActionLink("Detalles", "Details", new { id = item.Dni }) |
-                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Dni })
+
+                        <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="eliminar @item.Dni" onclick="location.href='@Url.Action("Delete", "Tutors", new { id = item.Dni })';return false;">
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                            <div class="mdl-tooltip" for="eliminar @item.Dni">
+                                Eliminar
+                            </div>
+                        </button>
+
+                        <button style="float:right" class="mdl-button mdl-js-button" type="button" id="editar @item.Dni" onclick="location.href='@Url.Action("Edit", "Tutors", new { id = item.Dni })';return false;">
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
+                            <div class="mdl-tooltip" for="editar @item.Dni">
+                                Editar
+                            </div>
+                        </button>
+
+                        <button style="float:right" class="mdl-button mdl-js-button" type="button" id="detalles @item.Dni" onclick="location.href='@Url.Action("Details", "Tutors", new { id = item.Dni })';return false;">
+                            <i class="material-icons mdc-button__icon" aria-hidden="true">search</i>
+                            <div class="mdl-tooltip" for="detalles @item.Dni">
+                                Detalles
+                            </div>
+                        </button>
+
                     </td>
                 </tr>
                 }

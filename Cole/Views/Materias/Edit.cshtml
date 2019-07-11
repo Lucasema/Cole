@@ -5,26 +5,48 @@
     Layout = "~/Views/Administrador/_LayoutAdministrador.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="mdl-grid col-md-12">
+    <div class="mdl-layout-spacer">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Materia</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Nombre)
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+            <figure class="front">
+                <div class="mdl-card mdl-shadow--6dp">
+                    <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+                        <h2 class="mdl-card__title-text">Editar materia</h2>
+                    </div>
+
+                    <div class="mdl-card__supporting-text" style="display:table-cell">
+
+
+                        <div class="mdl-grid col-md-12">
+
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:10px" id="nombre">
+
+                                <div class="col-md-10">
+                                    <input type="text" name="Nombre" id="Nombre" class="mdl-textfield__input" value="@Model.Nombre"/>
+                                    <label class="mdl-textfield__label" for="Nombre">
+                                        Nombre
+                                    </label>
+                                    <span class="mdl-textfield__error" id="errorNombre">@ViewBag.errorNombre</span>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="mdl-card__actions mdl-card--border">
+                                <div class="mdl-grid">
+                                    <input type="submit" value="Guardar" class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </figure>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>

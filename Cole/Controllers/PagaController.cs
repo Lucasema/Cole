@@ -11,6 +11,7 @@ using Cole.Servicios;
 
 namespace Cole.Controllers
 {
+    [Filters.Autorizar(Roles = "Administrador")]
     public class PagaController : Controller
     {
         private ColegioEntities db = new ColegioEntities();

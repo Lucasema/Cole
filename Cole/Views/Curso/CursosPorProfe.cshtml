@@ -57,8 +57,24 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Tomar asistencia", "TomarAsistencia", new { idCurso = item.Id }) |
-                            @Html.ActionLink("Ver inasistencias", "VerInasistencias", new { idCurso = item.Id })
+                            <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="tomarAsistencia @item.Id" onclick="location.href='@Url.Action("TomarAsistencia", "Curso", new { idCurso = item.Id })';return false;">
+
+                                <img src="~/Content/tomar_Asistencia.png" style="width:24px" />
+                                <div class="mdl-tooltip" for="tomarAsistencia @item.Id">
+                                    Tomar asistencia
+                                </div>
+
+                            </button>
+
+                            <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="verAsistencia @item.Id" onclick="location.href='@Url.Action("VerInasistencias", "Curso", new { idCurso = item.Id })';return false;">
+
+                                <img src="~/Content/ver_inasistencia.png" style="width:24px" />
+                                <div class="mdl-tooltip" for="verAsistencia @item.Id">
+                                    Ver inasistencias
+                                </div>
+
+                            </button>
+
                         </td>
 
                     </tr>

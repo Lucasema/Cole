@@ -38,7 +38,7 @@
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.Nombre, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
                                         <label class="mdl-textfield__label" for="Persona.Nombre">
-                                            Nombre del alumno
+                                            Nombre
                                         </label>
                                         <span class="mdl-textfield__error">
                                             @Html.ValidationMessageFor(model => model.Persona.Nombre, "", new { @id = "errorNombre" })
@@ -50,7 +50,7 @@
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.Persona.Apellido, new { htmlAttributes = new { @class = "mdl-textfield__input" } })
                                         <label class="mdl-textfield__label" for="Persona.Apellido">
-                                            Apellido del alumno
+                                            Apellido
                                         </label>
                                         <span class="mdl-textfield__error">
                                             @Html.ValidationMessageFor(model => model.Persona.Apellido, "", new { @id = "errorApellido" })
@@ -200,15 +200,35 @@
                             <link href="~/Content/mdc.chips.css" rel="stylesheet" />
                             <script src="~/Content/mdc.chips.js"></script>
 
+                            <script>
+                                function eliminarChip() {
+                                        document.querySelectorAll("input.asco").forEach(function (item, index) {
+                                            
+                                                item.id = "Titulo_" + (index) + "__Nombre";
+                                                item.name = "Titulo[" + (index) + "].Nombre";
+
+                                        });
+
+                                    }
+                            </script>
+
                             <div class="mdc-chip-set" id="titulos" style="max-width:500px">
-                                @foreach (Titulo t in Model.Titulo)
-                                {
-                                    <div class="mdc-chip">
-                                        @t.Nombre
-                                        <div class="material-icons mdc-chip__icon mdc-chip__icon--trailing" onclick="
-                                                     this.parentElement.remove();
-                                                     ">close</div>
-                                    </div>
+                                @{
+                                    int contador = 0;
+                                    foreach (Titulo t in Model.Titulo)
+                                    {
+                                        <div class="mdc-chip">
+                                            @t.Nombre
+                                            <div class="material-icons mdc-chip__icon mdc-chip__icon--trailing" onclick="
+                                                  this.parentElement.remove(); eliminarChip();
+                                                     ">
+                                                close
+                                            </div>
+                                            <input class="asco" id="Titulo_@contador.ToString()__Nombre" name="Titulo[@contador.ToString()].Nombre" value="@t.Nombre" hidden/>
+                                        </div>
+
+                                        contador++;
+                                    }
                                 }
                             </div>
 
@@ -225,7 +245,7 @@
                                 var texto = document.getElementById("texto");
 
                                 add.onclick = function () {
-                                    var chip = document.createElement("text");
+                                    var chip = document.createElement("div");
                                     chip.textContent = texto.value; chip.classList.add("mdc-chip");
 
                                     texto.value = "";
@@ -239,26 +259,19 @@
                                     closeChip.classList.add("material-icons");
                                     closeChip.classList.add("mdc-chip__icon");
                                     closeChip.classList.add("mdc-chip__icon--trailing");
-
+                                    
                                     var input = document.createElement("input");
                                     input.type = "hidden";
                                     input.value = chip.textContent;
                                     input.id = "Titulo_" + (tit.root_.childElementCount) + "__Nombre";
                                     input.name = "Titulo[" + (tit.root_.childElementCount) + "].Nombre";
+                                    input.classList.add("asco");
 
-                                    ;
 
-                                    closeChip.onclick = function () {
-                                        closeChip.parentElement.remove();
 
-                                        tit.root_.childNodes.forEach(function (item, index) {
-                                            if (item.lastChild != null) {
-                                                item.lastChild.id = "Titulo_" + (index - 1) + "__Nombre";
-                                                item.lastChild.name = "Titulo[" + (index - 1) + "].Nombre";
-                                            }
-                                        })
+                                    closeChip.onclick = function () { this.parentElement.remove(); eliminarChip() };
 
-                                    }
+                                    
 
                                     chip.appendChild(closeChip);
                                     chip.appendChild(input);

@@ -24,7 +24,7 @@
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="buscarPorAño">
 
                     <div class="col-md-10">
-                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@ViewBag.viendoAño step="1" min="2014" maxlength="4" />
+                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@ViewBag.viendoAño step="1" min="2014" max="3000" maxlength="4" />
                         <label class="mdl-textfield__label" for="nro">
                             Filtrar por año
                         </label>
@@ -68,7 +68,7 @@
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right:12px; width:150px" id="agregarEnAño">
 
                     <div class="col-md-10">
-                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@DateTime.Now.Year step="1" min="2014" maxlength="4" />
+                        <input class="mdl-textfield__input" type="number" id="año" name="año" value=@DateTime.Now.Year step="1" min="2014" max="3000" maxlength="4" />
                         <label class="mdl-textfield__label" for="nro">
                             Año del cursado
                         </label>
@@ -143,7 +143,7 @@
                                         <input value="@ViewBag.idCurso" id="idCurso" name="idCurso" hidden />
                                         <input value="@ViewBag.viendoAño" id="año" name="año" hidden />
 
-                                        <button class="mdl-button mdl-js-button" type="submit">
+                                        <button class="mdl-button mdl-js-button" type="submit" onclick="return confirm('¿ Estás seguro que quieres eliminar a @item.Apellido @item.Apellido ?');">
                                             <i class="material-icons mdc-button__icon" aria-hidden="true" style="color:red">delete</i>
 
                                         </button>

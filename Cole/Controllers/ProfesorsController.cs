@@ -12,10 +12,11 @@ using Cole.Servicios;
 
 namespace Cole.Controllers
 {
+    
     public class ProfesorsController : Controller
     {
         private ColegioEntities db = new ColegioEntities();
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Profesors
         public ActionResult Index()
         {
@@ -23,13 +24,13 @@ namespace Cole.Controllers
             return View(profesor.ToList());
         }
 
-
-        public ActionResult AsignarMaterias(int Dni)
+        [Filters.Autorizar(Roles = "Administrador")]
+        public ActionResult AsignarMaterias(int? Dni)
         {
            
             List<Dicta> dicta = db.Dicta.Include(x => x.Materia).Include(x => x.Curso).Where(x => x.DniProfesor == Dni && x.año.Year == DateTime.Today.Year).ToList();
 
-            CargarVistaDictados(Dni);
+            CargarVistaDictados((int)Dni);
 
             return View(dicta);
         }
@@ -64,7 +65,7 @@ namespace Cole.Controllers
         }
 
 
-
+        [Filters.Autorizar(Roles = "Administrador")]
         [HttpPost]
         public ActionResult AñadirDictado(int materia, int curso, int Dni)
         {
@@ -93,7 +94,7 @@ namespace Cole.Controllers
 
             return View("AsignarMaterias", dicta);
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         [HttpPost]
         public ActionResult EliminarDictado(int materia, int curso, int Dni)
         {
@@ -113,7 +114,7 @@ namespace Cole.Controllers
 
 
 
-
+        [Filters.Autorizar(Roles = "Administrador")]
         [HttpPost]
         public ActionResult Index(string campo, string valor)
         {
@@ -124,7 +125,7 @@ namespace Cole.Controllers
             }
             return Index();
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Profesors/Details/5
         public ActionResult Details(int? id)
         {
@@ -139,13 +140,13 @@ namespace Cole.Controllers
             }
             return View(profesor);
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Profesors/Create
         public ActionResult Create()
         {
             return View();
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // POST: Profesors/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -177,7 +178,7 @@ namespace Cole.Controllers
             ViewBag.Dni = new SelectList(db.Persona, "Dni", "Cuil", profesor.Dni);
             return View(profesor);
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Profesors/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -195,7 +196,7 @@ namespace Cole.Controllers
 
             return View(profesor);
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // POST: Profesors/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -204,6 +205,29 @@ namespace Cole.Controllers
         public ActionResult Edit( Profesor profesor)
         {
             profesor.Dni = profesor.Persona.Dni;
+
+            List<Titulo> borrar = db.Titulo.Where(x => x.Dni == profesor.Dni).ToList();
+
+            foreach(Titulo t in borrar)
+            {
+                db.Titulo.Remove(t);
+            }
+
+            foreach (Titulo t in profesor.Titulo)
+            {
+
+                t.Dni = profesor.Dni;
+
+
+                if (db.Titulo.Find(t.Dni, t.Nombre) == null)
+                {
+                    db.Titulo.Add(t);
+                }
+            }
+
+            db.SaveChanges();
+            profesor.Titulo = null;
+
             if (ModelState.IsValid)
             {
                 db.Entry(profesor).State = EntityState.Modified;
@@ -214,7 +238,7 @@ namespace Cole.Controllers
 
             return View(profesor);
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // GET: Profesors/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -229,7 +253,7 @@ namespace Cole.Controllers
             }
             return View(profesor);
         }
-
+        [Filters.Autorizar(Roles = "Administrador")]
         // POST: Profesors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -257,6 +281,14 @@ namespace Cole.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Filters.Autorizar(Roles = "Profesor")]
+        public ActionResult ManualProfesor()
+        {
+
+
+            return View();
         }
     }
 }

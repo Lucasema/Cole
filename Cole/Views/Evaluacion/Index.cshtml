@@ -201,6 +201,13 @@
 
                         <td>
 
+                            <button style="float:right; color:red" class="mdl-button mdl-js-button" type="button" id="@item.Fecha.ToShortDateString() @item.Titulo" onclick="if(confirm('¿Estás seguro que quieres eliminar la evaluación @item.Titulo?')){ location.href='@Url.Action("Delete", "Evaluacion", new { id = item.Id })' };return false;">
+                                <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
+                                <div class="mdl-tooltip" for="@item.Fecha.ToShortDateString() @item.Titulo">
+                                    Eliminar
+                                </div>
+                            </button>
+
                             <button style="float:right" class="mdl-button mdl-js-button" type="button" id="@item.Titulo @item.Fecha.ToShortDateString()" onclick="location.href='@Url.Action("Edit", "Evaluacion", new { id = item.Id })';return false;">
                                 <i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>
                                 <div class="mdl-tooltip" for="@item.Titulo @item.Fecha.ToShortDateString()">
@@ -208,12 +215,7 @@
                                 </div>
                             </button>
 
-                            <button style="float:right" class="mdl-button mdl-js-button" type="button" id="@item.Fecha.ToShortDateString() @item.Titulo" onclick="location.href='@Url.Action("Delete", "Evaluacion", new { id = item.Id })';return false;">
-                                <i class="material-icons mdc-button__icon" aria-hidden="true">delete</i>
-                                <div class="mdl-tooltip" for="@item.Fecha.ToShortDateString() @item.Titulo">
-                                    Eliminar
-                                </div>
-                            </button>
+
 
                             <button style="float:right" class="mdl-button mdl-js-button" type="button" id="calificar @item.Titulo @item.Fecha.ToShortDateString()" onclick="location.href='@Url.Action("Calificar", "Evaluacion", new { idMateria = item.Materia.Id , idEvaluacion = item.Id })';return false;">
                                 <img src="~/Content/examen_icono.png" style="width:24px" />

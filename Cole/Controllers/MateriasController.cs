@@ -11,6 +11,7 @@ using Cole.Servicios;
 
 namespace Cole.Controllers
 {
+    [Filters.Autorizar(Roles = "Administrador")]
     public class MateriasController : Controller
     {
         private ColegioEntities db = new ColegioEntities();
@@ -81,7 +82,7 @@ namespace Cole.Controllers
         }
 
         // GET: Materias/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
